@@ -22,7 +22,7 @@ def login(request):
             data['msg'] = '账号或密码错误'
             return render(request,'login.html',data)
         #成功
-        response = render(request,'blog.html',{'account':account,'src':cur_user.headpic_path})
+        response = render(request,'users/success.html',{'account':account,'src':cur_user.headpic_path})
         response.set_signed_cookie('account',account,salt='aaa')
         if(save_pwd=='on'):
             response.set_signed_cookie('password',pwd,salt='bbb')
@@ -74,6 +74,6 @@ def register(request):
         user = User(account = acc,password = password,name = name, headpic_path = src)
         user.save()
 
-        return render(request,'success.html',{'account': acc, 'src': src})
+        return render(request,'users/success.html',{'account': acc, 'src': src})
     else:
-        return render(request,'register.html')
+        return render(request,'users/register.html')

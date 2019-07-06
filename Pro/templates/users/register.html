@@ -1,62 +1,175 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{% block title %}尚硅谷书城-注册{% endblock title %}
-{% block topfiles %}
-{% endblock topfiles %}
-{% block header_con %}{% endblock header_con %}
-{% block search_bar %}{% endblock search_bar %}
-{% block body %}
-    <div class="register_con">
-        <div class="l_con fl">
-            <a class="reg_logo"><img src="/static/images/logo.png" style="width: 160px; height: 53px;"></a>
-            <div class="reg_slogan">学计算机  ·  来尚硅谷</div>
-            <div class="reg_banner"></div>
-        </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href={% static 'css/register.css' %}>
+    <!-- <link rel="stylesheet" type="text/css" href='../static/css/register.css'> -->
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <!-- <script src="../static/js/jquery-3.4.1.js"></script> -->
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <!-- <script src="../static/js/jquery.cookie.js"></script> -->
 
-        <div class="r_con fr">
-            <div class="reg_title clearfix">
-                <h1>用户注册</h1>
-                <a href="#">登录</a>
+
+    <title>Register</title>
+</head>
+<body>
+    <div class=register>
+        <form action="/register/" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p class="title">
+                <span>Register</span>
+            </p>
+
+            <fieldset class="acc_and_pwd">
+                <legend>账号密码</legend>
+                <div class="content">
+                    <div>
+                        <label for="acc">登录账号：</label><input type='text' name="account" id="acc"
+                        placeholder="邮箱/电话" required>
+                    </div>
+                    <div>
+                        <label for="pwd1">登录密码：</label><input type='password' name="password" id="pwd1"
+                        placeholder="不少于6位" minlength="6" required>
+                    </div>
+                    <div>
+                        <label for="pwd2">密码确认：</label><input type='password' id="pwd2" onchange="pwd_vertify()"
+                        placeholder="保持两次一致">
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="basic_info">
+                <legend>基本信息</legend>
+                <div class="content">
+                    <div class="basic_left">
+                        <div>
+                            <label for="usr_name">用户昵称：</label><input type='text' id="usr_name"
+                            name="name" required>
+                        </div>
+                        <div>
+                            <div id="msg">
+                                
+                            </div>
+                        </div>
+                        <div class="gender">
+                            用户性别：
+                            <input type="radio" name="gender" value="male" checked id="male_btn"><label for="male_btn">男</label>
+                            <input type="radio" name="gender" value="female" id="female_btn"><label for="female_btn">女</label>
+                        </div>
+                        <div class="city">
+                            所在城市：
+                            <select name="city">
+                                <option value="上海">上海</option>
+                                <option value="北京">北京</option>
+                                <option value="深圳">深圳</option>
+                                <option value="广州">广州</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="basic_right">
+                        <!-- 上传图片并回显 -->
+                        <input type="hidden" name="headpic_name" id="headpic_name">
+                        <div>
+                            <img id="display_img" src="{% static 'img/yuxiaoqin.jpg' %}" width="120px">
+                        </div>
+                        <div>
+                            <input id="upload_img" type="file" accept="img/jpeg img/png" name="headpic"
+                            style="width:65%">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+           
+            <fieldset class="signature">
+                <legend title="show your characteristic!!!">个性签名：</legend>
+                <textarea name="signature" maxlength="30" class="text">请输入不大于30个字</textarea>
+            </fieldset>
+            
+            <div class="bottom">
+                <div id="bottom_left">
+                    <button class="button" type="submit">立即注册</button>
+                </div>
+                <div id="bottom_right">
+                    <a href="/login/">返回登录</a>
+                </div>
             </div>
-            <div class="reg_form clearfix">
-                <form method="post" action="/user/register_handle/">
-                    {% csrf_token %}
-                <ul>
-                    <li>
-                        <label>用户名:</label>
-                        <input type="text" name="user_name" id="user_name">
-                        <span class="error_tip">提示信息</span>
-                    </li>
-                    <li>
-                        <label>密码:</label>
-                        <input type="password" name="pwd" id="pwd">
-                        <span class="error_tip">提示信息</span>
-                    </li>
-                    <li>
-                        <label>确认密码:</label>
-                        <input type="password" name="cpwd" id="cpwd">
-                        <span class="error_tip">提示信息</span>
-                    </li>
-                    <li>
-                        <label>邮箱:</label>
-                        <input type="text" name="email" id="email">
-                        <span class="error_tip">提示信息</span>
-                    </li>
-                    <li class="agreement">
-                        <input type="checkbox" name="allow" id="allow" checked="checked">
-                        <label>同意”尚硅谷书城用户使用协议“</label>
-                        <span class="error_tip2">提示信息</span>
-                    </li>
-                    <li class="reg_sub">
-                        <input type="submit" value="注 册" name="">
-                        {{errmsg}}
-                    </li>
-                </ul>
-                </form>
-            </div>
-
-        </div>
-
+        </form>
     </div>
-{% endblock body %}
-{% block cart_count %}{% endblock cart_count %}
+
+    <script>
+        $('ducument').ready(function(){
+            $('#usr_name').blur(function(){
+                $.ajax({
+                    async: true,
+                    url: "/ajax/check_name/" + $('#usr_name').val(), // ajax请求路径
+                    // url: "/ajax/check_name/?name=" + $('#usr_name').val(), // ajax请求路径
+                    type: "get",  // ajax请求方法
+                    headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
+                    success: function(data){
+                        console.log(data);
+                        if(data=='True'){
+                            $('#msg').html('<p style="color:green;font-style:italic"> 该昵称独一无二哟。 </p>')
+                        }
+                        else{
+                            $('#msg').html('<p style="color:red;font-style:italic"> 该昵称被别人抢先啦。 </p>')
+                        }
+                    }
+                })
+            });
+            $('#usr_name').focus(function(){
+                $('#msg').html('')
+            });
+            // //上传图片并回显
+            // $("#upload_img").change(function(){
+            //     //获取文件
+            //     curFiles = $("#upload_img")[0].files;
+            //     file = curFiles[0];
+            //     //构造formData
+            //     var form_data = new FormData();
+            //     form_data.append('file',file);
+            //     //异步上传
+            //     $.ajax({
+            //         async: true,
+            //         url: '/ajax/upload_headpic/',
+            //         type: 'post',
+            //         headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
+            //         data: form_data,
+            //         processData: false,
+            //         contentType: false,
+            //         success: (data)=>{
+            //             console.log(data);
+            //             if(data != 'not picture'){
+            //                 //回显图片
+            //                 $("#display_img").attr('src',data);
+            //                 //设置隐藏文件名
+            //                 file_name = data.split('/')[4];
+            //                 $("#headpic_name").val(file_name);
+            //             }
+            //         }
+            //     })
+            // })
+        });
+        // 离线版本的头像回显
+        var input = document.getElementById("upload_img");
+        var img = document.getElementById("display_img");
+        input.addEventListener('change', updateImageDisplay);
+        function updateImageDisplay() {
+            var img_file = input.files[0];
+            img.src=window.URL.createObjectURL(img_file);
+        }
+        function pwd_vertify(){
+            var pwd1=document.getElementById('pwd1');
+            var pwd2=document.getElementById('pwd2');
+            if(pwd1.value===pwd2.value){
+                pwd2.setCustomValidity("");
+            }
+            else{
+                pwd2.setCustomValidity("The second password is not the same as the first one");
+            }
+        }
+    </script>
+</body>
+</html>
