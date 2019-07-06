@@ -1,4 +1,7 @@
 from django.db import models
+from db.base_model import BaseModel
+from utils.get_hash import get_hash
+
 from books.models import Book
 
 # Create your models here.
