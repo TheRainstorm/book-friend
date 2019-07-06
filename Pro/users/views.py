@@ -32,7 +32,7 @@ def login(request):
     else:
         account = request.get_signed_cookie('account','','aaa')
         password = request.get_signed_cookie('password','','bbb')
-        return render(request,'login.html',{'account':account,'password':password})
+        return render(request,'users/login.html',{'account':account,'password':password})
 
 def register(request):
     if request.POST:

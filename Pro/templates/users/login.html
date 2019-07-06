@@ -1,75 +1,71 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{% block title %}尚硅谷书城-登录{% endblock title %}
-{% block topfiles %}
-<script>
-    $(function () {
-        $('#btnLogin').click(function () {
-            // 获取用户名和密码
-            var username = $('#username').val()
-            var password = $('#pwd').val()
-            var csrf = $('input[name="csrfmiddlewaretoken"]').val()
-            var remember = $('input[name="remember"]').prop('checked')
-            var verifycode = $('input[name="vc"]').val()
-            // 发起ajax请求
-            var params = {
-                'username': username,
-                'password': password,
-                'csrfmiddlewaretoken': csrf,
-                'remember': remember,
-                'verifycode': verifycode,
-            }
-            $.post('/user/login_check/', params, function (data) {
-                // 用户名密码错误 {'res':0}
-                // 登录成功 {'res':1}
-                if (data.res == 0){
-                    $('#username').next().html('用户名或密码错误').show()
-                }
-                else
-                {
-                    // 跳转页面
-                    location.href = data.next_url // /user/
-                }
-            })
-        })
-    })
-</script>
-{% endblock topfiles %}
-{% block header_con %}{% endblock header_con %}
-{% block search_bar %}{% endblock search_bar %}
-{% block body %}
-    <div class="login_top clearfix">
-        <a href="index.html" class="login_logo"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
-    </div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %}>
+    <!-- <link rel="stylesheet" type="text/css" href='../static/css/login.css'> -->
 
-    <div class="login_form_bg">
-        <div class="login_form_wrap clearfix">
-            <div class="login_banner fl"></div>
-            <div class="slogan fl">学计算机 · 来尚硅谷</div>
-            <div class="login_form fr">
-                <div class="login_title clearfix">
-                    <h1>用户登录</h1>
-                    <a href="#">立即注册</a>
+    <title>Login</title>
+</head>
+<body>
+    <div class=login>
+        <form class="login_form" name="login_form" action="/login/" method="POST" onsubmit="return check()" >
+            {% csrf_token %}
+
+            <p class="title">
+                Blog
+            </p>
+            <div>
+                <input type='text' placeholder="请输入登录账号" name="account" id="acc" value="{{ account }}" 
+                oninput="setCustomValidity('')">
+            </div>
+            <div>
+                <input type='password' placeholder="请输入登录密码" name="password" id="pwd" value="{{ password }}"
+                oninput="setCustomValidity('')">
+            </div>
+            <div>
+                <input type="checkbox" name="save_pwd">记住我
+            </div>
+            <div class="bottom">
+                <div id="bottom_left">
+                    <button class="button" type="submit">马上登录</button>
                 </div>
-                <div class="form_input">
-                    {% csrf_token %}
-                    <input type="text" id="username" class="name_input" value="{{ username }}" placeholder="请输入用户名">
-                    <div class="user_error">输入错误</div>
-                    <input type="password" id="pwd" class="pass_input" placeholder="请输入密码">
-                    <div class="pwd_error">输入错误</div>
-                    <div class="more_input clearfix">
-                        <input type="checkbox" name="remember" {{ checked }}>
-                        <label>记住用户名</label>
-                        <a href="#">忘记密码</a>
-                    </div>
-                    <div style="top: 100px; position: absolute;">
-                        <input type="text" id="vc" name="vc">
-                        <img id='verifycode' src="/user/verifycode/" onclick="this.src='/user/verifycode/?'+Math.random()" alt="CheckCode"/>
-                    </div>
-                    <input type="button" id="btnLogin" value="登录" class="input_submit">
+                <div id="bottom_right">
+                    <a href="/register/">立即注册</a>
                 </div>
             </div>
+        </form>
+        {% if msg %}
+        <div class="display_msg">
+            {{ msg }}
         </div>
+        {% endif %}
     </div>
-{% endblock body %}
-{% block cart_count %}{% endblock cart_count %}
+</body>
+
+<script>
+    // function clear_invalid(){
+    //     this.setCustomValidity("");
+    // }
+    function check(){
+        var acc = document.getElementById("acc");
+        var pwd = document.getElementById("pwd");
+        acc.setCustomValidity("");
+        pwd.setCustomValidity("");
+        var flag=true;
+  
+        if(acc.value=='' ){
+            acc.setCustomValidity("不能为空");
+            flag = false;
+        }
+        if(pwd.value==''){
+            pwd.setCustomValidity("不能为空");
+            flag = false;
+        }
+        return flag;
+    }
+</script>
+</html>
