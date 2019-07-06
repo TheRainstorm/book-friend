@@ -22,5 +22,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('comments/', include('comments.urls')),
     path('collects/', include('collects.urls')),
+    path('search/', include('haystack.urls')),
 
 ]

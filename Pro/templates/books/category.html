@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Category</title>
+</head>
+<body>
+    <a href="/books/index/">首页</a>
+    <ol>
+        {% for book in book_li %}
+        <li>
+            标题：<span>{{ book.title }}</span>
+            上传者：<span>{{ book.uploader.user_name }}</span>
+            上传时间：<span>{{ book.create_time }}</span>
+        </li>
+        {% empty %}
+        <p>空</p>
+        {% endfor %}
+    </ol>
+    
+    <!-- 分页导航 -->
+    <p>
+        {% if book_li.has_previous %}
+        <a href="?page={{ book_li.previous_page_number }}">上一页</a>
+        {% endif %}
+        当前：{{ book_li.number }} / {{ book_li.paginator.num_pages }}
+        {% if book_li.has_next %}
+        <a href="?page={{ book_li.next_page_number }}">下一页</a>
+        {% endif %}
+    </p>
+</body>
+</html>

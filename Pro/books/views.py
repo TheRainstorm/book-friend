@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,StreamingHttpResponse
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 from users.models import User
 from books.models import Book
@@ -11,9 +12,37 @@ import uuid
 from books.enums import BOOKS_TYPE
 
 # Create your views here.
+# def type_ranking(request):
+#     python_new = Book.objects.get_books_by_type(PYTHON, sort='new')
+#     python_hot = Book.objects.get_books_by_type(PYTHON, sort='hot')
+
+#     context = {
+#         'python_new': python_new,
+#         'python_hot': python_hot,
+#     }
+
+#     return render(request, 'book/index.html', context)
+
+# def all_ranking(request):
+#     all_new = Book.objects.get_all_ranking(sort='new')
+#     all_hot = Book.objects.get_all_ranking(sort='collect-hot')
+
+#     context = {
+#         'all_new': all_new,
+#         'all_hot': all_hot,
+#     }
+    
+#     return render(request, 'book/index.html', context)
+
 def index(request):
     books_li = Book.objects.all()
-    return render(request,'books/index.html',{"book_li":books_li})
+    all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
+    context = {
+        "book_li":books_li,
+        'all_book_li_by_hot':all_book_li_by_hot,
+        'type_dic':BOOKS_TYPE
+    }
+    return render(request,'books/index.html',context)
 
 def add(request):
     if request.POST:
@@ -77,6 +106,7 @@ def delete(request,book_id):
         Book.objects.filter(book_id=book_id).delete()
     except:
         pass
+    
     return redirect('/books/index/')
 
 def goupdate(request,book_id):
@@ -131,7 +161,10 @@ def detail(request,book_id):
     comment_li = Comment.objects.filter(bookName=book) 
     #获得是否收藏
     collection_li =Collection.objects.filter(book=book,user=user)
-    
+    #浏览加1
+    view_number = book.view_number
+    # book.update(view_number=view_number+1)
+    Book.objects.filter(book_id=book_id).update(view_number=view_number+1)
     if len(collection_li)==0:
         is_collected=0
     else:
@@ -144,3 +177,19 @@ def detail(request,book_id):
         'is_collected':is_collected
     }
     return render(request,'books/detail.html',context)
+
+#每一类书的页面
+def types(request,type_id):
+    typeBooks = Book.objects.get_books_by_type(type_id=type_id,sort='new')
+
+    paginator = Paginator(typeBooks,3) #每页显示6本
+    #接受客户端发送的页码:
+    page = request.GET.get('page',1)
+    #
+    try:
+        typeBooks=paginator.page(page)
+    except EmptyPage:
+        typeBooks= paginator.page(1)
+    except PageNotAnInteger:
+        typeBooks = paginator.page(paginator.num_pages)
+    return render(request,'books/category.html',{'book_li' : typeBooks})

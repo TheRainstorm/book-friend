@@ -1,0 +1,4 @@
+{{ object.title }} # 书籍名字
+{{ object.author }} # 书籍作者
+{{ object.description }} # 书籍简介
+{{ object.collection_number }} # 书籍收藏量

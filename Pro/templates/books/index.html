@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>首页</h1>
+    {% for k,v in type_dic.items %}
+    <li>
+        <a href="/books/types/{{ k }}">{{ v }}</a>
+    </li>
+    {% endfor %}
     <ol>
         <li>
             <a href='/users/home/'>用户中心</a>
@@ -18,7 +23,7 @@
         <tr>
             <th>book_id</th>
             <th>uploader_id</th>
-            <th>uploader_user_name</th>
+            <th>uploader</th>
             <th>title</th>
             <th>type_id</th>
             <th>book_type</th>
@@ -49,6 +54,25 @@
         </td>
         {% endfor %}
     </table>
+    <p>搜索</p>
+    <form action="/search/" method="GET">
+        <input name="q" placeholder="输入关键词">
+        <input type="submit" value="搜索">
+    </form>
+
+    <h2>总排行榜（依照浏览量）</h2>
+    <ol>
+        {% for book in all_book_li_by_hot %}
+        <li>
+            <a href="/books/{{ book.book_id }}">{{ book.title }}</a>
+            <span>id: {{ book.book_id }},{{ book.view_number }}</span>
+        </li>
+        {% empty %}
+            <p style="text-align: center">暂无书籍</p>
+        {% endfor %}
+    </ol>
+    
+
     <script>
         function delone(id){
             if(window.confirm('是否确认删除？')){

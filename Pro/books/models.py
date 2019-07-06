@@ -35,7 +35,7 @@ class BooksManager(models.Manager):
         # 查询结果集的限制
         if limit:
             books_li = books_li[:limit]
-        return books_l
+        return books_li
 
     def get_all_ranking(self, limit=None,sort='default'):
             if sort == 'new':

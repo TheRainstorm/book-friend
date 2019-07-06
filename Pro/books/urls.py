@@ -8,4 +8,5 @@ urlpatterns = [
     path('goupdate/<int:book_id>/',views.goupdate),
     path('update/',views.update),
     path('<int:book_id>',views.detail),
+    path('types/<int:type_id>',views.types),
 ]
