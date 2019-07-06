@@ -40,6 +40,7 @@
                 <button class="update" onclick="updateOne('{{ book.book_id }}');">修改</button>
                 <button class="delete" onclick="delone('{{ book.book_id }}');">删除</button>
                 <button class="detail" onclick="detail('{{ book.book_id }}');">详情</button>
+                <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button>
             </td>
         </tr>
         {% empty %}
@@ -59,6 +60,9 @@
         }
         function detail(id){
             window.location.href = '/books/'+ id
+        }
+        function collect(id){
+            window.location.href = '/collects/collect_add/'+ id
         }
     </script>
 </body>

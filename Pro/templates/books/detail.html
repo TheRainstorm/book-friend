@@ -16,6 +16,12 @@
     <p>book_type: {{ book_type }}</p>
     <p>uploader: {{ book.uploader.user_name }}</p>
 
+    <!-- 收藏 -->
+    {% if not is_collected %}
+    <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button>
+    {% else %}
+    <button disabled style="color:black; background-color: gray">收藏</button>
+    {% endif %}
     <p>添加评论</p>
     <form action="/comments/addcom/" method="POST">
         {% csrf_token %}
@@ -38,17 +44,8 @@
     </ol>
 </body>
 <script>
-    $('ducument').ready(function(){
-        $.ajax({
-            async: true,
-            url: "/users/ajax/add_recent_read/?book_id=" + $('#book_id').val(), // ajax请求路径
-            type: "get",  // ajax请求方法
-            headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
-            success: function(data){
-                console.log(data);
-                $('#msg').html('<p>'+data+'</p>');
-            }
-        })
-    })
+    function collect(id){
+        window.location.href = '/collects/collect_add/'+ id
+    }
 </script>
 </html>

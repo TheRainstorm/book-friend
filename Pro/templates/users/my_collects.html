@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My collection</title>
+</head>
+<body>
+    {% for book in book_li %}
+    <p>book_id: {{ book.book_id }}</p>
+    <p>book_title: {{ book.title }}</p>
+    <p>book_uploader: {{ book.uploader.user_name }}</p>
+    <button onclick="go_detail('{{ book.book_id }}');">详情</button>
+    <button onclick="delcollec('{{ book.book_id }}');">取消收藏</button>
+    <br>
+    {% empty %}
+    暂无收藏
+    {% endfor %}
+</body>
+<script>
+    function go_detail(id){
+        window.location.href = '/books/' + id;
+    }
+    function delcollec(id){
+        window.location.href = '/collects/collect_del/' + id;
+    }
+</script>
+</html>

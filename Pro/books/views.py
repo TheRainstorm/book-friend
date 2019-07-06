@@ -4,6 +4,7 @@ from django.http import HttpResponse,StreamingHttpResponse
 from users.models import User
 from books.models import Book
 from comments.models import Comment
+from collects.models import Collection
 import os
 import uuid
 
@@ -108,6 +109,18 @@ def detail(request,book_id):
 
     #获得评论
     comment_li = Comment.objects.filter(bookName=book) 
+    #获得是否收藏
+    collection_li =Collection.objects.filter(book=book,user=user)
     
+    if len(collection_li)==0:
+        is_collected=0
+    else:
+        is_collected=1
     book_type = BOOKS_TYPE[int(book.type_id)]
-    return render(request,'books/detail.html',{'book':book,'book_type':book_type,'comment_li':comment_li})
+    context = {
+        'book':book,
+        'book_type':book_type,
+        'comment_li':comment_li,
+        'is_collected':is_collected
+    }
+    return render(request,'books/detail.html',context)

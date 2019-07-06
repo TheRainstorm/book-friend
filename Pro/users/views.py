@@ -4,6 +4,7 @@ from django.http import HttpResponse,StreamingHttpResponse
 from users.models import User
 from books.models import Book
 from comments.models import Comment
+from collects.models import Collection
 import os
 import uuid
 # Create your views here.
@@ -97,20 +98,6 @@ def recent_read(request):
     book_li = user.recent_read.all()
     return render(request,'users/recent_read.html',{'user':user,'book_li':book_li})
 
-def add_recent_read(request):
-    user_name = request.session.get('account',None)
-    if user_name:
-        book_id = request.GET.get('book_id',None)
-
-        book = Book.objects.get(book_id=book_id)
-        user = User.objects.get(user_name=user_name)
-
-        user.recent_read.add(book)
-
-        return HttpResponse('add book_id:'+book_id+'as recent read')
-    else:
-        return redirect('/users/login/')
-
 def edit_info(request):
     user_name = request.session.get('account',None)
     user = User.objects.filter(user_name=user_name)[0]
@@ -132,3 +119,26 @@ def personal_comments(request):
     comment_li =Comment.objects.filter(userName=user)
 
     return render(request,'users/personal_comments.html',{'comment_li':comment_li})
+
+def my_collects(request):
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+
+    collection_li = Collection.objects.filter(user=user)
+
+    book_li=[]
+    for collect in collection_li:
+        book_li.append(collect.book)
+    return render(request,'users/my_collects.html',{'book_li':book_li})
+
+# def collect_view(request):
+#     if request.POST:
+#         userid = request.POST.get('userid',None)
+#         user = User.objects.get(user_id=userid)
+#         book_collections = collection.objects.filter(user=user)
+#         booklist=[]
+#         for collect in book_collections:
+#             booklist.append(collect.book)
+#         return render(request,'collection/booksInfo.html',{'booklist':booklist})#返回收藏书的信息显示
+#     else:
+#         return render(request,'collection/booksInfo.html')

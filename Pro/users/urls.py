@@ -8,8 +8,8 @@ urlpatterns = [
     path('home/', views.home),    
     path('ajax/check_account/<str:user_name>/', views.check_account, name='check_account'),
     path('recent_read/',views.recent_read),
-    path('ajax/add_recent_read/',views.add_recent_read),
     path('edit_info/', views.edit_info),    
     path('personal_comments/', views.personal_comments),    
+    path('my_collects/', views.my_collects),    
     
 ]
