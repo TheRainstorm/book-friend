@@ -1,0 +1,41 @@
+body {
+    background: url('/static/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.login {
+    width: 20%;
+    margin: 0;
+    position: relative;
+    left: 43%;
+
+    /* text-align: center; */
+}
+.login_form>div {
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+p.title {
+    margin-bottom: 50px;
+    font-size: 2em;
+    font-weight: bold;
+}
+.bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#bottom_left, #bottom_right {
+    width: 30%;
+    float: left;
+    text-align: center;
+}
+.button {
+    background-color: rgb(109, 169, 221);
+    border:none;
+    color: white;
+
+    font-style: italic
+}
+.display_msg {
+    text-align: center;
+}

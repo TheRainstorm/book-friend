@@ -1,0 +1,83 @@
+.register {
+    width: 30%;
+    margin: auto;
+}
+p.title {
+    font-size: 2em;
+    font-weight: bold;
+}
+legend {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+div.content {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/*  */
+.acc_and_pwd input {
+    width:60%;
+    border-top-style:none;
+    border-right-style:none;
+    border-bottom-style:solid;
+    border-left-style:none;
+}
+.content>div {
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.basic_info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.basic_left {
+    width: 60%;
+    float: left;
+    margin: 0px 5px;
+    /* background-color: green; */
+}
+.basic_right {
+    width: 30%;
+    float: left;
+    margin: 0px 5px;
+    /* background-color: red; */
+}
+#usr_name {
+    width: 60%;
+}
+.basic_left>div {
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+.basic_right {
+    height:160px;
+}
+.signature {
+    height: 20%;
+}
+.signature>textarea {
+    width: 100%;
+    height: 70%;
+    border-style: none;
+}
+.bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#bottom_left, #bottom_right {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+.button {
+    background-color: rgb(109, 169, 221);
+    border:none;
+    padding:10px 25px;
+}
+div.img_box {
+    width: 50px;
+    height: 50px;
+}
+#pwd2:invalid {
+    border: 1px solid red;
+}
