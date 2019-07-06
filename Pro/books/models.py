@@ -2,7 +2,7 @@ from django.db import models
 from books.enums import *
 from db.base_model import BaseModel
 
-from users.models import User
+# from users.models import User
 
 # Create your models here.
 class BooksManager(models.Manager):
@@ -53,7 +53,7 @@ class Book(BaseModel):
     book_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=20, verbose_name='书籍标题')
     author = models.CharField(max_length=20, verbose_name='书籍作者')
-    uploader = models.ForeignKey('User',on_delete=models.CASCADE, verbose_name='上传者')
+    uploader = models.ForeignKey('users.User',on_delete=models.CASCADE, verbose_name='上传者')
 
     type_id = models.SmallIntegerField(default=PYTHON, verbose_name='书的种类')
     tag = models.CharField(max_length=1024,verbose_name='标签') #暂时

@@ -2,7 +2,7 @@ from django.db import models
 from db.base_model import BaseModel
 from utils.get_hash import get_hash
 
-from books.models import Book
+# from books.models import Book
 
 # Create your models here.
 class PassportManager(models.Manager):
@@ -24,7 +24,7 @@ class PassportManager(models.Manager):
 class User(BaseModel):
     '''用户模型类'''
     user_id = models.AutoField(primary_key=True, verbose_name='用户的id')
-    recent_read = models.ManyToManyField(Book, verbose_name='最近浏览')
+    recent_read = models.ManyToManyField('books.Book', verbose_name='最近浏览')
     image = models.URLField(max_length=200)
     user_name = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
     password = models.CharField(max_length=40, verbose_name='用户密码')

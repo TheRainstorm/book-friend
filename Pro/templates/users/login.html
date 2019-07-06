@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class=login>
-        <form class="login_form" name="login_form" action="/login/" method="POST" onsubmit="return check()" >
+        <form class="login_form" name="login_form" action="/users/login/" method="POST" onsubmit="return check()" >
             {% csrf_token %}
 
             <p class="title">
@@ -34,7 +34,7 @@
                     <button class="button" type="submit">马上登录</button>
                 </div>
                 <div id="bottom_right">
-                    <a href="/register/">立即注册</a>
+                    <a href="/users/register/">立即注册</a>
                 </div>
             </div>
         </form>

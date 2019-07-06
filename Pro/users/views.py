@@ -9,26 +9,28 @@ def login(request):
     if(request.method=='POST'):
         account = request.POST.get('account', '')
         pwd = request.POST.get('password', '')
-        save_pwd = request.POST.get('save_pwd', '')
+        save_pwd = request.POST.get('save_pwd', '') #是否保存密码
         #数据库查找
-        cur_user = User()
-        all_user = User.objects.all()
-        for user in all_user:
-            if user.account == account and user.password == pwd:
-                cur_user = user
-                break
-        else:
+        user_li = User.objects.filter(user_name=account)
+        # cur_user = User()
+        # all_user = User.objects.all()
+        # for user in all_user:
+        #     if user.account == account and user.password == pwd:
+        #         cur_user = user
+        #         break
+        if len(user_li)==0:
             data = {}
             data['msg'] = '账号或密码错误'
             return render(request,'login.html',data)
-        #成功
-        response = render(request,'users/success.html',{'account':account,'src':cur_user.headpic_path})
-        response.set_signed_cookie('account',account,salt='aaa')
-        if(save_pwd=='on'):
-            response.set_signed_cookie('password',pwd,salt='bbb')
+        else:
+            #成功
+            response = render(request,'users/success.html',{'account':account,'src':user_li[0].image})
+            response.set_signed_cookie('account',account,salt='aaa')
+            if(save_pwd=='on'):
+                response.set_signed_cookie('password',pwd,salt='bbb')
 
-        request.session['account'] = account
-        return response
+            request.session['account'] = account
+            return response
     else:
         account = request.get_signed_cookie('account','','aaa')
         password = request.get_signed_cookie('password','','bbb')
@@ -37,15 +39,8 @@ def login(request):
 def register(request):
     if request.POST:
         acc = request.POST.get('account',None)
-        name = request.POST.get('name',None)
         headpic_name = request.POST.get('headpic_name',None)
         password = request.POST.get('password',None)
-        # name
-        # gender
-        # city
-        # headpic   //头像文件,重复提交
-        # signature
-        # return render(request,'login.html',{'msg':"{0},注册成功，请登录。".format(name)})
         '''头像上传'''
         headpic = request.FILES.get('headpic',None)
         if headpic==None:
@@ -59,7 +54,7 @@ def register(request):
                 return HttpResponse('not picture')
             else:
                 #设置上传文件夹
-                upload_path = os.path.join(os.getcwd(),'blog/static/img/headpic/')
+                upload_path = os.path.join(os.getcwd(),'static/image/headpic/')
                 if not os.path.exists(upload_path):
                     os.makedirs(upload_path)
                 #上传文件全路径
@@ -69,9 +64,9 @@ def register(request):
                 with open(upload_file_full_path,'wb+') as fp:
                     for chunck in headpic.chunks():
                         fp.write(chunck)
-                src = 'img/headpic/'+ file_u_name
+                src = 'image/headpic/'+ file_u_name
         
-        user = User(account = acc,password = password,name = name, headpic_path = src)
+        user = User(user_name = acc,password = password,image = src)
         user.save()
 
         return render(request,'users/success.html',{'account': acc, 'src': src})

@@ -17,7 +17,7 @@
 </head>
 <body>
     <div class=register>
-        <form action="/register/" method="POST" enctype="multipart/form-data">
+        <form action="/users/register/" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <p class="title">
                 <span>Register</span>
@@ -93,7 +93,7 @@
                     <button class="button" type="submit">立即注册</button>
                 </div>
                 <div id="bottom_right">
-                    <a href="/login/">返回登录</a>
+                    <a href="/users/login/">返回登录</a>
                 </div>
             </div>
         </form>
