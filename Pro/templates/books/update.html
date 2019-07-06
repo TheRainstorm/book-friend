@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>update</title>
+</head>
+<body>
+    <h1>修改书籍</h1>
+    <form action="/books/update/" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="book_id" value="{{ book.book_id }}">
+        <p>book_id: {{ book.book_id }}</p>
+        书籍标题
+        <input type="text" name="title" value="{{ book.title }}"><br>
+        书籍作者
+        <input type="text" name="author" value="{{ book.author }}"><br>
+        上传者(id)
+        <input type="text" name="uploader_id" value="{{ book.uploader_id }}"><br>
+        书的种类
+        <select name="type_id" id="">
+            <option value="1">python</option>
+            <option value="2">javascript</option>
+            <option value="3">OS</option>
+        </select><br>
+        标签
+        <input type="checkbox" name="tag" value="style1">style1<br>
+        <input type="checkbox" name="tag" value="style2">style2<br>
+        <input type="checkbox" name="tag" value="style3">style3<br>
+        <input type="checkbox" name="tag" value="style4">style4<br>
+        简介
+        <input type="text" name="description" value="{{ book.description }}"><br>
+        书籍保存路径
+        <input type="text" name="path1" value="{{ book.content_path }}"><br>
+        封面保存路径
+        <input type="text" name="path2" value="{{ book.image }}"><br>
+        浏览量
+        <input type="text" name="view_number" value="{{ book.view_number }}"><br>
+        收藏量
+        <input type="text" name="collection_number" value="{{ book.collection_number }}"><br>
+        
+        <button type="submit">提交修改</button>
+    </form>
+    {{ msg }}
+</body>
+</html>

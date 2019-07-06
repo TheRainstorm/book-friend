@@ -21,7 +21,7 @@ def login(request):
         if len(user_li)==0:
             data = {}
             data['msg'] = '账号或密码错误'
-            return render(request,'login.html',data)
+            return render(request,'users/login.html',data)
         else:
             #成功
             response = render(request,'users/success.html',{'account':account,'src':user_li[0].image})
@@ -38,8 +38,7 @@ def login(request):
 
 def register(request):
     if request.POST:
-        acc = request.POST.get('account',None)
-        headpic_name = request.POST.get('headpic_name',None)
+        usr_name = request.POST.get('usr_name',None)
         password = request.POST.get('password',None)
         '''头像上传'''
         headpic = request.FILES.get('headpic',None)
@@ -66,9 +65,16 @@ def register(request):
                         fp.write(chunck)
                 src = 'image/headpic/'+ file_u_name
         
-        user = User(user_name = acc,password = password,image = src)
+        user = User(user_name = usr_name,password = password,image = src)
         user.save()
 
-        return render(request,'users/success.html',{'account': acc, 'src': src})
+        return render(request,'users/success.html',{'account': usr_name, 'src': src})
     else:
         return render(request,'users/register.html')
+
+def check_account(request,user_name):
+    user_li = User.objects.filter(user_name=user_name)
+    if len(user_li)==0:
+        return HttpResponse('True')
+    else:
+        return HttpResponse('False')

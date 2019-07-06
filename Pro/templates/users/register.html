@@ -27,8 +27,13 @@
                 <legend>账号密码</legend>
                 <div class="content">
                     <div>
-                        <label for="acc">登录账号：</label><input type='text' name="account" id="acc"
-                        placeholder="邮箱/电话" required>
+                        <label for="usr_name">用户名：</label><input type='text' id="usr_name"
+                        name="usr_name" required>
+                    </div>
+                    <div>
+                        <div id="msg">
+                            
+                        </div>
                     </div>
                     <div>
                         <label for="pwd1">登录密码：</label><input type='password' name="password" id="pwd1"
@@ -45,15 +50,6 @@
                 <legend>基本信息</legend>
                 <div class="content">
                     <div class="basic_left">
-                        <div>
-                            <label for="usr_name">用户昵称：</label><input type='text' id="usr_name"
-                            name="name" required>
-                        </div>
-                        <div>
-                            <div id="msg">
-                                
-                            </div>
-                        </div>
                         <div class="gender">
                             用户性别：
                             <input type="radio" name="gender" value="male" checked id="male_btn"><label for="male_btn">男</label>
@@ -104,7 +100,7 @@
             $('#usr_name').blur(function(){
                 $.ajax({
                     async: true,
-                    url: "/ajax/check_name/" + $('#usr_name').val(), // ajax请求路径
+                    url: "/users/ajax/check_account/" + $('#usr_name').val(), // ajax请求路径
                     // url: "/ajax/check_name/?name=" + $('#usr_name').val(), // ajax请求路径
                     type: "get",  // ajax请求方法
                     headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
@@ -122,35 +118,6 @@
             $('#usr_name').focus(function(){
                 $('#msg').html('')
             });
-            // //上传图片并回显
-            // $("#upload_img").change(function(){
-            //     //获取文件
-            //     curFiles = $("#upload_img")[0].files;
-            //     file = curFiles[0];
-            //     //构造formData
-            //     var form_data = new FormData();
-            //     form_data.append('file',file);
-            //     //异步上传
-            //     $.ajax({
-            //         async: true,
-            //         url: '/ajax/upload_headpic/',
-            //         type: 'post',
-            //         headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
-            //         data: form_data,
-            //         processData: false,
-            //         contentType: false,
-            //         success: (data)=>{
-            //             console.log(data);
-            //             if(data != 'not picture'){
-            //                 //回显图片
-            //                 $("#display_img").attr('src',data);
-            //                 //设置隐藏文件名
-            //                 file_name = data.split('/')[4];
-            //                 $("#headpic_name").val(file_name);
-            //             }
-            //         }
-            //     })
-            // })
         });
         // 离线版本的头像回显
         var input = document.getElementById("upload_img");
