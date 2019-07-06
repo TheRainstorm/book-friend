@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Comments</title>
+</head>
+<body>
+    <a href="/users/home/">返回个人中心</a>
+    {% for comment in comment_li %}
+    <li>
+        评论日期：{{ comment.create_time }}
+        内容：
+        <p>{{ comment.content }}</p>
+        <button class="delete" onclick="delone('{{ comment.commentId }}');">删除</button>
+    </li>
+    {% empty %}
+    <p>暂无评论</p>
+    {% endfor %}
+</body>
+<script>
+function delone(id){
+    if(window.confirm('是否确认删除？')){
+        window.location.href = '/comments/delcom/' + id;
+    }
+}
+</script>
+
+</html>

@@ -3,6 +3,7 @@ from django.http import HttpResponse,StreamingHttpResponse
 
 from users.models import User
 from books.models import Book
+from comments.models import Comment
 import os
 import uuid
 # Create your views here.
@@ -25,7 +26,8 @@ def login(request):
             return render(request,'users/login.html',data)
         else:
             #成功
-            response = render(request,'books/index.html',{'account':account,'src':user_li[0].image})
+            book_li = Book.objects.all()
+            response = render(request,'books/index.html',{'account':account,'src':user_li[0].image,'book_li':book_li})
             response.set_signed_cookie('account',account,salt='aaa')
             if(save_pwd=='on'):
                 response.set_signed_cookie('password',pwd,salt='bbb')
@@ -122,3 +124,11 @@ def edit_info(request):
         return redirect('/users/home/')
     else:
         return render(request,'users/edit_info.html',{'user':user})
+    
+def personal_comments(request):
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+
+    comment_li =Comment.objects.filter(userName=user)
+
+    return render(request,'users/personal_comments.html',{'comment_li':comment_li})

@@ -6,7 +6,14 @@ from db.base_model import BaseModel
 
 # Create your models here.
 class BooksManager(models.Manager):
-    '''商品模型管理器类'''
+    def get_books_by_id(self, books_id):
+        '''根据商品的id获取商品信息'''
+        try:
+            books = self.get(id=books_id)
+        except self.model.DoesNotExist:
+            # 不存在商品信息
+            books = None
+        return books
     # sort='new' 按照创建时间进行排序
     # sort='hot' 按照商品销量进行排序
     # sort='price' 按照商品的价格进行排序
@@ -15,8 +22,10 @@ class BooksManager(models.Manager):
         '''根据商品类型id查询商品信息'''
         if sort == 'new':
             order_by = ('-create_time',)
-        elif sort == 'hot':
+        elif sort == 'view-hot':
             order_by = ('-view_number', )
+        elif sort == 'collect-hot':
+            order_by = ('-collection_number',)
         else:
             order_by = ('-pk', ) # 按照primary key降序排列。
 
@@ -26,16 +35,25 @@ class BooksManager(models.Manager):
         # 查询结果集的限制
         if limit:
             books_li = books_li[:limit]
-        return books_li
+        return books_l
 
-    def get_books_by_id(self, books_id):
-        '''根据商品的id获取商品信息'''
-        try:
-            books = self.get(id=books_id)
-        except self.model.DoesNotExist:
-            # 不存在商品信息
-            books = None
-        return books
+    def get_all_ranking(self, limit=None,sort='default'):
+            if sort == 'new':
+                order_by = ('-create_time',)
+            elif sort == 'view-hot':
+                order_by = ('-view_number', )
+            elif sort == 'collect-hot':
+                order_by = ('-collection_number',)
+            else:
+                order_by = ('-pk', ) # 按照primary key降序排列。
+
+            # 查询数据
+            books_li = self.order_by(*order_by)
+
+            # 查询结果集的限制
+            if limit:
+                books_li = books_li[:limit]
+            return books_li
 
 class Book(BaseModel):
     '''书籍模型类'''

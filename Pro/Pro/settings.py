@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     # my
     'users',
     'books',
+    'comments',
 ]
 
 MIDDLEWARE = [

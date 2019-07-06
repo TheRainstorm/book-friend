@@ -10,5 +10,6 @@ urlpatterns = [
     path('recent_read/',views.recent_read),
     path('ajax/add_recent_read/',views.add_recent_read),
     path('edit_info/', views.edit_info),    
-
+    path('personal_comments/', views.personal_comments),    
+    
 ]

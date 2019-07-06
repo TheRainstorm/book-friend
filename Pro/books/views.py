@@ -3,6 +3,7 @@ from django.http import HttpResponse,StreamingHttpResponse
 
 from users.models import User
 from books.models import Book
+from comments.models import Comment
 import os
 import uuid
 
@@ -102,5 +103,11 @@ def detail(request,book_id):
     #更新用户的浏览记录
     user.recent_read.add(book)
 
+    book_li = user.recent_read.all()
+
+
+    #获得评论
+    comment_li = Comment.objects.filter(bookName=book) 
+    
     book_type = BOOKS_TYPE[int(book.type_id)]
-    return render(request,'books/detail.html',{'book':book,'book_type':book_type})
+    return render(request,'books/detail.html',{'book':book,'book_type':book_type,'comment_li':comment_li})
