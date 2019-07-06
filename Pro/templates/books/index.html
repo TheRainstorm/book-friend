@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,7 @@
     <a href="/books/add/">去添加书</a>
     <table>
         <tr>
+            <th>picture</th>
             <th>book_id</th>
             <th>uploader_id</th>
             <th>uploader</th>
@@ -33,12 +35,13 @@
         </tr>
         {% for book in book_li %}
         <tr>
+            <td><a href="/books/{{ book.book_id }}"><img width=50px src="{% static book.image_path %}"></a></td>
             <td>{{ book.book_id }}</td>
             <td>{{ book.uploader.user_id }}</td>
             <td>{{ book.uploader.user_name }}</td>
             <td>{{ book.title }}</td>
             <td>{{ book.type_id }}</td>
-            <td>BOOKS_TYPE[{{ book_id }}]</td>
+            <td>待实现</td>
             <td>{{ book.tag }}</td>
             <td>{{ book.view_number }}</td>
             <td style="text-align:center;">

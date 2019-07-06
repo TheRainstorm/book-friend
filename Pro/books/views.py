@@ -37,10 +37,13 @@ from books.enums import BOOKS_TYPE
 def index(request):
     books_li = Book.objects.all()
     all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
+    # type_li = []
+    # for 
     context = {
         "book_li":books_li,
         'all_book_li_by_hot':all_book_li_by_hot,
         'type_dic':BOOKS_TYPE
+        # 'type_li':type_li
     }
     return render(request,'books/index.html',context)
 
@@ -80,7 +83,7 @@ def add(request):
         content_path = uploadDirPath + os.sep + objimage_u_name
         # 上传文件
         with open(content_path, 'wb+') as fp:
-            for chunk in objtext.chunks():
+            for chunk in objimage.chunks():
                 fp.write(chunk)
         #路径
         text_path = 'books/text/'+ objtext_u_name

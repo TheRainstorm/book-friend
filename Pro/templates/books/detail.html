@@ -11,7 +11,9 @@
 </head>
 <body>
     <a href='/books/index/'>首页</a>
+
     <p>书籍信息</p>
+    <img width=100px src="{% static book.image_path %}">
     <p id="book_id">book_id: {{ book.book_id }}</p>
     <p>book_type: {{ book_type }}</p>
     <p>uploader: {{ book.uploader.user_name }}</p>
@@ -22,6 +24,7 @@
     {% else %}
     <button disabled style="color:black; background-color: gray">收藏</button>
     {% endif %}
+    <!-- 添加评论 -->
     <p>添加评论</p>
     <form action="/comments/addcom/" method="POST">
         {% csrf_token %}
@@ -29,7 +32,7 @@
         <textarea name="content" style="height:100px; background-color: antiquewhite" placeholder="留下评论"></textarea>
         <input type="submit" value="提交">
     </form>
-
+    <!-- 显示评论 -->
     <p>显示评论</p>
     <ol>
         {% for comment in comment_li %}

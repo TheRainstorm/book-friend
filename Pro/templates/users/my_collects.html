@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +9,11 @@
 </head>
 <body>
     {% for book in book_li %}
-    <p>book_id: {{ book.book_id }}</p>
-    <p>book_title: {{ book.title }}</p>
-    <p>book_uploader: {{ book.uploader.user_name }}</p>
+    <a href="/books/{{ book.book_id }}"><img width=50px src="{% static book.image_path %}"></a>
+    <p>book id: {{ book.book_id }}</p>
+    <p>title: {{ book.title }}</p>
+    <p>author: {{ book.author }}</p>
+    <p>uploader: {{ book.uploader.user_name }}</p>
     <button onclick="go_detail('{{ book.book_id }}');">详情</button>
     <button onclick="delcollec('{{ book.book_id }}');">取消收藏</button>
     <br>
