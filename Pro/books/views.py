@@ -19,36 +19,56 @@ def add(request):
     if request.POST:
         title = request.POST.get('title',None)
         author = request.POST.get('author',None)
-        uploader_id = request.POST.get('uploader_id',None)
+        #session 获得user
+        user_name = request.session.get('account',None)
+        user = User.objects.filter(user_name=user_name)[0]
+
         type_id = request.POST.get('type_id',None)
         tag_li = request.POST.get('tag',None)
         description = request.POST.get('description',None)
-        path1 = request.POST.get('path1',None)
-        path2 = request.POST.get('path2',None)
-        view_number = request.POST.get('view_number',None)
-        collection_number = request.POST.get('collection_number',None)
 
-        print("typeof(tag_li",type(tag_li))
+        '''上传文本'''
+        objtext = request.FILES.get('upfiletxt',None)  #先拿到文件   然后需要把文件存入一个地方
+        uploadDirPath = os.path.join(os.getcwd(),'static/books/text')
+        if not os.path.exists(uploadDirPath):
+            os.mkdir(uploadDirPath)  # 是否存在  不存在则添加文件夹
+        # 拼接要上传的文件在服务器上的全路径
+        postfix = os.path.splitext(objtext.name)[1]
+        objtext_u_name = str(uuid.uuid1())+postfix
+        content_path = uploadDirPath + os.sep + objtext_u_name
+        # 上传文件
+        with open(content_path, 'wb+') as fp:
+            for chunk in objtext.chunks():
+                fp.write(chunk)
+        '''上传图片'''
+        objimage = request.FILES.get('upfileimg',None)
+        uploadDirPath = os.path.join(os.getcwd(),'static/books/picture')
+        if not os.path.exists(uploadDirPath):
+            os.mkdir(uploadDirPath)  # 是否存在  不存在则添加文件夹
+        # 拼接要上传的文件在服务器上的全路径
+        postfix = os.path.splitext(objimage.name)[1]
+        objimage_u_name = str(uuid.uuid1())+postfix
+        content_path = uploadDirPath + os.sep + objimage_u_name
+        # 上传文件
+        with open(content_path, 'wb+') as fp:
+            for chunk in objtext.chunks():
+                fp.write(chunk)
+        #路径
+        text_path = 'books/text/'+ objtext_u_name
+        picture_path = 'books/picture/'+ objimage_u_name
 
-        #User
-        user = User.objects.filter(user_id=uploader_id)[0]
-        print("typeof(user)",type(user))
         Book.objects.create(
             title=title,
             author=author,
             uploader=user,
             type_id=type_id,
-            # tag= '',
             tag= tag_li,
             description=description,
-            content_path=path1,
-            image_path=path2,
-            view_number=view_number,
-            collection_number=collection_number
+            content_path=text_path,
+            image_path=picture_path
         )
-        book_li = Book.objects.all()
 
-        return render(request,'books/index.html',{'book_li':book_li})
+        return render(request,'books/add.html',{'msg':'上传成功'})
     else:
         return render(request,'books/add.html')
 

@@ -82,8 +82,8 @@ class Book(BaseModel):
     content_path = models.CharField(max_length=200, verbose_name='书籍保存路径')
     image_path = models.CharField(max_length=200, default='static/books/pic.jpg', verbose_name='封面保存路径')
 
-    view_number = models.IntegerField(verbose_name='浏览量')
-    collection_number = models.IntegerField(verbose_name='收藏量')
+    view_number = models.IntegerField(default=0,verbose_name='浏览量')
+    collection_number = models.IntegerField(default=0,verbose_name='收藏量')
 
     objects = BooksManager()
     # admin显示书籍的名字

@@ -10,14 +10,14 @@
     <h1>添加书</h1>
     <a href="/books/index/">去首页</a>
 
-    <form action="/books/add/" method="POST">
+    <form action="/books/add/" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         书籍标题
         <input type="text" name="title"><br>
         书籍作者
         <input type="text" name="author"><br>
-        上传者(id)
-        <input type="text" name="uploader_id"><br>
+        <!-- 上传者(id)
+        <input type="text" name="uploader_id"><br> -->
         书的种类
         <select name="type_id" id="">
             <option value="1">python</option>
@@ -29,17 +29,10 @@
         <input type="checkbox" name="tag" value="style2">style2<br>
         <input type="checkbox" name="tag" value="style3">style3<br>
         <input type="checkbox" name="tag" value="style4">style4<br>
-        简介
-        <input type="text" name="description"><br>
-        书籍保存路径
-        <input type="text" name="path1"><br>
-        封面保存路径
-        <input type="text" name="path2"><br>
-        浏览量
-        <input type="text" name="view_number"><br>
-        收藏量
-        <input type="text" name="collection_number"><br>
-        
+        <div>简介</div>
+        <textarea name="description" placeholder="简介" style="height: 100px"></textarea><br>
+        <label for="u1">"上传文档"</label><input type="file" name="upfiletxt" id="u1"><br>
+        <label for="u2">"上传封面"</label><input type="file" name="upfileimg" id="u2"><br>
         <button type="submit">添加</button>
     </form>
     {{ msg }}
