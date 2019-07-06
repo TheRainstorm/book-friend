@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,StreamingHttpResponse
 
 from users.models import User
+from books.models import Book
 import os
 import uuid
 # Create your views here.
@@ -24,7 +25,7 @@ def login(request):
             return render(request,'users/login.html',data)
         else:
             #成功
-            response = render(request,'users/success.html',{'account':account,'src':user_li[0].image})
+            response = render(request,'books/index.html',{'account':account,'src':user_li[0].image})
             response.set_signed_cookie('account',account,salt='aaa')
             if(save_pwd=='on'):
                 response.set_signed_cookie('password',pwd,salt='bbb')
@@ -72,9 +73,52 @@ def register(request):
     else:
         return render(request,'users/register.html')
 
+def logout(request):
+    #删除session
+    del request.session['account']
+    return redirect('/users/login/')
+
 def check_account(request,user_name):
     user_li = User.objects.filter(user_name=user_name)
     if len(user_li)==0:
         return HttpResponse('True')
     else:
         return HttpResponse('False')
+
+def home(request):
+    return render(request,'users/home.html')
+
+def recent_read(request):
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+
+    book_li = user.recent_read.all()
+    return render(request,'users/recent_read.html',{'user':user,'book_li':book_li})
+
+def add_recent_read(request):
+    user_name = request.session.get('account',None)
+    if user_name:
+        book_id = request.GET.get('book_id',None)
+
+        book = Book.objects.get(book_id=book_id)
+        user = User.objects.get(user_name=user_name)
+
+        user.recent_read.add(book)
+
+        return HttpResponse('add book_id:'+book_id+'as recent read')
+    else:
+        return redirect('/users/login/')
+
+def edit_info(request):
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+    if request.POST:
+        user_name_change = request.POST.get('user_name',None)
+        pwd = request.POST.get('password',None)
+        user.updates(
+            user_name = user_name_change,
+            password = pwd
+        )
+        return redirect('/users/home/')
+    else:
+        return render(request,'users/edit_info.html',{'user':user})

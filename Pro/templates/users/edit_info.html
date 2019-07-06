@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>edit info</title>
+</head>
+<body>
+    <a href="/users/home/">返回用户中心</a>
+    <form action="/users/edit_info/" method="POST">
+        {% csrf_token %}
+        <p>id: {{ user.user_id }}</p>
+        <p>头像地址：{{ user.image }}</p>
+        用户名：<input name="user_name" value="{{ user.user_name }}">
+        密码：<input name="password" value="{{ user.password }}">
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

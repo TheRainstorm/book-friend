@@ -25,12 +25,12 @@ class User(BaseModel):
     '''用户模型类'''
     user_id = models.AutoField(primary_key=True, verbose_name='用户的id')
     recent_read = models.ManyToManyField('books.Book', verbose_name='最近浏览')
-    image = models.URLField(max_length=200)
+    image = models.CharField(max_length=200)
     user_name = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
     password = models.CharField(max_length=40, verbose_name='用户密码')
 
     #用户的管理表
     objects = PassportManager()
-
+    
     # class Meta:
     #     db_table = 's_user_account'

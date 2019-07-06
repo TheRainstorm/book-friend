@@ -50,17 +50,19 @@ class Book(BaseModel):
     # 封面（路径）
     # 浏览量
     # 收藏量
+    books_type_choices = ((k, v) for k,v in BOOKS_TYPE.items())
+
     book_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=20, verbose_name='书籍标题')
     author = models.CharField(max_length=20, verbose_name='书籍作者')
     uploader = models.ForeignKey('users.User',on_delete=models.CASCADE, verbose_name='上传者')
 
-    type_id = models.SmallIntegerField(default=PYTHON, verbose_name='书的种类')
+    type_id = models.SmallIntegerField(default=PYTHON,choices=books_type_choices, verbose_name='书的种类')
     tag = models.CharField(max_length=1024,verbose_name='标签') #暂时
     description = models.CharField(max_length=128, verbose_name='简介')
 
-    content_path = models.CharField(max_length=50, verbose_name='书籍保存路径')
-    image = models.CharField(max_length=50, verbose_name='封面保存路径')
+    content_path = models.CharField(max_length=200, verbose_name='书籍保存路径')
+    image_path = models.CharField(max_length=200, default='static/books/pic.jpg', verbose_name='封面保存路径')
 
     view_number = models.IntegerField(verbose_name='浏览量')
     collection_number = models.IntegerField(verbose_name='收藏量')

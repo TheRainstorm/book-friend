@@ -6,6 +6,8 @@ from books.models import Book
 import os
 import uuid
 
+from books.enums import BOOKS_TYPE
+
 # Create your views here.
 def index(request):
     books_li = Book.objects.all()
@@ -38,7 +40,7 @@ def add(request):
             tag= tag_li,
             description=description,
             content_path=path1,
-            image=path2,
+            image_path=path2,
             view_number=view_number,
             collection_number=collection_number
         )
@@ -82,7 +84,7 @@ def update(request):
         tag= tag_li,
         description=description,
         content_path=path1,
-        image=path2,
+        image_path=path2,
         view_number=view_number,
         collection_number=collection_number
     )
@@ -90,3 +92,15 @@ def update(request):
     book_li = Book.objects.all()
 
     return render(request,'books/index.html',{'book_li':book_li})
+
+def detail(request,book_id):
+    #获得当前用户对象
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+    #获得当前浏览的书的对象
+    book = Book.objects.get(book_id=book_id)
+    #更新用户的浏览记录
+    user.recent_read.add(book)
+
+    book_type = BOOKS_TYPE[int(book.type_id)]
+    return render(request,'books/detail.html',{'book':book,'book_type':book_type})

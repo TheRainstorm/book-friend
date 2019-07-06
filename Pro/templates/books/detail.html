@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <title>Book detail</title>
+</head>
+<body>
+    <a href='/books/index/'>首页</a>
+    <p>书籍信息</p>
+    <p id="book_id">book_id: {{ book.book_id }}</p>
+    <p>book_type: {{ book_type }}</p>
+    <p>uploader: {{ book.uploader.user_name }}</p>
+    <div id="msg">
+        
+    </div>
+</body>
+<script>
+    $('ducument').ready(function(){
+        $.ajax({
+            async: true,
+            url: "/users/ajax/add_recent_read/?book_id=" + $('#book_id').val(), // ajax请求路径
+            type: "get",  // ajax请求方法
+            headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
+            success: function(data){
+                console.log(data);
+                $('#msg').html('<p>'+data+'</p>');
+            }
+        })
+    })
+</script>
+</html>

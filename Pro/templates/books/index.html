@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>首页</h1>
+    <ol>
+        <li>
+            <a href='/users/home/'>用户中心</a>
+        </li>
+    </ol>
     <a href="/books/add/">去添加书</a>
     <table>
         <tr>
@@ -16,6 +21,7 @@
             <th>uploader_user_name</th>
             <th>title</th>
             <th>type_id</th>
+            <th>book_type</th>
             <th>tag</th>
             <th>view_number</th>
             <th></th>
@@ -27,11 +33,13 @@
             <td>{{ book.uploader.user_name }}</td>
             <td>{{ book.title }}</td>
             <td>{{ book.type_id }}</td>
+            <td>BOOKS_TYPE[{{ book_id }}]</td>
             <td>{{ book.tag }}</td>
             <td>{{ book.view_number }}</td>
             <td style="text-align:center;">
                 <button class="update" onclick="updateOne('{{ book.book_id }}');">修改</button>
                 <button class="delete" onclick="delone('{{ book.book_id }}');">删除</button>
+                <button class="detail" onclick="detail('{{ book.book_id }}');">详情</button>
             </td>
         </tr>
         {% empty %}
@@ -48,6 +56,9 @@
         }
         function updateOne(id){
             window.location.href = '/books/goupdate/'+ id
+        }
+        function detail(id){
+            window.location.href = '/books/'+ id
         }
     </script>
 </body>
