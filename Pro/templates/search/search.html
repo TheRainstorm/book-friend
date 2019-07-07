@@ -10,40 +10,41 @@
 <body>
     {% if query %}
     搜索结果如下：
-    <div >
-        {% for result in page.object_list %}
-        <p>                    
-            <button class="detail" onclick="detail('{{ result.object.book_id }}');">详情</button>
-        </p>
-        <p>                    
-            <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>                
-        </p>  
-        <p>                    
-            <a href="{{ result.object.get_absolute_url }}">{{ result.object.author }}</a>                
-        </p> 
-        <p>                    
-            <a href="{{ result.object.get_absolute_url }}">{{ result.object.description }}</a>                
-        </p>           
-        {% empty %}                
-        <p>No results found.</p>            
-        {% endfor %}
+    <div class="limit-free-list cf book-detail-wrap center1020">
+        <div class="limit-book-list fl" data-l1="5">
+                <div id="limit-list" class="inner-wrap">
+                        <div class="book-img-text">
+                            <ul>
+                                {% for i in item %}
+                                <li>
+                                    <div class="book-img-box">
+                                        <!-- <a href="{% url 'book' i.id %}?name={{ i.title }}">{{ i.title }}</a> -->
+                                        <a href="#"><img src="{{ i.cover }}"></a>
+                                    </div>
+                                    <div class="book-mid-info">
+                                        <!-- <h4><a href="{% url 'book' i.id %}?name={{ i.title }}">{{ i.title }}</a></h4> -->
+                                        <h4><a href="#">{{ i.title }}</a></h4>
+                                        <p class="author"><img src="{% static 'image/author.png'%}">
+                                            <img src="{% static 'image/author.png' %}">
+                                            <a class="default name">{{ i.author }}</a><em>|</em>
+                                            <a href="#">{{ i.class }}</a><em>|</em>{{ i.view_num }}
+                                        </p>
+                                        <p class="intro">{{ i.shortIntro }}</p>
+                                    </div>
+                                    <div class="book-right-info">
+                                        <p class="btn">
+                                            <a class="red-btn" href="#" style="background-color: rgb(214, 94, 100);border-color: rgb(214, 94, 100);color:white">书籍详情</a>
+                                            <a class="border-btn add-book" href="#" style="border-color: rgb(214, 94, 100);color: rgb(214, 94, 100)">加入书架</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
 
-        {% endif %}
-        <div class="pagenation">
-            {% if page.has_previous %}
-                <a href="/search/?q={{ query }}&page={{ page.previous_page_number }}"><上一页</a>
-            {% endif %}
-            {% for pindex in paginator.page_range %}
-                {% if pindex == page.number %}
-                    <a href="/search/?q={{ query }}&page={{ pindex }}" class="active">{{ pindex }}</a>
-                {% else %}
-                    <a href="/search/?q={{ query }}&page={{ pindex }}">{{ pindex }}</a>
-                {% endif %}
-            {% endfor %}
-            {% if page.has_next %}
-                <a href="/search/?q={{ query }}&page={{ page.next_page_number }}">下一页></a>
-            {% endif %}
-        </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
 <script>
 function detail(id){
