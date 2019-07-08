@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!--引用base界面-->
+    {% include "base.html" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
+    
+    <!--白色嵌入-->
+    <div action="" class="personal">
+        <!--书封面-->
+        <div class="personal_book">
+            <a><img src="{% static book.image_path %}" alt="" width="200" height="300"></a>
+        </div>
+
+        <!--书介绍-->
+        <div class="personal_text">
+          <ul>
+            <li class="personal_book_name">
+            <a href="  "> <font size="5">{{ book.title }}</font></a>
+            </li>
+             <li class="nums">
+                <br>
+                作者：  {{ book.author }}
+             </li>
+             <li class="nums">
+                <!--字数 浏览 评论-->
+                <span>总收藏 <i>{{ book.collection_number }}</i> </span> <span>总浏览 <i>{{ book.view_number }}</i> </span> 
+             </li>
+             <li class="personal_prev">
+                <br>
+                简介:{{ book.description }}
+             </li>
+             <br>
+             <!--开始阅读-->
+             <div class="btn-group">
+                <button class="btn-group_button1" ><a  href=""><font color="white">开始阅读</font></a></button>
+
+
+                {% if not is_collected %}
+                <!-- <button id="collect"  onclick="collect('{{ book.book_id }}');"><font color="pink"></font>加入书架</font></button> -->
+                <button class="btn-group_button2" id="collect"  onclick="collect('{{ book.book_id }}');"><font color="pink">加入书架</font></button>
+
+                <!-- <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button> -->
+                {% else %}
+                <button class="btn-group_button2" disabled style="color:black; background-color: gray"><font color="pink">加入书架</font></button>
+                
+                <!-- <button disabled style="color:black; background-color: gray">收藏</button> -->
+                {% endif %}
+
+
+                <!-- <button class="btn-group_button2" ><a  href=""><font color="pink">加入书架</font></a></button> -->
+               
+                &nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'image/3.jpg' %}" alt="" width="20" height="20">
+                <!-- <button class="btn-group_button3" id="donwload" onclick="donwload('{{ book.book_id }}');"><a  href=""><font color="gray" >下载</font></a></button> -->
+                <button id="donwload" class="donwload" onclick="donwload('{{ book.book_id }}');">下载</button>
+            </div>    
+             <!--<button>开始阅读</button>      <input type="radio">喜欢           <button>下载</button>-->
+            </ul>
+        </div>
+    </div>
+    <br><br>
+
+    <!--作者信息-->
+	<div class="AuthorInfo">
+        <div class="author">
+            <a href="" target="_blank">
+                &nbsp;<img src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="50" height="50">
+            </a>
+            <span class="sign">上传作者</span>
+            <a class="name" href="" target="_blank">{{book.uploader}}</a>
+            <br>
+        </div>
+
+        <dl class="modle">
+            <dt>
+                <label><span>作者公告</span></label>
+            </dt>
+            <dd>
+                <p> 【欢迎关注我的微信公众号皇甫奇，搜索名字即可，可以在里面和我聊天哦!】 </p>                        
+            </dd>
+        </dl>
+    </div>
+
+    <!--评论区-->
+    <div action="" class="comment">
+        <font size="5" color="red">|</font> <font size="5">最新书评：</font><hr>
+        <ul>  
+            {% for comment in comment_li %}
+            <img class="comment_pic" src="{% static comment.userName.image %}" alt="" width="30" height="30">
+            <li>
+            {{ comment.userName.user_name }}:
+            <div>
+                {{ comment.content }}
+            </div>
+            评论日期：{{ comment.create_time }}
+            </li>
+            {% empty %}
+            <br>
+            <li>快来抢沙发吧</li>
+            {% endfor %} 
+            <!-- 分页导航 -->
+            <p>
+                {% if comment_li.has_previous %}
+                <a href="?page={{ comment_li.previous_page_number }}">上一页</a>
+                {% endif %}
+                当前：{{ comment_li.number }} / {{ comment_li.paginator.num_pages }}
+                {% if comment_li.has_next %}
+                <a href="?page={{ comment_li.next_page_number }}">下一页</a>
+                {% endif %}
+            </p>           
+            <!-- <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
+            <li>
+            头像1+昵称:
+            <div>
+                和这个小说哈哈哈哈哈哈
+            </div>
+            </li>
+            <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
+            <li>
+            头像2+昵称:
+            <div>
+                哇卡卡卡扩扩扩扩有点意思
+            </div>
+            </li>
+            <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
+            <li>
+            头像3+昵称:
+            <div>
+                 新来的的发电机房价格加上个课
+            </div>
+            </li> -->
+        
+          <!--发表评论区-->
+        <br>
+        
+        
+        
+        <form action="/comments/addcom/" method="POST">
+            {% csrf_token %}
+            <font size="3" color="gray" >我要评论:</font>
+            <input type="hidden" name="book_id" value="{{ book.book_id }}">
+            <textarea name="content" type="text" placeholder="请在此处输入评论。。。" style="height:100px;width:300px"></textarea><br><br>
+            <button>提交</button>
+        </form>
+        </ul>
+    </div> 
+
+    <div class="rank_menu"> 
+        <!-- 对应旁边的人气榜单 -->
+       <!-- borderE6对应边框 -->
+      <div class="borderE6 rank_side"> 
+      <h3><a href="" class="rank_active">人气榜单</a></h3> 
+       <!-- 对应榜单的那条下划线 -->
+      <div class="borderB_e6"></div>
+       <h3>分类榜单</h3> 
+       <p><a href="">科幻榜</a></p> 
+       <p><a href="">悬疑榜</a></p> 
+       <p><a href="">青春文学榜</a></p> 
+       <p><a href="">严肃文学榜</a></p> 
+       <p><a href="">历史架空榜</a></p> 
+       <p><a href="">悬疑榜</a></p> 
+       <p><a href="">青春文学榜</a></p> 
+       <p><a href="">严肃文学榜</a></p> 
+      </div> 
+     </div>
+</body>
+<script>
+    function collect(id){
+        window.location.href = '/collects/collect_add/'+ id
+    }
+    function donwload(id){
+        window.location.href = '/books/download/'+ id
+    }
+</script>
+</html> 

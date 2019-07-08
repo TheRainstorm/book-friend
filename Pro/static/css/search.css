@@ -1,0 +1,148 @@
+
+.nav-tabs {
+	border-bottom: 1px solid #ddd;
+}
+
+.block {
+	margin-left: 50px;
+	margin-top: 20px;
+	background-color: #ddd;
+	float: left;
+	width: 300px;
+	height: 700px;
+	align-content: center;
+}
+
+.block h2 {
+	padding-bottom: 20px;
+	border-bottom: 2px solid #888;
+	text-align: center;
+}
+
+.block a {
+	color: #555;
+	text-decoration: none;
+	font-size: 19px;
+}
+
+.block a:hover {
+	color: rgb(214,94,100);
+}
+
+.block ul {
+	margin-top: 40px;
+	margin-left: 30%;
+	padding: 0;
+	padding-left: 20px;
+}
+
+.block li {
+	padding-bottom: 8px;
+}
+
+.info {
+	margin-top: 120px;
+	margin-left: 80px;
+	height: 200px;
+	padding-bottom: 0;
+}
+
+.info h2 {
+	font-size: 19px;
+	color: #555;
+}
+
+#topbar {
+	margin-top: 30px;
+	margin-left: 450px;
+	background-color: white;
+	width: 900px;
+	height: 250px;
+}
+
+.info button {
+	margin-top: 50px;
+	margin-left: 5px;
+}
+
+.info ul {
+	list-style: none;
+	margin-top: -10px;
+}
+
+.info li {
+	color: #555;
+}
+
+.read {
+	margin-top: 100px;
+	margin-left: 300PX;
+	width: 1000px;
+}
+
+.read h2 {
+	margin-left: 120px;
+	margin-bottom: 30px;
+	font-size: 19px;
+}
+
+.read ul{
+	list-style-type: none;
+}
+
+.read ul li{
+	margin-left: 70px;
+	width: 80px;
+	height: 150px;
+	float: left;
+}
+
+#uploading {
+	margin-top: 300px;
+}
+
+.upload {
+	margin-top: 100px;
+	margin-left: 520PX;
+	width: 1000px;
+}
+
+.upload h2 {
+	margin-left: 25px;
+
+	margin-bottom: 30px;
+	font-size: 19px;
+}
+
+.upload ul{
+	list-style-type: noun;
+}
+
+.upload ul li{
+	margin-left: 70px;
+	width: 80px;
+	height: 150px;
+	float: left;
+}
+
+.bgi {
+	margin-top: 20px;
+	width: 900px;
+	overflow: hidden;
+}
+
+.avatar {
+	position: absolute;
+	float: left;
+	width: 155px;
+	height: 155px;
+	overflow: hidden;
+	margin-left: 590px;
+	margin-top: 210px;
+	border: solid white 5px;
+}
+
+#image-div {
+	margin-top: 50px;
+	height: 300px;
+}

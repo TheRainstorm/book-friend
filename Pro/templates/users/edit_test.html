@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/edit.css' %}">
+
+	  <!--引用base界面-->
+	  {% include "base.html" %}
+	  <div class="list-group" style="float: left; width: 200px; margin-left: 330px; margin-right: 20px; height: 600px; margin-top: 120px;">
+		<span href="#" disabled class="list-group-item list-group-item-action active" style="border: none; background-color: rgb(214,94,100);">用户中心</span>
+		<a href="/users/edit_info/" class="list-group-item list-group-item-action">修改个人信息</a>
+		<a href="/users/my_collects/" class="list-group-item list-group-item-action">我的收藏</a>
+		<a href="/users/recent_read/" class="list-group-item list-group-item-action">浏览记录</a>
+		<a href="/users/personal_comments/" class="list-group-item list-group-item-action">个人评论</a>
+		<a href="/books/add/" class="list-group-item list-group-item-action">上传书籍</a>
+		<a href="/users/logout/" class="list-group-item list-group-item-action">登出账户</a>
+	</div>
+ </div>
+
+	<form action="/users/edit_info/" method="POST" class="edit-form">
+		{% csrf_token %}
+		<h2>修改信息</h2>
+			<div>
+				<label for="usr_name">用户名：</label><input type='text' id="usr_name"
+				name="usr_name" required>
+			</div>
+			<div>
+				<label for="pwd1">登录密码：</label><input type='password' name="password" id="pwd1"
+				placeholder="不少于6位" minlength="6" required>
+			</div>
+			<div>
+				<label for="pwd2">密码确认：</label><input type='password' id="pwd2" onchange="pwd_vertify()"
+				placeholder="保持两次一致">
+			</div>
+
+			性别:<br>
+			<input type="radio" name="gender" value="男">男<br>
+			<input type="radio" name="gender" value="女">女<br><br>
+
+			更改头像：
+			<div>
+				<img id="display_img" src="{% static user.image %}" width="120px">
+			</div>
+			<div>
+				<input id="upload_img" type="file" accept="img/jpeg img/png" name="headpic"
+				style="width:65%">
+			</div>
+			<br>修改个性签名<br>
+			<textarea name="signature" maxlength="30" class="text" placeholder="请输入不大于30个字"></textarea>
+			<br>
+		<button type="button" class="btn btn-primary">确认修改</button>
+	</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script>
+function pwd_vertify(){
+	var pwd1=document.getElementById('pwd1');
+	var pwd2=document.getElementById('pwd2');
+	if(pwd1.value===pwd2.value){
+		pwd2.setCustomValidity("");
+	}
+	else{
+		pwd2.setCustomValidity("The second password is not the same as the first one");
+	}
+}
+// 离线版本的头像回显
+var input = document.getElementById("upload_img");
+var img = document.getElementById("display_img");
+input.addEventListener('change', updateImageDisplay);
+function updateImageDisplay() {
+	var img_file = input.files[0];
+	img.src=window.URL.createObjectURL(img_file);
+}
+</script>
+</body>
+</html>

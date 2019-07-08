@@ -1,0 +1,176 @@
+.box {
+    background: #fff;
+    margin-bottom: 14px;
+}
+
+div {
+    display: block;
+}
+
+/*body {
+    font: 12px/1.5 'MicroSoft YaHei';
+    color: #333;
+}*/
+
+h2 {
+    display: block;
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+}
+
+h2, h3, li, p, ul {
+    margin: 0;
+}
+
+.box .b-tit {
+    height: 42px;
+    padding: 0 21px;
+    margin-bottom: 16px;
+    font-weight: 400;
+    box-shadow: 0 2px 4px 0 rgba(155,155,155,.3);
+}
+
+.box .b-tit .con:after {
+    content: '';
+    height: 10px;
+    border-left: 2px solid #F14C36;
+    position: absolute;
+    top: 50%;
+    margin-top: -5px;
+    left: 0;
+}
+
+
+.box .b-tit .con {
+    line-height: 42px;
+	font-family: "微软雅黑";	
+    font-size: 12px;
+    color: #4A4A4A;
+    position: relative;
+    padding-left: 15px;
+}
+
+.content .fl .b-con {
+    padding: 16px 13px;
+    padding-top: 8px;
+}
+
+.box .b-con {
+    padding: 16px 20px;
+    padding-top: 0;
+    font-size: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #666;
+}
+
+.box .b-tit .more {
+	font-family: "微软雅黑";
+    font-size: 12px;
+    color: #4A4A4A;
+    float: right;
+    line-height: 42px;
+    text-decoration: none;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+html {
+    color: -internal-root-color;
+}
+
+.booklist {
+	margin-top: -5px;
+	margin-left: -12px;
+	width: 710px;
+    height: 145px;
+
+}
+
+.box .b-con .booklist {
+    overflow: hidden;
+    box-shadow: 0 2px 4px 0 rgba(155,155,155,.3);
+}
+
+.content .fl {
+    background: 0 0;
+}
+
+.content .fl {
+    margin-left: 10px;
+    width: 710px;
+    margin-right: 20px;
+    background: #fff;
+    padding-bottom: 20px;
+}
+
+.content .fl, .content .rl {
+    float: left;
+}
+
+.QUIEND {
+    transition: all .3s;
+    opacity: 1;
+}
+
+.content {
+    overflow: hidden;
+    padding-top: 14px;
+}
+
+.main {
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 120px;
+    margin-left: 500px;
+}
+
+.box .b-con .booklist a img {
+    width: 75px;
+    height: 100px;
+}
+
+img {
+    image-rendering: -webkit-optimize-contrast;
+}
+
+img {
+    border: 0;
+}
+
+.box .b-con .booklist p {
+	font-family: "微软雅黑";
+    font-size: 13px;
+    color: #4A4A4A;
+    line-height: 31px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.box .b-con .booklist a {
+    width: 74px;
+    text-align: center;
+    float: left;
+    margin: 0 8px;
+    font-size: 13px;
+    /* color: #4A4A4A; */
+    line-height: 31px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #666;
+    margin-left: 50px;
+
+}

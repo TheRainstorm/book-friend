@@ -1,56 +1,359 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <link rel="icon" type="image/x-icon" href="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %}>
-    <!-- <link rel="stylesheet" type="text/css" href='../static/css/login.css'> -->
+    <title>账号登录</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
 
-    <title>Login</title>
+        @font-face {
+            font-family: 'neo';
+            /* src: url("font/NEOTERICc.ttf"); */
+        }
+        input:focus{
+			outline: none;
+		}
+		.form input{
+			width: 300px;
+			height: 30px;
+			font-size: 18px;
+            background: none;
+            border: none;
+            border-bottom: 1px solid #fff;
+            color: #fff;
+            margin-bottom: 20px;
+		}
+        .form input::placeholder{
+            color: rgba(255,255,255,0.8);
+            font-size: 18px;
+            font-family: "neo";
+        }
+        .confirm{
+            height: 0;
+            overflow: hidden;
+            transition: .25s;
+        }
+		.btn{
+			width:140px;
+			height: 40px;
+			border: 1px solid #fff;
+            background: none;
+			font-size:20px;
+			color: #fff;
+            cursor: pointer;
+            margin-top: 25px;
+            font-family: "neo";
+            transition: .25s;
+		}
+        .btn:hover{
+            background: rgba(255,255,255,.25);
+        }
+        #login_wrap{
+            width: 980px;
+            min-height: 500px;
+            border-radius: 10px;
+            font-family: "neo";
+            overflow: hidden;
+            box-shadow: 0px 0px 120px rgba(0, 0, 0, 0.25);
+            position: fixed;
+            top: 50%;
+            right: 50%;
+            margin-top: -250px;
+            margin-right: -490px;
+        }
+        #login{
+            width: 50%;
+            height: 100%;
+            min-height: 500px;
+            background: linear-gradient(45deg, #9a444e, #e06267);
+            position: relative;
+            float: right;
+        }
+        #login #status{
+            width: 100px;
+            height: 35px;
+            margin: 40px auto;
+            color: #fff;
+            font-size: 25px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        #login #status i{
+            font-style: normal;
+            position: absolute;
+            transition: .5s
+        }
+        #login span{
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            margin-left: -150px;
+            top: 52%;
+            margin-top: -140px;
+        }
+        #login span a{
+            text-decoration: none;
+            color: #fff;
+            display: block;
+            margin-top: 80px;
+            font-size: 18px;
+        }
+        #bg{
+            background: linear-gradient(45deg, #211136, #bf5853);
+            height: 100%;
+        }
+        /*绘图*/
+        #login_img{
+            width: 50%;
+            min-height: 500px;
+            background: linear-gradient(45deg, #221334, #6c3049);
+            float: left;
+            position: relative;
+        }
+        #login_img span{
+            position: absolute;
+            display: block;
+        }
+        #login_img .circle{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #df5555, #ef907a);
+            top: 70px;
+            left: 50%;
+            margin-left: -100px;
+            overflow: hidden;
+        }
+        #login_img .circle span{
+            width: 150px;
+            height: 40px;
+            border-radius: 50px;
+            position: absolute;
+        }
+        #login_img .circle span:nth-child(1){
+            top: 30px;
+            left: -38px;
+            background: #c55c59;
+        }
+        #login_img .circle span:nth-child(2){
+            bottom: 20px;
+            right: -35px;
+            background: #934555;
+        }
+        #login_img .star span{
+            background: radial-gradient(#fff 10%,#fff 20%,rgba(72, 34, 64, 0));
+            border-radius: 50%;
+            box-shadow: 0 0 7px #fff;
+        }
+        #login_img .star span:nth-child(1){
+            width: 15px;
+            height: 15px;
+            top: 50px;
+            left: 30px;
+        }
+        #login_img .star span:nth-child(2){
+            width: 10px;
+            height: 10px;
+            left: 360px;
+            top: 80px;
+        }
+        #login_img .star span:nth-child(3){
+            width: 5px;
+            height: 5px;
+            top: 400px;
+            left: 80px;
+        }
+        #login_img .star span:nth-child(4){
+            width: 8px;
+            height: 8px;
+            top: 240px;
+            left: 60px;
+        }
+        #login_img .star span:nth-child(5){
+            width: 4px;
+            height: 4px;
+            top: 20px;
+            left: 200px;
+        }
+        #login_img .star span:nth-child(6){
+            width: 4px;
+            height: 4px;
+            top: 460px;
+            left: 410px;
+        }
+        #login_img .star span:nth-child(7){
+            width: 6px;
+            height: 6px;
+            top: 250px;
+            left: 350px;
+        }
+        #login_img .fly_star span{
+            width: 90px;
+            height: 3px;
+            background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0.67), rgba(255,255,255,0));
+            background: -o-linear-gradient(left, rgba(255, 255, 255, 0.67), rgba(255,255,255,0));
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.67), rgba(255,255,255,0));
+            transform: rotate(-45deg);
+        }
+        #login_img .fly_star span:nth-child(1){
+            top:60px;
+            left: 80px;
+        }
+        #login_img .fly_star span:nth-child(2){
+            top: 210px;
+            left: 332px;
+            opacity: 0.6;
+        }
+        #login_img p{
+            text-align: center;
+            color: #af4b55;
+            font-weight: 600;
+            margin-top: 365px;
+            font-size: 25px;
+        }
+        #login_img p i{
+            font-style: normal;
+            margin-right: 45px;
+        }
+        #login_img p i:nth-last-child(1){
+            margin-right: 0;
+        }
+        /*提示*/
+        #hint{
+            width: 100%;
+            line-height: 70px;
+            background: linear-gradient(-90deg, #9b494d, #bf5853);
+            text-align: center;
+            font-size: 25px;
+            color: #fff;
+            box-shadow: 0 0 20px #733544;
+            display: none;
+            opacity: 0;
+            transition: .5s;
+            position: absolute;
+            top: 0;
+            z-index: 999;
+        }
+    </style>
 </head>
-<body>
-    <div class=login>
-        <form class="login_form" name="login_form" action="/users/login/" method="POST" onsubmit="return check()" >
-            {% csrf_token %}
 
-            <p class="title">
-                Blog
-            </p>
-            <div>
-                <input type='text' placeholder="请输入登录账号" name="account" id="acc" value="{{ account }}" 
-                oninput="setCustomValidity('')">
-            </div>
-            <div>
-                <input type='password' placeholder="请输入登录密码" name="password" id="pwd" value="{{ password }}"
-                oninput="setCustomValidity('')">
-            </div>
-            <div>
-                <input type="checkbox" name="save_pwd">记住我
-            </div>
-            <div class="bottom">
-                <div id="bottom_left">
-                    <button class="button" type="submit">马上登录</button>
+
+<body>
+    <div id="bg">
+
+        <div id="login_wrap">
+            <div id="login"><!-- 登录注册切换动画 -->
+                <div id="status">
+                    <i style="top: 0;left:23px">登陆</i>
+
                 </div>
-                <div id="bottom_right">
-                    <a href="/users/register/">立即注册</a>
-                </div>
+                <style>
+                    input::-webkit-input-placeholder{
+                        color:white;
+                    }
+                    input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+                        color:white;
+                    }
+                    input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+                        color:white;
+                    }
+                    input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+                        color:white;
+                    }
+                </style>
+				<span>
+                    <form action="/users/login/" method="POST" onsubmit="return check()">
+                        {% csrf_token %}
+                        <p class="form"><input type="text" name="account" id="acc" placeholder="用户名" value="{{ account }}" oninput="setCustomValidity('')"></p>
+                        <p class="form"><input type="password" name="password" id="pwd" placeholder="密码长度必须大于6位" value="{{ password }}"
+                         oninput="setCustomValidity('')"></p>
+                        <!-- <p class="form confirm"><input type="password" id="confirm password" placeholder="确认密码"></p> -->
+                        <input type="submit" value="登陆" class="btn" style="margin-right: 20px;">
+                        <input type="button" value="注册" class="btn" onclick="signin()" id="btn"><br><br>
+                         <input type="checkbox" value="remember" name="save_pwd"><font color="white">记住我</font><br>
+                         {% if msg %}
+                        <div class="display_msg">
+                            <font color="white">
+                                {{ msg }}
+                            </font>
+                        </div>
+                        {% endif %}
+                    </form>
+                    <a href="">忘记密码?</a>
+                </span>
+
             </div>
-        </form>
-        {% if msg %}
-        <div class="display_msg">
-            {{ msg }}
+
+            <div id="login_img"><!-- 图片绘制框 -->
+                
+                <span class="circle">
+                    <div>
+                        <img id="display_img" src="{% static 'image/headpic/yuxiaoqin.jpg' %}" width="200px" height="200px">
+                    </div>
+                    <!-- <span></span> -->
+                        
+                    <!-- <span></span> -->
+                </span>
+                <span class="star">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+                <span class="fly_star">
+                    <span></span>
+                    <span></span>
+                </span>
+                <p>悦读·书友——阅读给人快乐</p>
+            </div>
         </div>
-        {% endif %}
     </div>
-</body>
 
 <script>
-    // function clear_invalid(){
-    //     this.setCustomValidity("");
-    // }
-    function check(){
+   
+    //注册按钮
+    $('ducument').ready(function(){
+        $('#acc').change(function(){
+            $.ajax({
+                async: true,
+                url: "/users/get_headpic/?user_name=" + $('#acc').val(), // ajax请求路径
+                // url: "/ajaxeck_namename=" + $('#usr_name').val(), // ajax请求路径
+                type: "get",  // ajax请求方法
+                headers:{"X-CSRFToken":$.cookie("csrftoken")}, // 获取cookies中的csrftoken一并提交服务器
+                success: function(data){
+                    console.log(data);
+                    if(data=='False'){
+                        ;
+                    }
+                    else{
+                        $('#display_img').attr("src",data);
+                    }
+                }
+            });
+        });
+    });
+    function signin() {
+            window.location.href="/users/register/"
+        }
+
+function check(){
         var acc = document.getElementById("acc");
         var pwd = document.getElementById("pwd");
         acc.setCustomValidity("");
@@ -67,5 +370,8 @@
         }
         return flag;
     }
+
 </script>
-</html>
+
+
+</body></html>

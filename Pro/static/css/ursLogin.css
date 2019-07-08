@@ -1,0 +1,46 @@
+#cnt-box-parent .f-bgcolor{
+    background-color:#ca5252;
+}
+#cnt-box-parent .btncolor
+{background:#ca5252;color:#fff;}
+
+#cnt-box-parent .btncolor:hover{
+    background:#e66363;color:#edc8c8;
+}
+#cnt-box-parent .btncolor:active{background:#b65454;color:#edc8c8;}
+#cnt-box-parent .btndisabled{background:#da8686;color:#edc8c8;cursor:default;}
+#cnt-box-parent .btndisabled:hover{background:#da8686;color:#edc8c8;}
+#cnt-box-parent .btndisabled:active{background:#da8686;color:#edc8c8;}
+#cnt-box-parent{margin:0 auto;width:240px;}
+#cnt-box-parent .g-bd{padding-top:30px;width:auto;}
+#cnt-box-parent .m-header{display:none;}
+#cnt-box-parent .m-cnt{padding:2px 0;}
+#cnt-box-parent .m-cnt .inputbox{width:238px;height:32px;line-height:32px;}
+#cnt-box-parent .m-cnt .u-logo{display:none;}
+#cnt-box-parent .m-cnt .u-input input
+{
+    height:30px;line-height:30px;width:220px;font-size:12px;margin:0;padding:0 0 0 8px;
+}
+#cnt-box-parent .m-cnt #login-form .u-label{width:220px;}
+#cnt-box-parent .m-cnt .m-sug{top:33px;width:238px;left:-1px!important;}
+#cnt-box-parent .m-cnt #login-form .m-sug .itm{padding-left:8px;}
+#cnt-box-parent .m-cnt .u-tip{position:absolute;right:0;top:0;height:20px;width:20px;padding:5px;}
+#cnt-box-parent .m-cnt .u-success{margin:0;}
+#cnt-box-parent .u-loginbtn{width:240px;}
+#cnt-box-parent .m-cnt .m-nerror .ferrorhead,.m-cnt .m-nerror .ferrorhead2{width:220px;}
+#cnt-box-parent .m-cnt .m-unlogin .u-regbtn{float:left;margin-left:10px;}
+#cnt-box-parent .m-footer{display:none;}
+#cnt-box-parent .w-exception{width:220px;height:auto;margin:0 auto;}
+#cnt-box-parent .w-exception .cnt{padding:0;}
+#cnt-box-parent .w-exception .warnlogo{width:44px;height:44px;background-position:0 -178px;background-size:44px auto;margin:12px auto 0;}
+#cnt-box-parent .w-exception .cnt .note{font-size:16px;text-align:center;line-height:20px;margin:12px 0 20px 0;color:#333;}
+#cnt-box-parent .u-btn.bgcolor{height:30px;line-height:30px;}
+#cnt-box-parent .u-btn-middle3{width:90px;font-size:14px;height:30px;line-height:30px;}
+#cnt-box-parent .m-cnt .inputbox.ckin{width:110px;}
+#cnt-box-parent .m-cnt .m-ckcnt .ckimgbox{width:95px;}
+#cnt-box-parent .m-cnt .ckimg{width:95px;height:32px;line-height:32px;}
+#cnt-box-parent .m-cnt #login-form input.cktext.j-inputtext{width:86px;}
+#cnt-box-parent .m-cnt .statusTxt .u-success{margin-top:0;}
+#cnt-box-parent #cnt-box2{position:relative;left:-14px;}
+#cnt-box-parent .yidun.yidun--light .yidun_tips{font-size:12px;color:#999;}
+#cnt-box-parent .yidun.yidun--light{margin:0;}

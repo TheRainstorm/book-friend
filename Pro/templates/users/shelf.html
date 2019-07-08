@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+	<!--引用base界面-->
+	{% include "base.html" %}
+
+	<div class="list-group" style="float: left; width: 200px; margin-left: 330px; margin-right: 20px; height: 600px; margin-top: 120px;">
+		<span href="#" disabled class="list-group-item list-group-item-action active" style="border: none; background-color: rgb(214,94,100);">用户中心</span>
+		<a href="/users/edit_info/" class="list-group-item list-group-item-action">修改个人信息</a>
+		<a href="/users/my_collects/" class="list-group-item list-group-item-action">我的书架</a>
+		<a href="/users/recent_read/" class="list-group-item list-group-item-action">浏览记录</a>
+		<a href="/users/personal_comments/" class="list-group-item list-group-item-action">个人评论</a>
+		<a href="/books/add/" class="list-group-item list-group-item-action">上传书籍</a>
+		<a href="/users/logout/" class="list-group-item list-group-item-action">登出账户</a>
+	</div>
+	
+	<div class="rank">
+		<h2>用户中心 > 我的书架</h2>
+			{% for book in book_li %}
+			{% if book.author|length >= 10 %}
+			<div class="book-info"><a href="/books/{{ book.book_id }}"><img class="book-img" src="{% static book.image_path %}" alt="none"></a><a class="book-name" href="/books/{{ book.book_id }}">{{ book.title }}</a><p class="book-intro">作者：{{ book.author|slice:":10" }}... <br>分类：{{book.type_id}}<br><a href="/collects/collect_del/{{ book.book_id }}">移出书架</a></p></div>
+			{% else %}
+			<div class="book-info"><a href="/books/{{ book.book_id }}"><img class="book-img" src="{% static book.image_path %}" alt="none"></a><a class="book-name" href="/books/{{ book.book_id }}">{{ book.title }}</a><p class="book-intro">作者：{{ book.author }}<br>分类：{{book.type_id}}<br><a href="/collects/collect_del/{{ book.book_id }}">移出书架</a></p></div>
+			{% endif %}
+			
+			<!-- 图片为相对路径 -->
+			<!-- <div class="book-info"><img class="book-img" src="1.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="1.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="2.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="1.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="2.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="1.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="2.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div>
+			<div class="book-info"><img class="book-img" src="2.jpg" alt=""><a class="book-name" href="">长安十二时辰长安</a><p class="book-intro">作者：你我他<br>分类：武侠小说<br><a href="#">移出书架</a></p></div> -->
+			{% endfor %}
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    
+</body>
+</html>

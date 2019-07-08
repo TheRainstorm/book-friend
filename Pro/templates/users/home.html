@@ -1,35 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edgDe">
+        <title>Document</title>
+        {% load static %}	
+        <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>个人中心</h1>
-    <ol>
-        <li>
-            <a href='/books/index/'>首页</a>
-        </li>
-    </ol>
-    <ul>
-        <li>
-            <a href='/users/recent_read/'>最近浏览</a>
-        </li>
-        <li>
-            <a href='/users/edit_info/'>编辑个人信息</a>
-        </li>
-        <li>
-            <a href='/users/personal_comments/'>查看个人评论</a>
-        </li>
-        <li>
-            <a href="/users/my_collects/">我的收藏</a>
-        </li>
-        <li>
-            <a href="/books/add/">上传小说</a>
-        </li>
-    </ul>
-    <p>用户信息（未写）</p>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/seventeen.css' %}">
+
+      <!--引用base界面-->
+    {% include "base.html" %}
+      
+    <div class="list-group" style="float: left; width: 200px; margin-left: 330px; margin-right: 20px; height: 600px; margin-top: 120px;">
+		<span href="#" disabled class="list-group-item list-group-item-action active" style="border: none; background-color: rgb(214,94,100);">用户中心</span>
+		<a href="/users/edit_info/" class="list-group-item list-group-item-action">修改个人信息</a>
+		<a href="/users/my_collects/" class="list-group-item list-group-item-action">我的书架</a>
+		<a href="/users/recent_read/" class="list-group-item list-group-item-action">浏览记录</a>
+		<a href="/users/personal_comments/" class="list-group-item list-group-item-action">个人评论</a>
+		<a href="/books/add/" class="list-group-item list-group-item-action">上传书籍</a>
+		<a href="/users/logout/" class="list-group-item list-group-item-action">登出账户</a>
+	</div>
+
+    <div class="avatar">
+        <img width="150px" src="{% static headpic_url %}" alt="">
+    </div>
+
+    <div class="info">
+        <h2>基本信息</h2>
+        <div class="topbar">
+            <img class="bgi" src="{% static 'image/home-bg.jpg' %}" alt="">
+            <ul>
+                <button type="button" class="btn btn-primary">用户名:</button>
+                <button type="button" class="btn btn-secondary">{{ user.user_name }}</button>
+                <button type="button" class="btn btn-success">书友号:</button>
+                <button type="button" class="btn btn-danger">{{ user.user_id }}</button>
+                <button type="button" class="btn btn-warning">浏览量:</button>
+                <button type="button" class="btn btn-info">{{ view_num}}</button>
+                <button type="button" class="btn btn-light">收藏量:</button>
+                <button type="button" class="btn btn-dark">{{ collect_num }}</button>
+            </ul>
+        </div>
+    </div>
+
+<div class="main"> 
+        <div class="content"> 
+            <div class="fl QUIEND">
+			    <!--最近浏览-->
+			    <div class="box">
+                    <h2 class="b-tit"><span class="con">最近浏览</span><a class="more" href="#" target="_blank">查看全部>></a></h2>
+                        <div class="b-con">
+                            <div class="booklist">
+                                {% for book in recent_read_book_li|slice:"0:5" %}
+                                    <a href="/books/{{ book.book_id }}" target="_blank"><img src="{% static book.image_path %}" /><p>{{ book.title }}</p></a>
+                                {% empty %}
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;暂无记录</p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                </div>
+                <!--最近收藏-->
+                <div class="box">
+                    <h2 class="b-tit"><span class="con">最近收藏</span><a class="more" href="#" target="_blank">查看全部>></a></h2>
+                        <div class="b-con">
+                            <div class="booklist">
+                                {% for book in collect_book_li|slice:"0:5" %}
+                                    <a href="/books/{{ book.book_id }}" target="_blank"><img src="{% static book.image_path %}" /><p>{{ book.title }}</p></a>
+                                {% empty %}
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;暂无收藏</p>
+                                {% endfor %}
+                            </div>
+                            </div>
+                </div>
+            </div>
+        </div> 
+</div> 
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
 </body>
 </html>

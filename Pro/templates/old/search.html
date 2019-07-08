@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <meta charset="UTF-8">
+    <meta name="description"  content="悦读·书友是一个免费小说阅读网站">
+    <meta name="keywords"  content="悦读·书友,免费小说,完本小说,阅读,读书,全本小说">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+<script>
+        function detail(id){
+            window.location.href = '/books/'+ id
+        }
+</script>
+<body>
+<link rel="stylesheet" href="{% static 'css/edit.css' %}">
+      <!--引用base界面-->
+    {% include "base.html" %}
+<p class="word">关于 <span class="keyword">{{ keyword }}</span> 的搜索结果：</p>
+    <!-- <p class="word">关于 <span class="keyword">你不知道</span> 的搜索结果：</p> -->
+	<div class="limit-free-list cf book-detail-wrap center1020">
+			<div class="limit-book-list fl" data-l1="5">
+					<div id="limit-list" class="inner-wrap">
+							<div class="book-img-text">
+								<ul>
+                                    {%for result in page.object_list%}
+									<li>
+										<div class="book-img-box">
+                                             <!-- <a href="">{{result.object.title}}</a> --> 
+                                            <a href="/books/{{ result.object.book_id}}"><img src="{% static result.object.image_path %}"></a>
+										</div>
+										<div class="book-mid-info">
+											<h4><a href="/books/{{ result.object.book_id}}">{{ result.object.title }}</a></h4>
+											<p class="author"><img src="{% static 'image/search/author.png'%}">
+												<a class="default name">{{ result.object.author }}</a><em>|</em>
+												<a href="#">{{ result.object.type_id }}</a><em>|</em>{{ result.object.view_number }}
+											</p>
+											<p class="intro">{{ result.object.description }}</p>
+										</div>
+										<div class="book-right-info">
+											<p class="btn">
+												<a class="red-btn" href="/books/{{ result.object.book_id}}" style="background-color: rgb(214, 94, 100);border-color: rgb(214, 94, 100);color:white">书籍详情</a>
+											</p>
+										</div>
+									</li>
+									{% endfor %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<footer class="footer">
+  <div class="container">
+    <p class="text-center ">本站所收录作品均来自互联网<br/>蜀ICP备17035299号</p>
+  </div>
+</footer>
+
+</body>
+</html>

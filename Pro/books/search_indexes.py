@@ -6,6 +6,7 @@ from books.models import Book
 class BooksIndex(indexes.SearchIndex, indexes.Indexable):
     # 指定根据表中的哪些字段建立索引:比如:商品名字 商品描述
     text = indexes.CharField(document=True, use_template=True)
+    author=indexes.CharField(model_attr='author')
 
     def get_model(self):
         return Book

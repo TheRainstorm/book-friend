@@ -10,6 +10,7 @@ urlpatterns = [
     path('recent_read/',views.recent_read),
     path('edit_info/', views.edit_info),    
     path('personal_comments/', views.personal_comments),    
-    path('my_collects/', views.my_collects),    
-    
+    path('my_collects/', views.my_collects),
+    path('get_headpic/', views.get_headpic),
+
 ]

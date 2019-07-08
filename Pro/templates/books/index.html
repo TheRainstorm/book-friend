@@ -1,13 +1,23 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Show</title>
+{% load static %}    
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>悦读书友</title>
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/ursLogin.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}"/>
+
+<script type="text/javascript" src="{% static 'js/ga.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/index.bundle.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/ursLogin.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/lib.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/components.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/message.js'%}"></script>
 </head>
-<body>
+<style type="text/css" id="40855356833"></style>
+<!-- <body>
     <h1>首页</h1>
     {% for k,v in type_dic.items %}
     <li>
@@ -20,7 +30,7 @@
         </li>
     </ol>
     <a href="/books/add/">去添加书</a>
-    <table>
+     <table>
         <tr>
             <th>picture</th>
             <th>book_id</th>
@@ -56,7 +66,7 @@
             <p style="text-align: center">暂无书籍</p>
         </td>
         {% endfor %}
-    </table>
+    </table> 
     <p>搜索</p>
     <form action="/search/" method="GET">
         <input name="q" placeholder="输入关键词">
@@ -64,7 +74,7 @@
     </form>
 
     <h2>总排行榜（依照浏览量）</h2>
-    <ol>
+     <ol>
         {% for book in all_book_li_by_hot %}
         <li>
             <a href="/books/{{ book.book_id }}">{{ book.title }}</a>
@@ -73,8 +83,208 @@
         {% empty %}
             <p style="text-align: center">暂无书籍</p>
         {% endfor %}
-    </ol>
-    
+    </ol> -->
+<body id="page-163-com" class="page-index">
+    <!--引用base界面-->
+    {% include "base.html" %}
+<br><br><br><br><br><br>
+<div class="g-bdw">
+    <div class="g-bd g-bd-large">
+        <div class="g-sec f-cb" style="margin-top:17px;">
+                <div id="J_Slider01" class="m-slider m-slider-idx">
+                    <div class="slider">
+                        <ul class="j-slider">                                                                                                                                           
+                            <li style="position: absolute; top: 0px; left: 0px; display: none;"><a href="#" target="_blank" data-model="ad" data-opration="ad_index" title="小人物：我和父亲乔布斯"><img src="{% static 'image/a80c74c08b20424d92186379bfe069d9.jpeg' %}"  alt="喜鹊谋杀案"></a></li>
+                            <li style="display: list-item; position: absolute; top: 0px; left: 0px;"><a href="#" target="_blank" data-model="ad" data-opration="ad_index" title="天才打字机"><img src="{% static 'image/1b7563bcd41c4acf9db06a1612f313a3.jpeg' %}"  alt="天才打字机"></a></li>
+                            <li style="display: none; position: absolute; top: 0px; left: 0px;"><a href="#" target="_blank" data-model="ad" data-opration="ad_index" title="喜鹊谋杀案"><img src=" {% static 'image/0a16fa2a7e0b47f7aac5d7f9400d185a.jpeg' %}"  alt="小人物：我和父亲乔布斯"></a></li>
+                            <li style="display: none; position: absolute; top: 0px; left: 0px;"><a href="#" target="_blank" data-model="ad" data-opration="ad_index" title="天才打字机"><img src="{% static 'image/1b7563bcd41c4acf9db06a1612f313a3.jpeg' %}" alt="天才打字机"></a></li>
+                        </ul>
+                    </div>
+                    <a class="btn left-btn j-cl" href="#"></a>
+                    <a class="btn right-btn j-cr" href="#"></a>
+                    <div class="control">
+                        <ol class="j-control">
+                            <li class=""><span>1</span><em>•</em></li>
+                            <li class="j-crt"><span>2</span><em>•</em></li>
+                            <li class=""><span>3</span><em>•</em></li>
+                            <li class=""><span>4</span><em>•</em></li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="right">
+                        <header><p style=" font-size:19px;">书籍总排行榜</p></header>
+                        <div id="J_PubBang" class="m-foldlist">
+                            <div class="">
+                                <ul class="">
+                                    {% for book in all_book_li_by_hot|slice:"0:5"%}
+                                        <li><p class="fold"><a href="/books/{{ book.book_id }}" target="_blank" ><i>{{forloop.counter}}</i>{{book.title}}</a></p><div class="unfold" style="display:none;"><i>{{forloop.counter}}</i><div class="border f-cb"></div></div></li>                                    
+                                        <!-- <li><p class="fold"><a href="#" target="_blank" ><i>02</i>书名2</a></p><div class="unfold" style="display:none;"><i>02</i><div class="border f-cb"></div></div></li>                                   
+                                        <li><p class="fold"><a href="#" target="_blank" ><i>03</i>书名3</a></p><div class="unfold" style="display:none;"><i>03</i><div class="border f-cb"></div></div></li>
+                                        <li><p class="fold"><a href="#" target="_blank" ><i>04</i>书名4</a></p><div class="unfold" style="display:none;"><i>04</i><div class="border f-cb"></div></div></li>
+                                        <li><p class="fold"><a href="#" target="_blank" ><i>05</i>书名5</a></p><div class="unfold" style="display:none;"><i>05</i><div class="border f-cb"></div></div></li>
+                                        <li><p class="fold"><a href="#" target="_blank" ><i>06</i>书名6</a></p><div class="unfold" style="display:none;"><i>06</i><div class="border f-cb"></div></div></li>
+                                        <li><p class="fold"><a href="#" target="_blank" ><i>07</i>书名7</a></p><div class="unfold" style="display:none;"><i>06</i><div class="border f-cb"></div></div></li> -->
+                                    {% endfor %}
+                                </ul>
+                            <a class="more" href="#"><i></i>查看更多</a>
+                            </div>
+                        </div>
+                    </div>
+
+{% for type_book in types_book  %}
+    <div class="g-sec">
+        <div class="left">
+            <!-- 类型名字 -->
+            <header><h2>{{type_book.0}}</h2><a class="more" href="/books/types/{{ k }}">更多&gt;</a></header>
+            <div id="J_Publish" class="m-book-ten">
+                <div class="tabs">
+                </div>
+                <div class="contents">
+                    <div class="tab-item">
+                        <ul class="book f-cb">
+                        {% for book in type_book.1|slice:"0:5"%}
+                            <li>
+                                    <a href="/books/{{ book.book_id }}" target="_blank" data-model="jptu" data-opration="jpts_img" title="{{book.title}}"><img width=50px src="{% static book.image_path %}" alt="{{book.title}}"></a>
+                                    <h3><a href="/books/{{ book.book_id }}" target="_blank" data-model="jptu" data-opration="jpts_txt" title="{{book.title}}">{{book.title}}</a></h3>
+                                    <p>{{book.author}}</p>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <br/>
+                <header><h2>{{type_book.0}}排行榜</h2></header>
+                <div id="J_PubBang" class="m-foldlist">
+                        <ul class="">
+                                {% for book in type_book.1|slice:"0:6" %}
+                                    <li><p class="fold"><a href="/books/{{ book.book_id }}" target="_blank" ><i>{{forloop.counter}}</i>{{book.title}}</a></p><div class="unfold" style="display:none;"><i>{{forloop.counter}}</i><div class="border f-cb"></div></div></li>                                    
+                                     <!-- <li><p class="fold"><a href="#" target="_blank" ><i>02</i>书名2</a></p><div class="unfold" style="display:none;"><i>02</i><div class="border f-cb"></div></div></li>                                   
+                                    <li><p class="fold"><a href="#" target="_blank" ><i>03</i>书名3</a></p><div class="unfold" style="display:none;"><i>03</i><div class="border f-cb"></div></div></li>
+                                    <li><p class="fold"><a href="#" target="_blank" ><i>04</i>书名4</a></p><div class="unfold" style="display:none;"><i>04</i><div class="border f-cb"></div></div></li>
+                                    <li><p class="fold"><a href="#" target="_blank" ><i>05</i>书名5</a></p><div class="unfold" style="display:none;"><i>05</i><div class="border f-cb"></div></div></li>
+                                    <li><p class="fold"><a href="#" target="_blank" ><i>06</i>书名6</a></p><div class="unfold" style="display:none;"><i>06</i><div class="border f-cb"></div></div></li> --> 
+                                {% endfor %}
+                        </ul>
+                    <a class="more" href="点击进入分类排行"><i></i>查看更多</a>
+                </div> 
+        </div>
+    </div>
+{% endfor %}
+<!-- <div class="g-sec">
+<div class="left">
+    <header><h2>书籍分类2</h2><a class="more" href="#">更多&gt;</a></header>
+    <div id="J_Publish" class="m-book-ten">
+        <div class="tabs">
+        </div>
+        <div class="contents">
+            <div class="tab-item">
+                <ul class="book f-cb">
+                    <li>
+                        <a href="#" target="_blank" data-model="jptu" data-opration="jpts_img" title="如何有效阅读一本书"><img src="./index_files/8796093023227049207" srcset="https://easyreadfs.nosdn.127.net/1qp6LtTNJQta156hfve1Gg==/8796093023227049207?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="如何有效阅读一本书"></a>
+                        <h3><a href="#" target="_blank" data-model="jptu" data-opration="jpts_txt" title="如何有效阅读一本书">如何有效阅读一本书</a></h3>
+                        <p>【日】奥野宣之,张晶晶</p>
+                </li>
+                    <li>
+                        <a href="#" target="_blank" data-model="jptu" data-opration="jpts_img" title="人类简史：从动物到上帝"><img src="./index_files/8796093023880310110" srcset="https://easyreadfs.nosdn.127.net/QgyFaBRwbLBEzby9GMB0tQ==/8796093023880310110?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="人类简史：从动物到上帝"></a>
+                        <h3><a href="#" target="_blank" data-model="jptu" data-opration="jpts_txt" title="人类简史：从动物到上帝">人类简史：从动物到上帝</a></h3>
+                        <p>【以】尤瓦尔·赫拉利</p>
+                </li>
+                    <li>
+                        <a href="#" target="_blank" data-model="jptu" data-opration="jpts_img" title="激荡十年，水大鱼大：中国企业2008—2018"><img src="./index_files/8796093023850096702" srcset="https://easyreadfs.nosdn.127.net/YcXnx2QZlH7RzmH6uv9W4g==/8796093023850096702?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="激荡十年，水大鱼大：中国企业2008—2018"></a>
+                        <h3><a href="#" target="_blank" data-model="jptu" data-opration="jpts_txt" title="激荡十年，水大鱼大：中国企业2008—2018">激荡十年，水大鱼大：中国企业2008—2018</a></h3>
+                        <p>吴晓波</p>
+                </li>
+                    <li>
+                        <a href="#" target="_blank" data-model="jptu" data-opration="jpts_img" title="美国怎么了"><img src="./index_files/8796093024065552140" srcset="https://easyreadfs.nosdn.127.net/XKrbD-MUYZIGTCbM9XDnzg==/8796093024065552140?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="美国怎么了"></a>
+                        <h3><a href="#" target="_blank" data-model="jptu" data-opration="jpts_txt" title="美国怎么了">美国怎么了</a></h3>
+                        <p>王瑞恩</p>
+                </li> 
+                    <li>
+                        <a href="#" target="_blank" data-model="jptu" data-opration="jpts_img" title="美国怎么了"><img src="./index_files/8796093024065552140" srcset="https://easyreadfs.nosdn.127.net/XKrbD-MUYZIGTCbM9XDnzg==/8796093024065552140?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="美国怎么了"></a>
+                        <h3><a href="#" target="_blank" data-model="jptu" data-opration="jpts_txt" title="美国怎么了">美国怎么了</a></h3>
+                        <p>王瑞恩</p>
+                </li>
+                 
+                  </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right">
+        <header><h2>书籍分类3排行榜</h2></header>
+        <div id="J_PubBang" class="m-foldlist">
+                <ul class="">
+                        <li><p class="fold"><a href="#" target="_blank" ><i>01</i>书名1</a></p><div class="unfold" style="display:none;"><i>01</i><div class="border f-cb"></div></div></li>                                    
+                        <li><p class="fold"><a href="#" target="_blank" ><i>02</i>书名2</a></p><div class="unfold" style="display:none;"><i>02</i><div class="border f-cb"></div></div></li>                                   
+                        <li><p class="fold"><a href="#" target="_blank" ><i>03</i>书名3</a></p><div class="unfold" style="display:none;"><i>03</i><div class="border f-cb"></div></div></li>
+                        <li><p class="fold"><a href="#" target="_blank" ><i>04</i>书名4</a></p><div class="unfold" style="display:none;"><i>04</i><div class="border f-cb"></div></div></li>
+                        <li><p class="fold"><a href="#" target="_blank" ><i>05</i>书名5</a></p><div class="unfold" style="display:none;"><i>05</i><div class="border f-cb"></div></div></li>
+                        <li><p class="fold"><a href="#" target="_blank" ><i>06</i>书名6</a></p><div class="unfold" style="display:none;"><i>06</i><div class="border f-cb"></div></div></li>
+                 </ul>
+            <a class="more" href="#"><i></i>查看更多</a>
+        </div>
+    </div>
+</div>
+<div class="g-sec">
+<div class="left">
+<header><h2>书籍分类3</h2><a class="more" href="#">更多&gt;</a></header>
+<div id="J_Publish" class="m-book-ten">
+    <div class="tabs">
+    </div>
+    <div class="contents">
+        <div class="tab-item">
+            <ul class="book f-cb">
+         <li>
+               <a href="http://yuedu.163.com/source/2eb6e7c4b35d48219844d09384becc8b_4" target="_blank" data-model="jptu" data-opration="jpts_img" title="如何有效阅读一本书"><img src="./index_files/8796093023227049207" srcset="https://easyreadfs.nosdn.127.net/1qp6LtTNJQta156hfve1Gg==/8796093023227049207?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="如何有效阅读一本书"></a>
+                    <h3><a href="http://yuedu.163.com/source/2eb6e7c4b35d48219844d09384becc8b_4" target="_blank" data-model="jptu" data-opration="jpts_txt" title="如何有效阅读一本书">如何有效阅读一本书</a></h3>
+                    <p>【日】奥野宣之,张晶晶</p>
+            </li>
+            <li>
+                <a href="http://yuedu.163.com/source/b9f95b4557a04358b29373d9ddd67ab6_4" target="_blank" data-model="jptu" data-opration="jpts_img" title="人类简史：从动物到上帝"><img src="./index_files/8796093023880310110" srcset="https://easyreadfs.nosdn.127.net/QgyFaBRwbLBEzby9GMB0tQ==/8796093023880310110?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="人类简史：从动物到上帝"></a>
+                    <h3><a href="http://yuedu.163.com/source/b9f95b4557a04358b29373d9ddd67ab6_4" target="_blank" data-model="jptu" data-opration="jpts_txt" title="人类简史：从动物到上帝">人类简史：从动物到上帝</a></h3>
+                    <p>【以】尤瓦尔·赫拉利</p>
+            </li>
+            <li>
+                   <a href="http://yuedu.163.com/source/a0f26176741949a9b4d18248b11958f0_4" target="_blank" data-model="jptu" data-opration="jpts_img" title="激荡十年，水大鱼大：中国企业2008—2018"><img src="./index_files/8796093023850096702" srcset="https://easyreadfs.nosdn.127.net/YcXnx2QZlH7RzmH6uv9W4g==/8796093023850096702?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="激荡十年，水大鱼大：中国企业2008—2018"></a>
+                    <h3><a href="http://yuedu.163.com/source/a0f26176741949a9b4d18248b11958f0_4" target="_blank" data-model="jptu" data-opration="jpts_txt" title="激荡十年，水大鱼大：中国企业2008—2018">激荡十年，水大鱼大：中国企业2008—2018</a></h3>
+                    <p>吴晓波</p>
+            </li>
+                <li>
+                    <a href="http://yuedu.163.com/source/dfac062f04b64cdf93cc58de8500929a_4" target="_blank" data-model="jptu" data-opration="jpts_img" title="美国怎么了"><img src="./index_files/8796093024065552140" srcset="https://easyreadfs.nosdn.127.net/XKrbD-MUYZIGTCbM9XDnzg==/8796093024065552140?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="美国怎么了"></a>
+                    <h3><a href="http://yuedu.163.com/source/dfac062f04b64cdf93cc58de8500929a_4" target="_blank" data-model="jptu" data-opration="jpts_txt" title="美国怎么了">美国怎么了</a></h3>
+                    <p>王瑞恩</p>
+            </li> 
+                 <li>
+                    <a href="http://yuedu.163.com/source/dfac062f04b64cdf93cc58de8500929a_4" target="_blank" data-model="jptu" data-opration="jpts_img" title="美国怎么了"><img src="./index_files/8796093024065552140" srcset="https://easyreadfs.nosdn.127.net/XKrbD-MUYZIGTCbM9XDnzg==/8796093024065552140?imageView&amp;quality=90&amp;thumbnail=228y320 2x" alt="美国怎么了"></a>
+                    <h3><a href="http://yuedu.163.com/source/dfac062f04b64cdf93cc58de8500929a_4" target="_blank" data-model="jptu" data-opration="jpts_txt" title="美国怎么了">美国怎么了</a></h3>
+                    <p>王瑞恩</p>
+            </li>
+             
+              </ul>
+        </div>
+    </div>
+</div>
+</div>
+<div class="right">
+<header><h2>书籍分类3排行榜</h2></header>
+<div id="J_PubBang" class="m-foldlist">
+        <ul class="">
+                <li><p class="fold"><a href="#" target="_blank" ><i>01</i>书名1</a></p><div class="unfold" style="display:none;"><i>01</i><div class="border f-cb"></div></div></li>                                    
+                <li><p class="fold"><a href="#" target="_blank" ><i>02</i>书名2</a></p><div class="unfold" style="display:none;"><i>02</i><div class="border f-cb"></div></div></li>                                   
+                <li><p class="fold"><a href="#" target="_blank" ><i>03</i>书名3</a></p><div class="unfold" style="display:none;"><i>03</i><div class="border f-cb"></div></div></li>
+                <li><p class="fold"><a href="#" target="_blank" ><i>04</i>书名4</a></p><div class="unfold" style="display:none;"><i>04</i><div class="border f-cb"></div></div></li>
+                <li><p class="fold"><a href="#" target="_blank" ><i>05</i>书名5</a></p><div class="unfold" style="display:none;"><i>05</i><div class="border f-cb"></div></div></li>
+                <li><p class="fold"><a href="#" target="_blank" ><i>06</i>书名6</a></p><div class="unfold" style="display:none;"><i>06</i><div class="border f-cb"></div></div></li>
+         </ul>
+    <a class="more" href="#"><i></i>查看更多</a>
+</div>
+</div>
+</div>
+-->
+<!-- 尾部导航 -->
 
     <script>
         function delone(id){

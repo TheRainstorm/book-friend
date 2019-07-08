@@ -10,42 +10,53 @@ import os
 import uuid
 
 from books.enums import BOOKS_TYPE
-
-# Create your views here.
-# def type_ranking(request):
-#     python_new = Book.objects.get_books_by_type(PYTHON, sort='new')
-#     python_hot = Book.objects.get_books_by_type(PYTHON, sort='hot')
-
-#     context = {
-#         'python_new': python_new,
-#         'python_hot': python_hot,
-#     }
-
-#     return render(request, 'book/index.html', context)
-
-# def all_ranking(request):
-#     all_new = Book.objects.get_all_ranking(sort='new')
-#     all_hot = Book.objects.get_all_ranking(sort='collect-hot')
-
-#     context = {
-#         'all_new': all_new,
-#         'all_hot': all_hot,
-#     }
-    
-#     return render(request, 'book/index.html', context)
+import json
 
 def index(request):
+    #session 获得user
+    user_name = request.session.get('account',None)
+
+    if user_name!=None:
+        user = User.objects.filter(user_name=user_name)[0]
+    else:
+        user = None
+    
     books_li = Book.objects.all()
     all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
     # type_li = []
-    # for 
+    # for
+    #每种类型按new分类返回
+    python_new = Book.objects.get_books_by_type(1, limit=7, sort='new')
+    #python_hot = Books.objects.get_books_by_type(PYTHON, limit=4, sort='view-hot')
+    javascript_new = Book.objects.get_books_by_type(2,limit= 7, sort='new')
+    #javascript_hot = Books.objects.get_books_by_type(JAVASCRIPT, limit=4, sort='view-hot')
+    algorithms_new = Book.objects.get_books_by_type(3, 7, sort='new')
+    # algorithms_hot = Books.objects.get_books_by_type(ALGORITHMS, 4, sort='view-hot')
+    # machinelearning_new = Book.objects.get_books_by_type(4, 3, sort='new')
+    # machinelearning_hot = Books.objects.get_books_by_type(MACHINELEARNING, 4, sort='view-hot')
+    # operatingsystem_new = Book.objects.get_books_by_type(5, 3, sort='new')
+    # operatingsystem_hot = Books.objects.get_books_by_type(OPERATINGSYSTEM, 4, sort='view-hot')
+    # database_new = Book.objects.get_books_by_type(6, 3, sort='new')
+    # database_hot = Books.objects.get_books_by_type(DATABASE, 4, sort='view-hot')
+
     context = {
+        'user':user,
         "book_li":books_li,
         'all_book_li_by_hot':all_book_li_by_hot,
-        'type_dic':BOOKS_TYPE
-        # 'type_li':type_li
+        'type_dic':BOOKS_TYPE,
+        'types_book':[  ['Python',python_new],
+                        ['Javascript',javascript_new],
+                        ['数据结构与算法',algorithms_new],
+                        # ['机器学习',machinelearning_new],
+                        # ['操作系统',operatingsystem_new],
+                        # ['数据库',database_new],
+                    ],
     }
+    
     return render(request,'books/index.html',context)
+
+def go2index(request):
+    return redirect('/books/index/')
 
 def add(request):
     if request.POST:
@@ -149,37 +160,108 @@ def update(request):
     return render(request,'books/index.html',{'book_li':book_li})
 
 def detail(request,book_id):
-    #获得当前用户对象
-    user_name = request.session.get('account',None)
-    user = User.objects.filter(user_name=user_name)[0]
     #获得当前浏览的书的对象
     book = Book.objects.get(book_id=book_id)
-    #更新用户的浏览记录
-    user.recent_read.add(book)
-
-    book_li = user.recent_read.all()
-
-
-    #获得评论
-    comment_li = Comment.objects.filter(bookName=book) 
-    #获得是否收藏
-    collection_li =Collection.objects.filter(book=book,user=user)
     #浏览加1
     view_number = book.view_number
     # book.update(view_number=view_number+1)
     Book.objects.filter(book_id=book_id).update(view_number=view_number+1)
+    #获得评论
+    comment_li = Comment.objects.filter(bookName=book).order_by('-create_time') 
+
+    #获得当前用户对象
+    user_name = request.session.get('account',None)
+    if user_name!=None:
+        user = User.objects.filter(user_name=user_name)[0]
+        #更新用户的浏览记录
+        recent_read_book = request.session.get('recent_read_book',None)
+        if recent_read_book==None:
+            L = []
+            L.append(book.book_id)
+            request.session['recent_read_book']= json.dumps(L)
+            request.session.set_expiry(3600*24*365)
+        else:
+            L = json.loads(recent_read_book)
+            L = [book.book_id]+L[:4]
+            request.session['recent_read_book']= json.dumps(L)
+        collection_li = Collection.objects.filter(user=user)
+    else:
+        user = None
+        collection_li = [1] #没有用户的情况下，非空，不能收藏
+    
     if len(collection_li)==0:
         is_collected=0
     else:
         is_collected=1
+    
     book_type = BOOKS_TYPE[int(book.type_id)]
+
+    paginator = Paginator(comment_li,3) #每页显示6本
+    #接受客户端发送的页码:
+    page = request.GET.get('page',1)
+    #
+    try:
+        comment_li=paginator.page(page)
+    except EmptyPage:
+        comment_li= paginator.page(1)
+    except PageNotAnInteger:
+        comment_li = paginator.page(paginator.num_pages)
+
     context = {
         'book':book,
         'book_type':book_type,
         'comment_li':comment_li,
         'is_collected':is_collected
     }
-    return render(request,'books/detail.html',context)
+    return render(request,'books/eachbook1.html',context)
+
+# def detail(request,book_id):
+#     #获得当前浏览的书的对象
+#     book = Book.objects.get(book_id=book_id)
+#     #浏览加1
+#     view_number = book.view_number
+#     # book.update(view_number=view_number+1)
+#     Book.objects.filter(book_id=book_id).update(view_number=view_number+1)
+#     #获得评论
+#     comment_li = Comment.objects.filter(bookName=book).order_by('-create_time') 
+
+#     #获得当前用户对象
+#     user_name = request.session.get('account',None)
+#     if user_name!=None:
+#         user = User.objects.filter(user_name=user_name)[0]
+#         #更新用户的浏览记录
+#         user.recent_read.add(book)
+#         #获得是否收藏
+#         collection_li =Collection.objects.filter(book=book,user=user)
+#     else:
+#         user = None
+#         collection_li = [1] #没有用户的情况下，非空，不能收藏
+    
+#     if len(collection_li)==0:
+#         is_collected=0
+#     else:
+#         is_collected=1
+    
+#     book_type = BOOKS_TYPE[int(book.type_id)]
+
+#     paginator = Paginator(comment_li,3) #每页显示6本
+#     #接受客户端发送的页码:
+#     page = request.GET.get('page',1)
+#     #
+#     try:
+#         comment_li=paginator.page(page)
+#     except EmptyPage:
+#         comment_li= paginator.page(1)
+#     except PageNotAnInteger:
+#         comment_li = paginator.page(paginator.num_pages)
+
+#     context = {
+#         'book':book,
+#         'book_type':book_type,
+#         'comment_li':comment_li,
+#         'is_collected':is_collected
+#     }
+#     return render(request,'books/eachbook1.html',context)
 
 #每一类书的页面
 def types(request,type_id):
@@ -196,3 +278,57 @@ def types(request,type_id):
     except PageNotAnInteger:
         typeBooks = paginator.page(paginator.num_pages)
     return render(request,'books/category.html',{'book_li' : typeBooks})
+
+def filedownload(request, book_id):
+# 定义一个内部函数分块读取下文件数据
+    def fileIterator(downloadFilePath, chunkSize=512):
+        # 读取二进制文件
+        with open(downloadFilePath, 'rb') as fp:
+            while True:
+                content = fp.read(chunkSize)
+                if content:
+                    yield content
+                else:
+                    break
+    #获得下载对象
+    book = Book.objects.get(book_id = book_id)
+    # 获取下载文件的全路径
+    downloadFilePath = os.getcwd() + '/static/' + book.content_path
+
+    #获得文件名
+    filename = book.title + os.path.splitext(book.content_path)[1]
+
+    # 响应客户端
+    rep = StreamingHttpResponse(fileIterator(downloadFilePath))
+    # 设置响应对象的关键值选项
+    rep['Content-Type'] = 'application/octet-stream'
+    rep['Content-Disposition'] = 'attachment;filename="{0}"'.format(filename)
+    return rep
+
+def paihang(request):
+    #session 获得user
+    user_name = request.session.get('account',None)
+    user = User.objects.filter(user_name=user_name)[0]
+
+    new_list = Book.objects.get_all_ranking(limit=10,sort='new')
+    n_new_list = new_list[3:]
+    nn_new_list =  enumerate(n_new_list)
+    nnn_new_list = [(k+4,v) for k,v in nn_new_list]
+    view_list = Book.objects.get_all_ranking(limit=10,sort='view-hot')
+    v_view_list = view_list[3:]
+    vv_new_list = enumerate(v_view_list)
+    vvv_view_list = [(k+4,v) for k,v in vv_new_list]
+    collect_list = Book.objects.get_all_ranking(limit=10,sort='collect-hot')
+    c_collect_list = collect_list[3:]
+    cc_collect_list = enumerate(c_collect_list)
+    ccc_collect_list = [(k+4,v) for k,v in cc_collect_list]
+    context = {
+        'user':user,
+        'nnn_new_list': nnn_new_list,
+        'new_list':new_list,
+        'vvv_view_list':vvv_view_list,
+        'view_list':view_list,
+        'ccc_collect_list':ccc_collect_list,
+        'collect_list':collect_list,
+    }
+    return render(request,'books/paihang.html',context)
