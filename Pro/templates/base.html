@@ -12,8 +12,22 @@
 
 <!--登录 登出 书架-->
 <div class="in">
+        {% if user %}
         <a href="/users/my_collects/"><img src="{% static 'image/5.png' %}"  width="30px"  height="50px"></a>
         &nbsp; &nbsp; &nbsp;
+        {% else %}
+        <script>
+            // document.getElementById("#collect").onclick=go2login;
+            function go2login(){
+                if(window.confirm('需要登录，是否前往登录？')){
+                    window.location.href = '/users/login/';
+                }
+            }
+        </script>
+        <a href="#" onclick="go2login()"><img src="{% static 'image/5.png' %}"  width="30px"  height="50px"></a>
+        &nbsp; &nbsp; &nbsp;
+        {% endif %}
+
         {% if user %}
         <a href="/users/home/"><img src="{% static user.image %}"  width="30px"  height="50px"></a>
         {% else %}

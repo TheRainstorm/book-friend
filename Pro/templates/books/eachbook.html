@@ -7,13 +7,58 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
     <script src="{% static 'js/jquery.cookie.js' %}"></script>
-    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}"/>
+
+    <title>Detail</title>
 </head>
+<script>
+    $('#document').ready(function(){
+        $('#ajax').click(function(){
+            book_id = $('#book_id').val();
+            content = $('#content').val();
+            // alert(book_id);
+            $.ajax({
+                async: true,
+                url: '/comments/addcom/',
+                type: 'post',
+                headers: {"X-CSRFToken":$.cookie('csrftoken')},
+                data:{
+                    'book_id':book_id,
+                    'content':content
+                },
+                success:function(data){
+                    if(data == 'False'){
+
+                        if(window.confirm('需要登录，是否登录？')){
+                            window.location.href = '/users/login/';
+                        }
+                    }else{
+                        // console.log(data);
+                        comm_obj = JSON.parse(data);
+                        comment_li = comm_obj.comment_li;
+                        // console.log(comment_li[0].image_path);
+                        // console.log(comment_li[0].user_name);
+                        // console.log(comment_li[0].content);
+                        // console.log(comment_li[0].date);
+                        // alert('con')
+                        var text = "";
+                        for(var i=0; i<comment_li.length; i++){
+                            text +='<img class="commentpage_pic" src="/static/'+ comment_li[i].image_path+ '" alt="" width="30" height="30">'+ '<li>'+comment_li[i].user_name + ':<div>'+ comment_li[i].content +'</div>评论日期：' + comment_li[i].date + '</li>'
+                        }
+                        $('#ajaxchange').html(text);
+                        $('#content').val('');
+                    }
+
+                }
+            });
+        });
+    });
+</script>
 <body>
     <!--引用base界面-->
     {% include "base.html" %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
-    
+
     <!--白色嵌入-->
     <div action="" class="personal">
         <!--书封面-->
@@ -91,11 +136,15 @@
     </div>
 
     <!--评论区-->
-    <div action="" class="comment">
-        <font size="5" color="red">|</font> <font size="5">最新书评：</font><hr>
-        <ul>  
+    <div class="commentpage">
+        <dl>
+            <dt>|</dt>
+            <dd>书籍评论：</dd>
+        </dl>
+        <hr>
+        <ul id="ajaxchange">  
             {% for comment in comment_li %}
-            <img class="comment_pic" src="{% static comment.userName.image %}" alt="" width="30" height="30">
+            <img class="commentpage_pic" src="{% static comment.userName.image %}" alt="" width="30" height="30">
             <li>
             {{ comment.userName.user_name }}:
             <div>
@@ -107,53 +156,28 @@
             <br>
             <li>快来抢沙发吧</li>
             {% endfor %} 
-            <!-- 分页导航 -->
-            <p>
-                {% if comment_li.has_previous %}
-                <a href="?page={{ comment_li.previous_page_number }}">上一页</a>
-                {% endif %}
-                当前：{{ comment_li.number }} / {{ comment_li.paginator.num_pages }}
-                {% if comment_li.has_next %}
-                <a href="?page={{ comment_li.next_page_number }}">下一页</a>
-                {% endif %}
-            </p>           
-            <!-- <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
-            <li>
-            头像1+昵称:
-            <div>
-                和这个小说哈哈哈哈哈哈
-            </div>
-            </li>
-            <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
-            <li>
-            头像2+昵称:
-            <div>
-                哇卡卡卡扩扩扩扩有点意思
-            </div>
-            </li>
-            <img class="comment_pic" src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="30" height="30">
-            <li>
-            头像3+昵称:
-            <div>
-                 新来的的发电机房价格加上个课
-            </div>
-            </li> -->
-        
-          <!--发表评论区-->
-        <br>
-        
-        
-        
-        <form action="/comments/addcom/" method="POST">
-            {% csrf_token %}
-            <font size="3" color="gray" >我要评论:</font>
-            <input type="hidden" name="book_id" value="{{ book.book_id }}">
-            <textarea name="content" type="text" placeholder="请在此处输入评论。。。" style="height:100px;width:300px"></textarea><br><br>
-            <button>提交</button>
-        </form>
         </ul>
+        
+        <!-- 分页导航 -->
+        <p >
+            {% if comment_li.has_previous %}
+            <a href="?page={{ comment_li.previous_page_number }}">上一页</a>
+            {% endif %}
+            当前：{{ comment_li.number }} / {{ comment_li.paginator.num_pages }}
+            {% if comment_li.has_next %}
+            <a href="?page={{ comment_li.next_page_number }}">下一页</a>
+            {% endif %}
+        </p>           
+        <br>
+        <!--提交评论区-->
+        <div>
+            <font size="3" color="gray" >我要评论:</font>
+            <input type="hidden" id="book_id" name="book_id" value="{{ book.book_id }}">
+            <textarea id="content" name="content" type="text" placeholder="请在此处输入评论。。。" style="height: 100px;width: 600px;resize: none;"></textarea><br><br>
+            <button id="ajax">提交</button>
+        </div>
     </div> 
-
+    
     <div class="rank_menu"> 
         <!-- 对应旁边的人气榜单 -->
        <!-- borderE6对应边框 -->
@@ -162,14 +186,14 @@
        <!-- 对应榜单的那条下划线 -->
       <div class="borderB_e6"></div>
        <h3>分类榜单</h3> 
-       <p><a href="">科幻榜</a></p> 
-       <p><a href="">悬疑榜</a></p> 
-       <p><a href="">青春文学榜</a></p> 
-       <p><a href="">严肃文学榜</a></p> 
-       <p><a href="">历史架空榜</a></p> 
-       <p><a href="">悬疑榜</a></p> 
-       <p><a href="">青春文学榜</a></p> 
-       <p><a href="">严肃文学榜</a></p> 
+        <p><a href="">科幻榜</a></p> 
+        <p><a href="">悬疑榜</a></p> 
+        <p><a href="">青春文学榜</a></p> 
+        <p><a href="">严肃文学榜</a></p> 
+        <p><a href="">历史架空榜</a></p> 
+        <p><a href="">悬疑榜</a></p> 
+        <p><a href="">青春文学榜</a></p> 
+        <p><a href="">严肃文学榜</a></p> 
       </div> 
      </div>
 </body>

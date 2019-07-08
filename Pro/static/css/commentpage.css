@@ -1,0 +1,292 @@
+.bottom_pic{
+    margin-left:15%;
+    background-color:white;
+}
+
+.location{
+    margin-top: 10px;
+    margin-left:7%;
+    size:2;
+    color: rgb(0, 162, 255); 
+}
+
+.commentpage{
+    position: absolute;
+	left:350px;  
+	top:171px;
+    width: 700px;
+    background-color:rgba(238, 238, 238, 0.918);
+    padding:1%;
+    border-radius: 10px 10px 10px 10px; 
+    border: 0.5px solid #eee;
+}
+
+.commentpage dt{
+	margin-left: 2px;
+	font-size: 30px;
+	color: red;
+}
+
+.commentpage dd{
+	margin-left: 10px;
+	margin-top: -38px;
+	font-size: 30px;
+	color: black;
+	font-family:"Microsoft YaHei";
+}
+.commentpage_pic{
+	margin-top: 10px;
+    margin-left: -50px;
+    border-radius:200px;
+}
+
+.commentpage ul{
+    list-style:none; 
+    color:#ccc;
+}
+
+.commentpage li{
+    margin-top: -30px;
+}
+
+.commentpage div{
+    color:black;
+    background-color:none;
+    width:600px;
+	border-top:2px solid #ccc;
+	overflow-wrap:break-word;
+}
+
+.commentpage textarea{
+    width: 600px;
+	height:100px;
+	margin-top: 5px;
+	vertical-align:top;
+	outline:none;
+	border-top:3px solid #ccc;
+	border-left: 3px solid #ccc;
+	border-right: 0.5px solid #ccc;
+	border-bottom: 0.5px solid #ccc;
+}
+
+.commentpage button{
+	margin-left: 550px;
+	border-radius: 10px 10px 10px 10px;
+	width: 60px;
+	height: 30px;
+	background: #999;
+	color:white;
+}
+.commentpage button:hover{
+    margin-left: 550px;
+    color: #ccc;
+}
+.nums{
+	color: #999;
+    margin-bottom: 25px;
+}
+
+.nums span{
+	margin-right: 20px;
+}
+
+.nums i{
+	font-size: 16px;
+	color: #333;
+	font-family: Arial,Helvetica,sans-serif;
+}
+
+.btn-group_button1{
+    background-color: rgb(214,94,100);
+    color:#ffff;
+	width: 150px;
+	height: 34px;
+    line-height: 34px;
+    margin-right:30px;
+}
+
+.btn-group_button2{
+    background-color:white;
+	width: 100px;
+	height: 34px;
+    line-height: 34px;
+    margin-right:30px;
+    border: 0.5px solid rgb(214,94,100);
+}
+
+.btn-group_button3{  
+	border:none;
+	background:white;
+}
+
+.btn-group_button3 a{
+    color: gray;
+}
+
+.btn-group_button3 a:hover{
+    color: black;
+}
+
+.btn-group_button1:hover{
+    background-color: rgb(219, 129, 25);
+}
+
+.btn-group_button2:hover{
+    border: 2px solid rgb(219, 129, 25);
+}
+
+/*人气榜单样式配置*/
+.rank_menu {
+	padding: 22px;
+	border: 1px solid rgb(214,94,100);
+    border-top: 2px solid #F60;
+	width: 250px;
+	font-family: "Microsoft YaHei";
+	/*人气榜单位置控制*/
+    position: absolute;
+	left:1125px;
+	top:580px;
+}
+
+.rank_menu a:hover {
+	color: #e84848
+}
+
+.borderE6 {
+	border: 1px solid #e6e6e6
+}
+
+.rank_side {
+	padding: 7px 22px 15px;
+	color: #333;
+	font-size: 14px
+}
+
+.rank_side a {
+	color: #333;
+	text-decoration: none
+}
+
+.rank_a_crown:hover,.rank_side a:hover {
+	color: #e84848
+}
+
+.rank_side>h3 {
+	line-height: 35px;
+	font-size: 14px;
+	font-weight: 700
+}
+
+.rank_side>p {
+	line-height: 30px;
+	font-size: 14px;
+	background: url(../1/rankdot.png) no-repeat left center;
+	padding-left: 9px
+}
+
+.rank_side .rank_active,.rank_side .rank_active>a {
+	color: #a11313
+}
+
+.rank_side .rank_active {
+	font-weight: 700
+}
+
+.borderB_e6 {
+	border-bottom: 1px solid #e6e6e6;
+	line-height: 0;
+	font-size: 0
+}
+
+/*作者信息*/
+.AuthorInfo {
+	position: absolute;
+	top:170px;
+	background: rgba(238, 238, 238, 0.918);
+	padding: 22px;
+	border: 1px solid #ffe3d1;
+    border-top: 2px solid #F60;
+    width:250px;
+	position: absolute;
+    left:1125px;
+}
+
+.AuthorInfo .author {
+	height: 62px;
+	line-height: 2
+}
+
+.AuthorInfo .author img {
+	width: 62px;
+	height: 62px;
+	margin-right: 10px;
+	float: left;
+	border-radius: 50%
+}
+
+.AuthorInfo .author .sign {
+	background: #53a200;
+	color: #fff;
+	font-size: 12px;
+	padding: 0 2px;
+	margin-right: 5px
+}
+
+.AuthorInfo .author .name {
+	font-size: 14px;
+    color:  rgb(214,94,100);
+}
+
+.AuthorInfo .modle {
+	margin-top: 15px
+}
+
+.AuthorInfo .modle dt {
+	height: 30px
+}
+
+.AuthorInfo .modle dd {
+	margin-left: -2px;
+}
+
+.AuthorInfo .modle dt label {
+	border-bottom: 1px solid rgb(160, 158, 158);
+	height: 10px;
+	display: block;
+	text-align: center
+}
+
+.AuthorInfo .modle dt label span {
+	background: rgba(238, 238, 238, 0.918);
+	padding: 0 10px;
+	font-size: 14px;
+	font-weight: 700
+}
+
+.AuthorInfo .modle table.data {
+	margin-left: 0px;
+	background: #ffe3d1
+}
+
+.AuthorInfo .modle table.data td {
+	padding: 0;
+	background: #fff;
+	width: 33.3%
+}
+
+.AuthorInfo .modle table.data td a {
+    text-align: center;
+	color:  rgb(214,94,100);
+	padding: 10px 0;
+	display: block
+}
+
+.AuthorInfo .modle table.data td a:hover {
+	background: #ffe3d1
+}
+
+.AuthorInfo .modle table.data td span {
+	font-size: 18px;
+	display: block
+}
+

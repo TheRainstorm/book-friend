@@ -61,7 +61,7 @@
         </div> 
   
         <div class="rank_i_bcount fr"> 
-         <a href="" target="_blank"><img src="/static/{{new_list.0.image_path}}" alt="{{new_list.0.title}}" /></a> 
+         <a href="/books/{{ collect_list.0.book_id }}" target="_blank"><img src="/static/{{new_list.0.image_path}}" alt="{{new_list.0.title}}" /></a> 
         </div> 
        </div>
        <div class="borderB_c_dsh rank_i_li rank_i_li2 clearfix"> 
@@ -165,7 +165,7 @@
         </div> 
        </div>  -->
        <div class="rank_i_more"> 
-        <a href="" class="rank_i_more_a">更多</a> 
+        <a href="" class="rank_i_more_a" target="_blank">更多</a> 
 
        </div> 
       </div> 
@@ -187,7 +187,7 @@
         </div> 
   
         <div class="rank_i_bcount fr"> 
-         <a href="" target="_blank"><img src="/static/{{collect_list.0.image_path}}" alt="{{collect_list.0.title}}" /></a> 
+         <a href="/books/{{ collect_list.0.book_id }}" target="_blank"><img src="/static/{{collect_list.0.image_path}}" alt="{{collect_list.0.title}}" /></a> 
         </div> 
        </div>
        <div class="borderB_c_dsh rank_i_li rank_i_li2 clearfix"> 
@@ -246,7 +246,7 @@
              </div> 
        
              <div class="rank_i_bcount fr"> 
-              <a href="" target="_blank"><img src="/static/{{view_list.0.image_path}}" alt="{{view_list.0.title}}" /></a> 
+              <a href="/books/{{ collect_list.0.book_id }}" target="_blank"><img src="/static/{{view_list.0.image_path}}" alt="{{view_list.0.title}}" /></a> 
              </div> 
             </div>
             <div class="borderB_c_dsh rank_i_li rank_i_li2 clearfix"> 
@@ -284,7 +284,7 @@
             </div>
             {% endfor %}
        <div class="rank_i_more"> 
-        <a href="" class="rank_i_more_a" target="_blank">更多</a> 
+        <a href="" class="rank_i_more_a" target="">更多</a> 
        </div> 
       </div> 
      </div>

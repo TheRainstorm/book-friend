@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {% load static %}
+</head>
+<body bgcolor="#fdfaf3">
+    <!--引用base界面-->
+    {% include "base.html" %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/commentpage.css' %}"/>
+
+     <!--作者信息-->
+	<div class="AuthorInfo">
+        <div class="author">
+            <a href="" target="_blank">
+                &nbsp;<img src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="50" height="50">
+            </a>
+            <span class="sign">上传作者</span><br>
+            <a class="name" href="" target="_blank">{{book.uploader}}</a>
+            <br>
+        </div>
+        
+        <dl class="modle">
+                <dt>
+                    <label><span>作者信息</span></label>
+                </dt>
+                <dd>
+                    <table class="data" cellspacing="1" width="100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="" target="_blank">
+                                    <span id="hb_total_fold">n</span>下载
+                                </a>
+                            </td>
+                            <td>
+                                <a href="" target="_blank">
+                                    <span id="fansScore">n</span>收藏
+                                </a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="">
+                                    <span id="topicCount">1.6万</span>评论
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </dd>
+            </dl>
+        <dl class="modle">
+            <dt>
+                <label><span>作者公告</span></label>
+            </dt>
+            <dd>
+                <p> 【欢迎关注我的微信公众号皇甫奇，搜索名字即可，可以在里面和我聊天哦!】 </p>                        
+            </dd>
+        </dl>
+    </div>
+
+   <!--评论区-->
+    <div class="commentpage">
+        <dl>
+            <dt>|</dt>
+            <dd>我的评论：</dd>
+        </dl>
+        <hr>
+        <ul>  
+            {% for comment in comment_li %}
+            <img class="commentpage_pic" src="{% static comment.userName.image %}" alt="" width="30" height="30">
+            <li>
+            {{ comment.userName.user_name }}:
+            <div>
+                {{ comment.content }}
+            </div>
+            评论日期：{{ comment.create_time }}
+            </li>
+            {% empty %}
+            <br>
+            <li>暂无评论记录</li>
+            {% endfor %} 
+        </ul>
+        
+            <!-- 分页导航 -->
+            <p>
+                {% if comment_li.has_previous %}
+                <a href="?page={{ comment_li.previous_page_number }}">上一页</a>
+                {% endif %}
+                当前：{{ comment_li.number }} / {{ comment_li.paginator.num_pages }}
+                {% if comment_li.has_next %}
+                <a href="?page={{ comment_li.next_page_number }}">下一页</a>
+                {% endif %}
+            </p>           
+            <br>
+    </div> 
+
+    <div class="rank_menu"> 
+        <!-- 对应旁边的人气榜单 -->
+       <!-- borderE6对应边框 -->
+      <div class="borderE6 rank_side"> 
+      <h3><a href="" class="rank_active">人气榜单</a></h3> 
+       <!-- 对应榜单的那条下划线 -->
+      <div class="borderB_e6"></div>
+       <h3>分类榜单</h3> 
+       <p><a href="">科幻榜</a></p> 
+       <p><a href="">悬疑榜</a></p> 
+       <p><a href="">青春文学榜</a></p> 
+       <p><a href="">严肃文学榜</a></p> 
+       <p><a href="">历史架空榜</a></p> 
+       <p><a href="">悬疑榜</a></p> 
+       <p><a href="">青春文学榜</a></p> 
+       <p><a href="">严肃文学榜</a></p> 
+      </div> 
+     </div>
+</body>
+</html> 
