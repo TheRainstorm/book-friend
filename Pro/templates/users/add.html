@@ -33,24 +33,24 @@
               <div class="a"><div class="in-1">
                 <select name="type_id" id="" class="in-1">
                    <option value ="1">请选择书籍类型</option>
-                   <option value ="2">Saab</option>
-                   <option value="3">Opel</option>
-                   <option value="4">Audi</option>
+                   <option value ="1">仙剑玄幻</option>
+                   <option value="2">历史纵横</option>
+                   <option value="3">都市言情</option>
                 </select>
                 </div>
                 <br>
                 <div class="a">
                 <a href=".static/css/shangchuanshu.css" class="file" id="file2">选择上传文档  
-                    <input type="file" name="upfiletxt" id="u1">  
+                    <input type="file" name="upfiletxt" id="u1" accept="text/plain">  
                 </a> 
                 <a href=".static/css/shangchuanshu.css" class="file" >选择上传封面  
-                    <input type="file" name="upfiletxt" id="u2">  
+                    <input type="file" name="upfileimg" id="u2" accept="image/jpeg, image/png">  
                 </a><br><br>
-
-                
-                <textarea rows="3" cols="29" class="in-1" id="ziti" style="height: 80px;width: 245px;resize: none;" placeholder="请输入评论"> </textarea> 
+                <p style="margin-left:-61px;margin-bottom:-20px;color: gray">简介：</p>
+                <br>
+                <textarea type="text" name="description" rows="3" cols="29" class="in-1" id="ziti" placeholder="请在此处输入简介" style="height: 80px;width: 245px;resize: none;"> </textarea> 
                 </div><br><br><br>
-                <button type="button" id="file3">添加</button>  
+                <button type="submit" id="file3">添加</button>  
         
         </form>
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'css/read_main.css' %}">
+    <!-- <meta name="msvalidate.01" content="7F5A4F41F59B7840336A1530F6D3474E"/> -->
+    <title>{{ bookname }} - 悦读·书友</title>
+    <link rel="stylesheet" href="{% static 'css/chapter.css' %}">
+    <!-- <meta name="baidu-site-verification" content="j5gv2S1IaS"/> -->
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d9af2fd1fd46f5278efda5231ad3a8cb";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <style>
+        #cnzz_stat_icon_1262602051 {
+            display: none;
+        }
+    </style>
+
+
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+
+<div class="container all-chapter">
+    <!-- <input id="content_url" type="hidden" value="{{content_url}}">
+    <input id="url" type="hidden" value="{{url}}"> -->
+    <!-- <input id="novels_name" type="hidden" value="{{novels_name}}"> -->
+
+    <div class="box_con">
+        <div id="maininfo">
+            <div id="info">
+                <h1>{{ bookname }}</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="box_con">
+        <div id="list">
+            <dl>
+            {% for i in chapters %}
+                <dd><a href="/books/read/{{bookname}}/{{i.chapters_id}}/">{{ i.chapters_name }}</a></dd>
+            {% endfor %}
+            </dl>
+        </div>
+    </div>
+
+    <div class="move">
+        <div class="move_up">
+            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+        </div>
+        <div class="move_down">
+            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/read_main.js' %} "></script>
+<div class="cnzz" style="display: none">
+    <script src="https://s19.cnzz.com/z_stat.php?id=1262602051&web_id=1262602051" language="JavaScript"></script>
+</div>
+</body>
+</html>

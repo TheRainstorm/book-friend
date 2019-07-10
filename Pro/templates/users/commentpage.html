@@ -11,55 +11,73 @@
     <!--引用base界面-->
     {% include "base.html" %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/commentpage.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style222.css' %}"> 
+    <!-- 左侧连接 -->
+    <div class="app-canvas">
+            <div class="menubox" tabindex="0">
+              <div class="menubox__label">
+                <span class="menubox__label-text">用户中心</span>
+              </div>
+              <div class="menubox__contents">
+                <ul class="menubox__options">
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <a href="/users/edit_info/" class="menubox__option-label">修改个人信息</a>
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
 
-     <!--作者信息-->
-	<div class="AuthorInfo">
-        <div class="author">
-            <a href="" target="_blank">
-                &nbsp;<img src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="50" height="50">
-            </a>
-            <span class="sign">上传作者</span><br>
-            <a class="name" href="" target="_blank">{{book.uploader}}</a>
-            <br>
-        </div>
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <a href="/users/my_collects/" class="menubox__option-label">我的书架</a>
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <a href="/users/recent_read/" class="menubox__option-label">浏览记录</a>
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <a href="/users/personal_comments/" class="menubox__option-label">个人评论</a>
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <input type="button" class="menubox__option-label1" value="上传书籍" onclick=OpenWindow('/users/home/add',400,500) />
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
+                  <li class="menubox__option">
+                    <label class="menubox__option-toggle">
+                      <input type="checkbox">
+                      <a href="/users/logout/" class="menubox__option-label">登出账户</a>
+                      <span class="menubox__option-toggle-check"></span>
+                    </label>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         
-        <dl class="modle">
-                <dt>
-                    <label><span>作者信息</span></label>
-                </dt>
-                <dd>
-                    <table class="data" cellspacing="1" width="100%">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <a href="" target="_blank">
-                                    <span id="hb_total_fold">{{ download_number }}</span>下载
-                                </a>
-                            </td>
-                            <td>
-                                <a href="" target="_blank">
-                                    <span id="fansScore">{{ collect_number }}</span>收藏
-                                </a>
-                            </td>
-                            <td>
-                                <a target="_blank" href="">
-                                    <span id="topicCount">{{ comment_number }}</span>评论
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </dd>
-            </dl>
-        <dl class="modle">
-            <dt>
-                <label><span>作者公告</span></label>
-            </dt>
-            <dd>
-                <p> 【欢迎关注我的微信公众号皇甫奇，搜索名字即可，可以在里面和我聊天哦!】 </p>                        
-            </dd>
-        </dl>
-    </div>
+    
+    <script "text/javescript">
+        function OpenWindow(url,w,h)
+        {
+            var left=Math.round((window.screen.availWidth-w)/2);
+            var top=Math.round((window.screen.availHeight-100-h)/2);
+            var MyWin=window.open(url, "", "height="+h+", width="+w+",top="+top+",left="+left+", toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+        }
+        
+    </script>     
 
    <!--评论区-->
     <div class="commentpage">
@@ -75,12 +93,16 @@
             {{ comment.userName.user_name }}:
             <div>
                 {{ comment.content }}
+                <br>
+                <a href="/comments/delcom/{{ comment.commentId }}"><button style="width:100px; height:30px;">删除评论</button></a> 
             </div>
             评论日期：{{ comment.create_time }}
             </li>
             {% empty %}
             <br>
-            <li>快来抢沙发吧</li>
+            <br>
+            <br>
+            <li>暂无评论，快去评论吧！</li>
             {% endfor %} 
         </ul>
         
@@ -95,33 +117,4 @@
                 {% endif %}
             </p>           
             <br>
-            <!--提交评论区-->
-            <form action="/comments/addcom/" method="POST">
-                {% csrf_token %}
-                <font size="3" color="gray" >我要评论:</font>
-                <input type="hidden" name="book_id" value="{{ book.book_id }}">
-                <textarea name="content" type="text" placeholder="请在此处输入评论。。。" style="height: 100px;width: 600px;resize: none;"></textarea><br><br>
-                <button>提交</button>
-            </form>
     </div> 
-
-    <div class="rank_menu"> 
-        <!-- 对应旁边的人气榜单 -->
-       <!-- borderE6对应边框 -->
-      <div class="borderE6 rank_side"> 
-      <h3><a href="" class="rank_active">人气榜单</a></h3> 
-       <!-- 对应榜单的那条下划线 -->
-      <div class="borderB_e6"></div>
-       <h3>分类榜单</h3> 
-       <p><a href="">科幻榜</a></p> 
-       <p><a href="">悬疑榜</a></p> 
-       <p><a href="">青春文学榜</a></p> 
-       <p><a href="">严肃文学榜</a></p> 
-       <p><a href="">历史架空榜</a></p> 
-       <p><a href="">悬疑榜</a></p> 
-       <p><a href="">青春文学榜</a></p> 
-       <p><a href="">严肃文学榜</a></p> 
-      </div> 
-     </div>
-</body>
-</html> 

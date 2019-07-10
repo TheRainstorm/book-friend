@@ -12,8 +12,8 @@
 
 .commentpage{
     position: absolute;
-	left:350px;  
-	top:171px;
+	left:550px;  
+	top:190px;
     width: 700px;
     background-color:rgba(238, 238, 238, 0.918);
     padding:1%;
@@ -42,7 +42,7 @@
 
 .commentpage ul{
     list-style:none; 
-    color:#ccc;
+    color:rgb(119, 115, 115);
 }
 
 .commentpage li{
@@ -74,12 +74,12 @@
 	border-radius: 10px 10px 10px 10px;
 	width: 60px;
 	height: 30px;
-	background: #999;
+	background:rgb(214,94,100);
 	color:white;
 }
 .commentpage button:hover{
     margin-left: 550px;
-    color: #ccc;
+    color: rgb(204, 204, 204);
 }
 .nums{
 	color: #999;

@@ -1,0 +1,118 @@
+body, body dd, body dl, body dt, body form {
+    margin: 0;
+}
+
+div {
+    display: block;
+}
+
+form, dl, dd, dt, ul, li, p, h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+}
+
+dd {
+    display: block;
+    margin-inline-start: 40px;
+}
+
+dl {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.fllist {
+	border: 1px solid rgb(214,94,100);
+	border-width: 1px 0px 1px 0px;
+	padding: 10px 20px;
+    font-family: "SimSun", "Arial Narrow";
+}
+
+.fllist-item {
+    line-height: 30px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.fllist-item dt {
+	float: left;
+	font-weight: bold;
+	color: #666;
+}
+
+.fllist-item dd {
+	color: rgb(214,94,100);
+}
+
+.fllist-item dd a {
+	margin-left: 18px;
+}
+
+/* .fllist-item dd a.fb {
+	color: rgb(214,94,100);
+	font-weight: bold
+} */
+
+.searchjg {
+    margin-top: 120px;
+    margin-left: 380px;
+    position: relative;
+	padding: 0 0 12px 0;
+	font-size: 12px;
+	font-family: "SimSun", "Arial Narrow";
+	color: #333;
+	font: 12px/1.5 'MicroSoft YaHei';
+}
+
+.main {
+    width: 1000px;
+}
+
+div {
+    display: block;
+}
+
+.searchjg:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.allfl {
+    /* background: url(https://static.17k.com/www/skin/search/search.png) repeat-x 0 -294px; */
+    height: 31px;
+    line-height: 33px;
+    padding-left: 20px;
+    /* border: 1px solid rgb(214,94,100);
+    border-width: 1px 0px 0px; */
+    color: #666;
+}
+
+.tl1121 .books {
+    color: #666;
+}
+
+em {
+    font-style: normal;
+}
+
+a {
+	text-decoration: none;
+	color: #333
+}
+
+a:hover {
+	color: rgb(214,94,100);
+}
+
+.hidden {
+	display: none!important
+}

@@ -2,24 +2,81 @@
 <html>
 <head>
 	{% load static %}
-	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style222.css' %}"> 
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
 	<!--引用base界面-->
 	{% include "base.html" %}
 
-	<div class="list-group" style="float: left; width: 200px; margin-left: 330px; margin-right: 20px; height: 600px; margin-top: 120px;">
-		<span href="#" disabled class="list-group-item list-group-item-action active" style="border: none; background-color: rgb(214,94,100);">用户中心</span>
-		<a href="/users/edit_info/" class="list-group-item list-group-item-action">修改个人信息</a>
-		<a href="/users/my_collects/" class="list-group-item list-group-item-action">我的书架</a>
-		<a href="/users/recent_read/" class="list-group-item list-group-item-action">浏览记录</a>
-		<a href="/users/personal_comments/" class="list-group-item list-group-item-action">个人评论</a>
-		<a href="/books/add/" class="list-group-item list-group-item-action">上传书籍</a>
-		<a href="/users/logout/" class="list-group-item list-group-item-action">登出账户</a>
-	</div>
+	<div class="app-canvas">
+		<div class="menubox" tabindex="0">
+		  <div class="menubox__label">
+			<span class="menubox__label-text">用户中心</span>
+		  </div>
+		  <div class="menubox__contents">
+			<ul class="menubox__options">
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <a href="/users/edit_info/" class="menubox__option-label">修改个人信息</a>
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <a href="/users/my_collects/" class="menubox__option-label">我的书架</a>
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <a href="/users/recent_read/" class="menubox__option-label">浏览记录</a>
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <a href="/users/personal_comments/" class="menubox__option-label">个人评论</a>
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <input type="button" class="menubox__option-label1" value="上传书籍" onclick=OpenWindow('/users/home/add',400,500) />
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+			  <li class="menubox__option">
+				<label class="menubox__option-toggle">
+				  <input type="checkbox">
+				  <a href="/users/logout/" class="menubox__option-label">登出账户</a>
+				  <span class="menubox__option-toggle-check"></span>
+				</label>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </div>
+	
+
+<script "text/javescript">
+	function OpenWindow(url,w,h)
+	{
+		var left=Math.round((window.screen.availWidth-w)/2);
+		var top=Math.round((window.screen.availHeight-100-h)/2);
+		var MyWin=window.open(url, "", "height="+h+", width="+w+",top="+top+",left="+left+", toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
+	}
+	
+</script>  
 	
 	<div class="rank">
 		<h2>用户中心 > 浏览记录</h2>

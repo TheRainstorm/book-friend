@@ -8,9 +8,75 @@ from comments.models import Comment
 from collects.models import Collection
 import os
 import uuid
-
+import re
 from books.enums import BOOKS_TYPE
 import json
+import xlrd
+from django.db import transaction
+
+def read_json(name):
+    path = 'static/books/json/' + name + '.json'
+    with open(path) as f:
+        string = f.read()
+    dict = json.loads(string)
+    return dict
+
+def chapters(request, bookname):
+    content = read_json(bookname)
+    chapters_list = list(content.keys())
+    #id_list = [i for i in range(len(chapters_list))]
+    chapters = []
+    for i in range(len(chapters_list)):
+        chapters.append({'chapters_id': i,'chapters_name':chapters_list[i],})
+    
+    chapters_dic = {
+        'bookname':bookname,
+        'chapters':chapters
+    }
+
+    return render(request,'books/chapters.html',chapters_dic)
+
+def read(request, bookname, chapters_id):
+    '''
+    阅读界面
+    :param request:
+    :param id:书籍ID
+    :param book_id:源ID
+    :param titleID: 章节ID
+    :return:
+    '''
+    # session 获得user
+    user_name = request.session.get('account',None)
+    if user_name:
+        is_login = True
+    else:
+        is_login = False
+
+    content = read_json(bookname)
+    chapters_list =  list(content.keys())
+    
+    last_chapter = int(chapters_id) - 1
+    book_content = content[chapters_list[int(chapters_id)]]
+    next_chapter = int(chapters_id) + 1
+    # 获得书名
+    title = chapters_list[chapters_id]
+    
+    book_content = book_content.replace('上一页', '')
+    book_content = book_content.replace('下一页', '')
+    book_content = book_content.replace('-', '')
+
+    content = re.findall('.*\n', book_content)
+
+    context = {
+        'body':content,
+        'next': next_chapter,
+        'last':last_chapter,
+        'bookname':bookname,
+        'title':title,
+        'is_login':is_login,
+    }
+
+    return render(request,'books/read.html',context=context)
 
 def index(request):
     #session 获得user
@@ -23,33 +89,19 @@ def index(request):
     
     books_li = Book.objects.all()
     all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
-    # type_li = []
-    # for
+
     #每种类型按new分类返回
-    python_new = Book.objects.get_books_by_type(1, limit=7, sort='new')
-    #python_hot = Books.objects.get_books_by_type(PYTHON, limit=4, sort='view-hot')
-    javascript_new = Book.objects.get_books_by_type(2,limit= 7, sort='new')
-    #javascript_hot = Books.objects.get_books_by_type(JAVASCRIPT, limit=4, sort='view-hot')
-    algorithms_new = Book.objects.get_books_by_type(3, 7, sort='new')
-    # algorithms_hot = Books.objects.get_books_by_type(ALGORITHMS, 4, sort='view-hot')
-    # machinelearning_new = Book.objects.get_books_by_type(4, 3, sort='new')
-    # machinelearning_hot = Books.objects.get_books_by_type(MACHINELEARNING, 4, sort='view-hot')
-    # operatingsystem_new = Book.objects.get_books_by_type(5, 3, sort='new')
-    # operatingsystem_hot = Books.objects.get_books_by_type(OPERATINGSYSTEM, 4, sort='view-hot')
-    # database_new = Book.objects.get_books_by_type(6, 3, sort='new')
-    # database_hot = Books.objects.get_books_by_type(DATABASE, 4, sort='view-hot')
+    category1_new = Book.objects.get_books_by_type(1, limit=7, sort='new') #仙侠玄幻
+    category2_new = Book.objects.get_books_by_type(2,limit= 7, sort='new')#历史纵横
+    category3_new = Book.objects.get_books_by_type(3, 7, sort='new')#都市言情
 
     context = {
         'user':user,
         "book_li":books_li,
         'all_book_li_by_hot':all_book_li_by_hot,
-        'type_dic':BOOKS_TYPE,
-        'types_book':[  ['Python',python_new],
-                        ['Javascript',javascript_new],
-                        ['数据结构与算法',algorithms_new],
-                        # ['机器学习',machinelearning_new],
-                        # ['操作系统',operatingsystem_new],
-                        # ['数据库',database_new],
+        'types_book':[  ['仙侠玄幻',category1_new],
+                        ['历史纵横',category2_new],
+                        ['都市言情',category3_new]
                     ],
     }
     
@@ -57,6 +109,81 @@ def index(request):
 
 def go2index(request):
     return redirect('/books/index/')
+
+# #后端上传书籍接口
+# def uploadGrade(request):
+#     '''
+#     班级信息导入
+#     :param request:
+#     :return:
+#     '''
+#     if request.method == 'POST':
+#         f = request.FILES.get('file')
+#         excel_type = f.name.split('.')[1]
+#         if excel_type in ['xlsx','xls']:
+#             # 开始解析上传的excel表格
+#             wb = xlrd.open_workbook(filename=None,file_contents=f.read())
+#             table = wb.sheets()[0]
+#             rows = table.nrows  # 总行数
+#             name_list = ['yfy','jyf','hx','smy','twz','lg','lb','hmx','cgz','mxy','hkh','xmh','qx']
+#             user_list = []
+#             for i in range(13):
+#                 flag = i%13
+#                 user_name = name_list[flag]
+#                 user = User(user_name=user_name,password="123456")
+#                 user_list.append(user)
+#                 user.save()            
+#             with transaction.atomic():  # 控制数据库事务交易
+#                 for i in range(1,rows):
+#                     flag = i%13
+#                     rowVlaues = table.row_values(i)
+#                     path = '**\\books\\picture\\' + str(i-1) + '.jpg' //路径
+#                     rowVlaues[4] = rowVlaues[4][:40]
+#                     print(rowVlaues[0])
+#                     book = Book(title=rowVlaues[1],author=rowVlaues[2],uploader=user_list[flag],type_id=int(rowVlaues[0]),description=rowVlaues[4],image_path=path,view_number=rowVlaues[5],collection_number=rowVlaues[6])
+#                     book.save()
+#                     print(book)
+#             return render(request,'books/shangchuang.html')
+#         else:
+#             return render(request,'books/shangchuang.html')
+
+def shangchuang(request):
+    return render(request, 'books/shangchuang.html')    
+
+def find_chaps(name, bookname):
+    chapters = {}
+    patterns = re.compile('第[一二三四五六七八九]*千*[一二三四五六七八九]*百*零*[一二三四五六七八九]*十*[一二三四五六七八九]*章\s.*\n')
+    encoding = ['utf-8', 'gbk', 'gb2312', 'iso-8859-1']
+    filename = os.getcwd() + '\\static\\books\\text\\' + name
+    for e in encoding:
+        try:
+            with open(filename, encoding=e) as f:
+                text = f.read()
+        except UnicodeDecodeError:
+            pass
+        else:
+            break
+    res = re.findall(patterns, text)
+    title = res[0]
+    text = text.replace(title, '')
+    for i in range(len(res)):
+        if i == (len(res) - 1):
+            content = text
+            title = title.replace('\n', '')
+            chapters[title] = content
+        else:
+            ind = text.index(res[i + 1])
+            content = text[:ind]
+            text = text[ind:]
+            title = title.replace('\n', '')
+            chapters[title] = content
+            title = res[i + 1]
+            text = text.replace(title, '')
+    name = name.replace('.txt', '.json')
+    with open(os.getcwd() + '\\static\\books\\json\\' + bookname + '.json', 'w', encoding='utf-8') as f:
+        f.write(json.dumps(chapters))
+    return chapters
+
 
 def add(request):
     if request.POST:
@@ -67,7 +194,6 @@ def add(request):
         user = User.objects.filter(user_name=user_name)[0]
 
         type_id = request.POST.get('type_id',None)
-        tag_li = request.POST.get('tag',None)
         description = request.POST.get('description',None)
 
         '''上传文本'''
@@ -77,12 +203,19 @@ def add(request):
             os.mkdir(uploadDirPath)  # 是否存在  不存在则添加文件夹
         # 拼接要上传的文件在服务器上的全路径
         postfix = os.path.splitext(objtext.name)[1]
+
+        accept_type = ['.txt','.text']
+        if not postfix in accept_type:
+            return render(request,'users/add.html',{'msg':'文件类型不符'})
+
         objtext_u_name = str(uuid.uuid1())+postfix
         content_path = uploadDirPath + os.sep + objtext_u_name
+ 
         # 上传文件
         with open(content_path, 'wb+') as fp:
             for chunk in objtext.chunks():
-                fp.write(chunk)
+                fp.write(chunk)      
+        find_chaps(objtext_u_name,title)
         '''上传图片'''
         objimage = request.FILES.get('upfileimg',None)
         uploadDirPath = os.path.join(os.getcwd(),'static/books/picture')
@@ -90,6 +223,11 @@ def add(request):
             os.mkdir(uploadDirPath)  # 是否存在  不存在则添加文件夹
         # 拼接要上传的文件在服务器上的全路径
         postfix = os.path.splitext(objimage.name)[1]
+
+        accept_type = ['.jpg', '.jpeg', '.png','.PNG']
+        if not postfix in accept_type:
+            return render(request,'users/add.html',{'msg':'封面类型不符'})
+
         objimage_u_name = str(uuid.uuid1())+postfix
         content_path = uploadDirPath + os.sep + objimage_u_name
         # 上传文件
@@ -105,15 +243,14 @@ def add(request):
             author=author,
             uploader=user,
             type_id=type_id,
-            tag= tag_li,
             description=description,
             content_path=text_path,
             image_path=picture_path
         )
 
-        return render(request,'books/add.html',{'msg':'上传成功'})
+        return render(request,'users/add.html',{'msg':'上传成功'})
     else:
-        return render(request,'books/add.html')
+        return render(request,'users/add.html')
 
 def delete(request,book_id):
     try:
@@ -179,7 +316,7 @@ def detail(request,book_id):
             if e==book.book_id:
                 L.remove(e)
                 break
-        L = [book.book_id]+L[:4]
+        L = [book.book_id]+L[:15]
 
         User.objects.filter(user_name=user.user_name).update(
             recent_read=json.dumps(L)
@@ -189,9 +326,6 @@ def detail(request,book_id):
     else:
         user = None
         collection_li = [1] #没有用户的情况下，非空，不能收藏
-        download_number = 0
-        comment_number = 0 
-        collect_number = 0
     
     #上传者信息
     uploader = book.uploader
@@ -230,22 +364,6 @@ def detail(request,book_id):
         'collect_number':collect_number
     }
     return render(request,'books/eachbook.html',context)
-
-#每一类书的页面
-def types(request,type_id):
-    typeBooks = Book.objects.get_books_by_type(type_id=type_id,sort='new')
-
-    paginator = Paginator(typeBooks,3) #每页显示6本
-    #接受客户端发送的页码:
-    page = request.GET.get('page',1)
-    #
-    try:
-        typeBooks=paginator.page(page)
-    except EmptyPage:
-        typeBooks= paginator.page(1)
-    except PageNotAnInteger:
-        typeBooks = paginator.page(paginator.num_pages)
-    return render(request,'books/category.html',{'book_li' : typeBooks})
 
 def filedownload(request, book_id):
     #增加下载量
@@ -288,7 +406,10 @@ def filedownload(request, book_id):
 def paihang(request):
     #session 获得user
     user_name = request.session.get('account',None)
-    user = User.objects.filter(user_name=user_name)[0]
+    if user_name:
+        user = User.objects.filter(user_name=user_name)[0]
+    else:
+        user = None
 
     new_list = Book.objects.get_all_ranking(limit=10,sort='new')
     n_new_list = new_list[3:]
@@ -312,3 +433,34 @@ def paihang(request):
         'collect_list':collect_list,
     }
     return render(request,'books/paihang.html',context)
+
+
+def go_to_category(request, type_id, order_by):
+    #session 获得user
+    user_name = request.session.get('account',None)
+    if user_name:
+        user = User.objects.filter(user_name=user_name)[0]
+    else:
+        user = None
+    if order_by == 'create_time':
+        sort = '-create_time'
+    elif order_by == 'view_number':
+        sort = '-view_number'
+    elif order_by == '-collection_number':
+        sort = '-collection_number'
+    else:
+        sort ='-collection_number'
+    book_li = Book.objects.filter(type_id=type_id).order_by(sort)
+
+    paginator = Paginator(book_li,3) #每页显示6本
+    #接受客户端发送的页码:
+    page = request.GET.get('page',1)
+    #
+    try:
+        book_li=paginator.page(page)
+    except EmptyPage:
+        book_li= paginator.page(1)
+    except PageNotAnInteger:
+        book_li = paginator.page(paginator.num_pages)
+
+    return render(request, "books/class.html", {'user':user,'book_li':book_li, 'type_id': type_id})

@@ -15,8 +15,20 @@
 
 <!--登录 登出 书架-->
 <div class="in">
-        <a href="/users/my_collects/"><img src="{% static 'image/back1.jpg' %}"  width="30px"  height="50px"></a>
+        {% if user %}
+        <a href="/users/my_collects/"><img src="{% static 'image/shujia5.jpg' %}" width="30px" height="50px"></a>
+        {% else %}
+        <script>
+            function go2login(){
+                if(window.confirm('前往书架需要登录，是否前往登录？')){
+                    window.location.href = '/users/login/';
+                }
+            }
+        </script>
+        <a onclick="go2login()"><img src="{% static 'image/shujia5.jpg' %}"  width="30px"  height="50px"></a>
+        {% endif %}
         &nbsp; &nbsp; &nbsp;
+
         {% if user %}
         <a href="/users/home/"><img src="{% static user.image %}"  width="30px"  height="50px"></a>
         {% else %}
@@ -28,9 +40,9 @@
 <br><br>
     <div class="nav">
         <a href="/books/index/" class="nav-item"  active-color="orange">首页</a> 
-        <a href="/books/types/1" target="_blanket" class="nav-item"  active-color="green">推理悬疑</a>
-        <a href="/books/types/2" target="_blanket" class="nav-item"  active-color="blue">现代都市</a>
-        <a href="/books/types/3" target="_blanket" class="nav-item"  active-color="red">守望先锋</a> 
+        <a href="/books/goto_category/1/create_time" target="_blanket" class="nav-item"  active-color="green">仙侠玄幻</a>
+        <a href="/books/goto_category/2/create_time" target="_blanket" class="nav-item"  active-color="blue">历史纵横</a>
+        <a href="/books/goto_category/3/create_time" target="_blanket" class="nav-item"  active-color="red">都市言情</a> 
         <a href="/books/paihang/" class="nav-item"  active-color="rebeccapurple">排行榜</a>
         <span class="nav-indicator"></span>
     </div>

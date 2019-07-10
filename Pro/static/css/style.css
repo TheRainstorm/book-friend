@@ -35,7 +35,7 @@ body{
     display: inline-block;
     height: 16px;
     position: relative;
-    top: -40px;
+    top: -95px;
     left: 9px;
     font-family: "Helvetica Neue", Helvetica, tahoma, Arial, 微软雅黑;
     font-weight: bold;
@@ -78,8 +78,8 @@ body{
 
 .rank {
     overflow: hidden;
-    margin-left: 300px;
-    margin-top: 120px;
+    margin-left: 550px;
+    margin-top: -280px;
     width: 1060px;
 }
 
@@ -92,6 +92,7 @@ body{
     padding-bottom: 6px;
     border-bottom: 1px solid rgb(214, 94, 100);
 }
+
 
 .search {
     margin-top: 15px;

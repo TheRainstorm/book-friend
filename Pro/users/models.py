@@ -24,7 +24,7 @@ class PassportManager(models.Manager):
 class User(BaseModel):
     '''用户模型类'''
     user_id = models.AutoField(primary_key=True, verbose_name='用户的id')
-    recent_read = models.CharField(max_length=100,default="[]",verbose_name='最近浏览')
+    recent_read = models.CharField(max_length=300,default="[]",verbose_name='最近浏览')
     image = models.CharField(max_length=200)
     user_name = models.CharField(max_length=20, unique=True, verbose_name='用户名称')
     password = models.CharField(max_length=40, verbose_name='用户密码')

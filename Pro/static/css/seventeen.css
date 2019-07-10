@@ -72,14 +72,13 @@ a {
     line-height: 42px;
 }
 
-a:-webkit-any-link {
-    color: -webkit-link;
-    cursor: pointer;
-}
+/* a:-webkit-any-link {
+     cursor: pointer; 
+} */
 
-html {
+/* html {
     color: -internal-root-color;
-}
+} */
 
 .booklist {
 	margin-top: -5px;
@@ -132,7 +131,7 @@ html {
 }
 
 img {
-    image-rendering: -webkit-optimize-contrast;
+    /* image-rendering: -webkit-optimize-contrast; */
 }
 
 img {

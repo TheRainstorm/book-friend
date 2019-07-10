@@ -75,8 +75,8 @@ class Book(BaseModel):
     author = models.CharField(max_length=20, verbose_name='书籍作者')
     uploader = models.ForeignKey('users.User',on_delete=models.CASCADE, verbose_name='上传者')
 
-    type_id = models.SmallIntegerField(default=PYTHON,choices=books_type_choices, verbose_name='书的种类')
-    tag = models.CharField(max_length=1024,verbose_name='标签') #暂时
+    type_id = models.SmallIntegerField(default=1,choices=books_type_choices, verbose_name='书的种类')
+    # tag = models.CharField(max_length=1024,verbose_name='标签') #暂时
     description = models.CharField(max_length=128, verbose_name='简介')
 
     content_path = models.CharField(max_length=200, verbose_name='书籍保存路径')

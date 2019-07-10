@@ -6,8 +6,6 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edgDe">
         <title>Document</title>
         {% load static %}	
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/home_fuck_problems.css' %}"> -->
-
         <!--核心样式-->
         <link rel="stylesheet" type="text/css" href="{% static 'css/style222.css' %}"> 
     </head>
@@ -39,7 +37,7 @@
                   <li class="menubox__option">
                     <label class="menubox__option-toggle">
                       <input type="checkbox">
-                      <a href="/users/my_collects/" class="menubox__option-label">我的收藏</a>
+                      <a href="/users/my_collects/" class="menubox__option-label">我的书架</a>
                       <span class="menubox__option-toggle-check"></span>
                     </label>
                   </li>
@@ -84,6 +82,7 @@
             var top=Math.round((window.screen.availHeight-100-h)/2);
             var MyWin=window.open(url, "", "height="+h+", width="+w+",top="+top+",left="+left+", toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
         }
+        
     </script>     
 
 
@@ -113,7 +112,7 @@
             <div class="fl QUIEND">
 			    <!--最近浏览-->
 			    <div class="box">
-                    <h2 class="b-tit"><span class="con">最近浏览</span><a class="more" href="#" target="_blank">查看全部>></a></h2>
+                    <h2 class="b-tit"><span class="con">最近浏览</span><a class="more" href="/users/recent_read/" target="_blank">查看全部>></a></h2>
                         <div class="b-con">
                             <div class="booklist">
                                 {% for book in recent_read_book_li|slice:"0:5" %}
@@ -126,7 +125,7 @@
                 </div>
                 <!--最近收藏-->
                 <div class="box">
-                    <h2 class="b-tit"><span class="con">最近收藏</span><a class="more" href="#" target="_blank">查看全部>></a></h2>
+                    <h2 class="b-tit"><span class="con">最近收藏</span><a class="more" href="/users/my_collects/" target="_blank">查看全部>></a></h2>
                         <div class="b-con">
                             <div class="booklist">
                                 {% for book in collect_book_li|slice:"0:5" %}

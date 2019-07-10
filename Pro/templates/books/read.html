@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="{% static 'css/read_main.css' %}">
+
+    <title>在线阅读 - {{ bookname }} - 悦读·书友</title>
+    <link rel="stylesheet" href="{% static 'css/read.css' %}">
+    <style>
+        #yun-tie-sdk-wrap {
+            background-color: #f8f3e9;
+            margin-top: 20px;
+        }
+    </style>
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?d9af2fd1fd46f5278efda5231ad3a8cb";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    <style>
+        #cnzz_stat_icon_1262602051 {
+            display: none;
+        }
+    </style>
+
+
+    <!-- Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body >
+<nav class="navbar navbar-default nav-search">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">首页</a>
+        </div>
+        {% if not is_login %}
+        <div class="login">
+            <a class="btn btn-primary pull-right" href="/users/login/" role="button" data-toggle="modal" data-target="#login">登录</a>
+        </div>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="container all-content">
+    <div class="title">
+        <h2 id="content_name">{{ title }}</h2>
+    </div>
+    <div class="left-bar-list">
+        <div class="left-bar-flag">
+            <a href="/books/chapters/{{bookname}}/">
+                <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+                <div>目录</div>
+            </a>
+        </div>
+        <div class="left-bar-flag">
+            <a href="">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                <div>设置</div>
+            </a>
+        </div>
+        <div class="left-bar-flag">
+            {% if is_login %}
+            <a href="/users/my_collects/">
+                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                <div>书架</div>
+            </a>
+            {% else %}
+            <a href="javascript:;">
+                <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                <div>书架</div>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="show-content">
+        <div id="content">
+        {%  for i in body %}
+            <p>{{ i }}</p>
+        {% endfor %}
+        </div>
+    </div>
+    <div class="pre_next">
+        {% if last < 0 %}
+            <a class="btn btn-default" href="/books/chapters/{{bookname}}/">上一章</a>
+        {% else %}
+            <a class="btn btn-default" href="/books/read/{{bookname}}/{{last}}">上一章</a>
+        {% endif %}
+        {% if next == -99 %}
+            <a class="btn btn-default" href="/books/chapters/{{bookname}}/">下一章</a>
+        {% else %}
+            <a class="btn btn-default" href="/books/read/{{bookname}}/{{next}}">下一章</a>
+        {% endif %}
+    </div>
+    <div class="move">
+        <div class="move_up">
+            <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+        </div>
+        <div class="move_down">
+            <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{% static 'js/read_main.js' %}"></script>
+<div class="cnzz" style="display: none">
+    <script src="https://s19.cnzz.com/z_stat.php?id=1262602051&web_id=1262602051" language="JavaScript"></script>
+</div>
+
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/content.js' %}"></script>
+
+</body>
+</html>

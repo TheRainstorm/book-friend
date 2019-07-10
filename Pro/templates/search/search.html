@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,9 +19,44 @@
         }
 </script>
 <body>
+
+<!-- base content -->
 <link rel="stylesheet" href="{% static 'css/edit.css' %}">
-      <!--引用base界面-->
-    {% include "base.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
+<!--取消下划线-->
+<style type="text/css">a {text-decoration: none}</style>  
+<script  src="{% static 'js/script111.js' %}"></script>
+
+<!--logo和搜索-->
+<a href="/books/index/"><img class="img-align1" src="{% static 'image/logo.png' %}"></a>
+<div class="searchForm">
+<form action="/search/">
+    <input type="text" name="q" placeholder="搜索">
+    <button type="submit"></button>
+</form>
+</div>
+
+<!--登录 登出 书架-->
+<div class="in">
+        <a id="shujia_url" href="/users/my_collects/"><img src="/static/image/shujia5.jpg" width="30px"  height="50px"></a>
+        &nbsp; &nbsp; &nbsp;
+        <a id="headpic_url" href="/users/home/"><img id="headpic" width="30px" ></a>
+</div>
+
+<!--首页 分类-->
+<br><br>
+    <div class="nav">
+        <a href="/books/index/" class="nav-item"  active-color="orange">首页</a> 
+        <a href="/books/goto_category/1/create_time" target="_blanket" class="nav-item"  active-color="green">推理悬疑</a>
+        <a href="/books/goto_category/2/create_time" target="_blanket" class="nav-item"  active-color="blue">现代都市</a>
+        <a href="/books/goto_category/3/create_time" target="_blanket" class="nav-item"  active-color="red">守望先锋</a> 
+        <a href="/books/paihang/" class="nav-item"  active-color="rebeccapurple">排行榜</a>
+        <span class="nav-indicator"></span>
+    </div>
+
+
+
 <p class="word">关于 <span class="keyword" id="q"></span> 的搜索结果：</p>
     <!-- <p class="word">关于 <span class="keyword">你不知道</span> 的搜索结果：</p> -->
 	<div class="limit-free-list cf book-detail-wrap center1020">
@@ -42,35 +76,79 @@
 												<a class="default name">{{ result.object.author }}</a><em>|</em>
 												<a href="#">{{ result.object.type_id }}</a><em>|</em>{{ result.object.view_number }}
 											</p>
-											<p class="intro">{{ result.object.description }}</p>
+											<p class="intro">简介：{{ result.object.description }}</p>
 										</div>
 										<div class="book-right-info">
 											<p class="btn">
 												<a class="red-btn" href="/books/{{ result.object.book_id}}" style="background-color: rgb(214, 94, 100);border-color: rgb(214, 94, 100);color:white">书籍详情</a>
 											</p>
 										</div>
-									</li>
+                                    </li>
+                                    {% empty %}
+                                    <p>本站暂时未收录该书籍</p>
 									{% endfor %}
 
                                 </ul>
                             </div>
                         </div>
                     </div>
+                    <div class="pagenation">
+                            {% if page.has_previous %}
+                                <a href="/search/?q={{ query }}&page={{ page.previous_page_number }}"><上一页</a>
+                            {% endif %}
+                            {% for pindex in paginator.page_range %}
+                                {% if pindex == page.number %}
+                                    <a href="/search/?q={{ query }}&page={{ pindex }}" class="active">{{ pindex }}</a>
+                                {% else %}
+                                    <a href="/search/?q={{ query }}&page={{ pindex }}">{{ pindex }}</a>
+                                {% endif %}
+                            {% endfor %}
+                            {% if page.has_next %}
+                                <a href="/search/?q={{ query }}&page={{ page.next_page_number }}">下一页></a>
+                            {% endif %}
+                    </div>
                 </div>
 
+
+        
 <footer class="footer">
   <div class="container">
     <p class="text-center ">本站所收录作品均来自互联网<br/>蜀ICP备17035299号</p>
   </div>
 </footer>
+
 <script>
     function detail(id){
         window.location.href = '/books/'+ id
     }
+    //显示关键词keyword
     var url = window.location.href;
     text = url.split("=")[1];
-    // console.log(text);
-    document.getElementById("q").innerHTML=text;
+    document.getElementById("q").innerHTML=decodeURI(text);
+
+    //显示头像
+    var headpic_path = getCookie("headpic_path");
+
+    if(headpic_path=='"/static/image/book.png"'){
+        document.getElementById("headpic_url").href="/users/login/";
+        document.getElementById("shujia_url").href="/users/login/";
+    }
+    if(headpic_path=='"/static/image/book.png"'){
+        document.getElementById("headpic_url").href = "/users/login/";
+    }
+    document.getElementById("headpic").src = headpic_path.split("\"")[1];
+    function getCookie(name){
+        var strcookie = document.cookie;//获取cookie字符串
+        var arrcookie = strcookie.split("; ");//分割
+        //遍历匹配
+        for ( var i = 0; i < arrcookie.length; i++) {
+            var arr = arrcookie[i].split("=");
+            if (arr[0] == name){
+                return arr[1];
+            }
+        }
+        return '"/static/image/book.png"';
+    }
 </script>
 </body>
 </html>

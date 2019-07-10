@@ -64,8 +64,8 @@
 }
 .flrg{
     position: fixed;
-    top: 100%;
-    left:7%;
+    top: 90%;
+    left:11%;
     transform: translateY(-50%);
     float: right;
     width: 330px;
@@ -328,6 +328,10 @@ select::-ms-expand { display: none; }
            height: auto; 
            font-family:Microsoft YaHei;
            border-radius: 4px; 
+     }
+
+     .shifouok{
+         margin-top: -150px;
      }
 
 

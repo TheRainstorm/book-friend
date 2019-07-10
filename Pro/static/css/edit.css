@@ -1629,7 +1629,7 @@ embed {
 .inner-wrap {
   padding: 20px;
   border-radius: 6px;
-  background: #fff
+  background: #fafafa;
 }
 .book-img {
   width: 72px;
@@ -3763,8 +3763,9 @@ body {
   position: relative;
   z-index: 10;
   min-height: 700px;
-  float:center;
+  margin-left: 380px;
 }
+
 .book-information {
   position: relative;
   z-index: 2;
@@ -10599,7 +10600,7 @@ span.rank-tag.no3 {
   z-index: 1;
   overflow: hidden;
   padding: 22px 0;
-  margin-left:-50px;
+
   border-top: 1px solid #e6e6e6;
   width:900px;
 }
@@ -11137,7 +11138,11 @@ span.rank-tag.no3 {
   margin-left: auto
 }
 .fl {
-  float: left
+  float: left;
+  border-top: 3px solid #ccc;
+  border-left: 1.5px solid #ccc;
+  border-right: 0.5px solid #ccc;
+  border-bottom: 0.5px solid #ccc;
 }
 .fr {
   float: right
@@ -11549,12 +11554,13 @@ span.rank-tag.no3 {
 
 .word{
   margin-top: 120px;
-  font-size: 12px;
+  font-size: 16px;
   font-family: Microsoft Yahei;
-  margin-left:330px;
+  margin-left:350px;
+  margin-bottom: 10px;
 }
 .keyword{
   color: rgb(206, 76, 82);
-  font-size: 12px;
+  font-size: 16px;
   font-family: Microsoft Yahei;
 }

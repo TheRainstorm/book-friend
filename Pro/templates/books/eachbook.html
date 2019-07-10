@@ -29,7 +29,9 @@
                 },
                 success:function(data){
                     if(data == 'False'){
-                        alert('请先登录')
+                        if(window.confirm("前往登录？")){
+                            window.location.href = "/users/login/";
+                        }
                     }else{
                         // console.log(data);
                         comm_obj = JSON.parse(data);
@@ -84,7 +86,7 @@
              <br>
              <!--开始阅读-->
              <div class="btn-group">
-                <button class="btn-group_button1" ><a  href=""><font color="white">开始阅读</font></a></button>
+                <button class="btn-group_button1" ><a  href="/books/chapters/{{book.title}}"><font color="white">开始阅读</font></a></button>
 
 
                 {% if not is_collected %}
@@ -113,11 +115,9 @@
     <!--作者信息-->
 	<div class="AuthorInfo">
         <div class="author">
-            <a href="" target="_blank">
-                &nbsp;<img src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="50" height="50">
-            </a>
+                &nbsp;<img src="{% static book.uploader.image %}" alt="" width="50" height="50">
             <span class="sign">上传作者</span>
-            <a class="name" href="" target="_blank">{{book.uploader.user_name}}</a>
+            <span class="name" >{{book.uploader.user_name}}</span>
             <br>
         </div>
 
@@ -130,17 +130,17 @@
                         <tbody>
                         <tr>
                             <td>
-                                <a href="" target="_blank">
+                                <a>
                                     <span id="hb_total_fold">{{ download_number }}</span>下载
                                 </a>
                             </td>
                             <td>
-                                <a href="" target="_blank">
+                                <a>
                                     <span id="fansScore">{{ collect_number }}</span>收藏
                                 </a>
                             </td>
                             <td>
-                                <a target="_blank" href="">
+                                <a>
                                     <span id="topicCount">{{ comment_number }}</span>评论
                                 </a>
                             </td>
@@ -207,18 +207,13 @@
         <!-- 对应旁边的人气榜单 -->
        <!-- borderE6对应边框 -->
       <div class="borderE6 rank_side"> 
-      <h3><a href="" class="rank_active">人气榜单</a></h3> 
+      <h3><span class="rank_active">人气榜单</span></h3> 
        <!-- 对应榜单的那条下划线 -->
       <div class="borderB_e6"></div>
-       <h3>分类榜单</h3> 
-        <p><a href="">科幻榜</a></p> 
-        <p><a href="">悬疑榜</a></p> 
-        <p><a href="">青春文学榜</a></p> 
-        <p><a href="">严肃文学榜</a></p> 
-        <p><a href="">历史架空榜</a></p> 
-        <p><a href="">悬疑榜</a></p> 
-        <p><a href="">青春文学榜</a></p> 
-        <p><a href="">严肃文学榜</a></p> 
+       <h3>分类榜单</h3>
+        <p><a href="/books/goto_category/1/create_time">仙侠玄幻</a></p> 
+        <p><a href="/books/goto_category/2/create_time">历史纵横</a></p> 
+        <p><a href="/books/goto_category/3/create_time">都市言情</a></p> 
       </div> 
      </div>
 </body>

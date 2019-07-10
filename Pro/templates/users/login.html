@@ -301,7 +301,11 @@
                 
                 <span class="circle">
                     <div>
+                        {% if headpic_path %}
+                        <img id="display_img" src="{% static headpic_path %}" width="200px" height="200px">
+                        {% else %}
                         <img id="display_img" src="{% static 'image/headpic/yuxiaoqin.jpg' %}" width="200px" height="200px">
+                        {% endif %}
                     </div>
                     <!-- <span></span> -->
                         
@@ -340,7 +344,7 @@
                 success: function(data){
                     console.log(data);
                     if(data=='False'){
-                        ;
+                        $('#display_img').attr("src",'/static/image/headpic/yuxiaoqin.jpg');
                     }
                     else{
                         $('#display_img').attr("src",data);

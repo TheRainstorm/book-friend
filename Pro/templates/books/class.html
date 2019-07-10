@@ -1,0 +1,105 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <!-- <link rel="stylesheet" type="text/css" href="static/css/search.css"> -->
+    
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+
+    <title>分类-悦读·书友</title>
+
+    <meta charset="UTF-8">
+    <meta name="description"  content="悦读·书友是一个免费小说阅读网站">
+    <meta name="keywords"  content="悦读·书友,免费小说,完本小说,阅读,读书,全本小说">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+
+<body>
+    <!-- <link rel="stylesheet" href="{% static 'css/edit.css'}"> -->
+    
+    <!--引用base界面-->
+    {% include "base.html" %}
+    <link rel="stylesheet" href="{% static 'css/bookClass.css' %}">
+    <div class="main searchjg">
+            <div class="allfl">
+                <span class="tl1121">
+                   <em class="books">首页 > 分类</em>
+                </span>
+            </div>
+            <div class="fllist" style="display: block;">
+                    <div class="fllist-item">
+                        <dl>
+                            <dt>作品类别：</dt>
+        
+                                <dd class="allzplb" style="padding-left: 60px;">
+                                    <a href="/books/goto_category/1/create_time" class="fb"><span >仙侠玄幻</span></a>
+                                    <a href="/books/goto_category/2/create_time">历史纵横</a>
+                                    <a href="/books/goto_category/3/create_time">都市言情</a>
+                                </dd>
+                        </dl>
+                    </div>
+        
+                    <div class="fllist-item">
+                        <dl>
+                            <dt>排序方式：</dt>
+                            <!-- 是否需要按照时间顺序进行排序 -->
+                            <dd>
+                                <a href="/books/goto_category/{{type_id}}/create_time"  class="fb">按最新</a>
+                                <a href="/books/goto_category/{{type_id}}/view_number">浏览量</a>
+                                <a href="/books/goto_category/{{type_id}}/collection_number">收藏量</a>
+                            </dd>
+                        </dl>
+                    </div>
+        
+                </div>
+            </div>
+
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/edit.css' %}">
+        
+
+    <!--分类结果-->
+	<div class="limit-free-list cf book-detail-wrap center1020">
+        <div class="limit-book-list fl" data-l1="5">
+            <div id="limit-list" class="inner-wrap">
+                    <div class="book-img-text">
+                        <ul>
+                            {% for book in book_li %}
+                            <li>
+                                <div class="book-img-box">
+                                    <a href="/books/{{book.book_id}}"><img src="{% static book.image_path %}"></a>
+                                </div>
+                                <div class="book-mid-info">
+                                    <h4><a href="/books/{{book.book_id}}">{{ book.title }}</a></h4>
+                                    <p class="author"><img src="{% static 'image/author.png' %}">
+                                        <a class="default name">{{ book.author }}</a><em>|</em>
+                                        <a href="/books/goto_category/{{type_id}}">{{ book.type_id }}</a><em>|</em>{{ book.view_number }}
+                                    </p>
+                                    <p class="intro">{{ book.description }}</p>
+                                    
+                                </div>
+                                <div class="book-right-info">
+                                    <p class="btn">
+                                        <a class="red-btn" href="/books/{{book.book_id}}" style="background-color: rgb(214, 94, 100);border-color: rgb(214, 94, 100);color:white">书籍详情</a>
+                                    </p>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <p>
+                                {% if book_li.has_previous %}
+                                <a href="?page={{ book_li.previous_page_number }}">上一页</a>
+                                {% endif %}
+                                当前：{{ book_li.number }} / {{ book_li.paginator.num_pages }}
+                                {% if book_li.has_next %}
+                                <a href="?page={{ book_li.next_page_number }}">下一页</a>
+                                {% endif %}
+                            </p>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
