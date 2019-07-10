@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+{% load static %} 
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>上传</title>
+    <link rel="stylesheet" href="{% static 'css/shangchuanshu.css' %}">
+</head>
+<body>
+<div class="wel" id="background-3"></div>
+<div class="wel" id="box">
+    <div class="box-1 lefp"></div>
+    <div class="box-1">
+        <div class="righp"></div>
+    </div>
+</div>
+<!--荧光点点-->
+<div class="wel" id="git"></div>
+<!--登录注册表-->
+<div class="wel" id="from">
+    <div class="box-2 le-1">
+            <div class="flrg">
+                 <h1>添加书</h1>
+                <div class="hr1"></div>
+                <form action="/books/add/" method="POST" enctype="multipart/form-data">
+                         {% csrf_token %}   
+
+                <div class="a">
+                    <input class="in-1" type="text"  placeholder="请输入书籍标题" name="title">
+                </div><br>
+                <div class="a">
+                    <input class="in-1" type="text"  placeholder="请输入书籍作者" name="author">
+                </div><br>
+              <div class="a"><div class="in-1">
+                <select name="type_id" id="" class="in-1">
+                   <option value ="1">请选择书籍类型</option>
+                   <option value ="2">Saab</option>
+                   <option value="3">Opel</option>
+                   <option value="4">Audi</option>
+                </select>
+                </div>
+                <br>
+                <div class="a">
+                <a href=".static/css/shangchuanshu.css" class="file" id="file2">选择上传文档  
+                    <input type="file" name="upfiletxt" id="u1">  
+                </a> 
+                <a href=".static/css/shangchuanshu.css" class="file" >选择上传封面  
+                    <input type="file" name="upfiletxt" id="u2">  
+                </a><br><br>
+
+                
+                <textarea rows="3" cols="29" class="in-1" id="ziti" style="height: 80px;width: 245px;resize: none;" placeholder="请输入评论"> </textarea> 
+                </div><br><br><br>
+                <button type="button" id="file3">添加</button>  
+        
+        </form>
+
+            <div class="hr2"></div>
+
+            </div>
+            {{ msg }}
+       <!--  </form> -->
+    </div>
+</div>
+
+</body></html>

@@ -33,17 +33,17 @@
                         <tr>
                             <td>
                                 <a href="" target="_blank">
-                                    <span id="hb_total_fold">n</span>下载
+                                    <span id="hb_total_fold">{{ download_number }}</span>下载
                                 </a>
                             </td>
                             <td>
                                 <a href="" target="_blank">
-                                    <span id="fansScore">n</span>收藏
+                                    <span id="fansScore">{{ collect_number }}</span>收藏
                                 </a>
                             </td>
                             <td>
                                 <a target="_blank" href="">
-                                    <span id="topicCount">1.6万</span>评论
+                                    <span id="topicCount">{{ comment_number }}</span>评论
                                 </a>
                             </td>
                         </tr>
@@ -80,7 +80,7 @@
             </li>
             {% empty %}
             <br>
-            <li>暂无评论记录</li>
+            <li>快来抢沙发吧</li>
             {% endfor %} 
         </ul>
         
@@ -95,6 +95,14 @@
                 {% endif %}
             </p>           
             <br>
+            <!--提交评论区-->
+            <form action="/comments/addcom/" method="POST">
+                {% csrf_token %}
+                <font size="3" color="gray" >我要评论:</font>
+                <input type="hidden" name="book_id" value="{{ book.book_id }}">
+                <textarea name="content" type="text" placeholder="请在此处输入评论。。。" style="height: 100px;width: 600px;resize: none;"></textarea><br><br>
+                <button>提交</button>
+            </form>
     </div> 
 
     <div class="rank_menu"> 

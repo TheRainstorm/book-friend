@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <title>Book detail</title>
+</head>
+<body>
+    <a href='/books/index/'>首页</a>
+
+    <p>书籍信息</p>
+    <img width=100px src="{% static book.image_path %}">
+    <p id="book_id">book_id: {{ book.book_id }}</p>
+    <p>book_type: {{ book_type }}</p>
+    <p>uploader: {{ book.uploader.user_name }}</p>
+
+    <!-- 收藏 -->
+    {% if not is_collected %}
+    <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button>
+    {% else %}
+    <button disabled style="color:black; background-color: gray">收藏</button>
+    {% endif %}
+    <!-- 添加评论 -->
+    <p>添加评论</p>
+    <form action="/comments/addcom/" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="book_id" value="{{ book.book_id }}">
+        <textarea name="content" style="height:100px; background-color: antiquewhite" placeholder="留下评论"></textarea>
+        <input type="submit" value="提交">
+    </form>
+    <!-- 显示评论 -->
+    <p>显示评论</p>
+    <ol>
+        {% for comment in comment_li %}
+        <li>
+            评论者：{{ comment.userName.user_name }}<br>
+            评论日期：{{ comment.create_time }}
+            内容：{{ comment.content }}
+        </li>
+        {% empty %}
+        <li>快来抢沙发吧</li>
+        {% endfor %}
+    </ol>
+</body>
+<script>
+    function collect(id){
+        window.location.href = '/collects/collect_add/'+ id
+    }
+</script>
+</html>

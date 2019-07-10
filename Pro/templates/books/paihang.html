@@ -1,3 +1,4 @@
+{% load static %}	
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +9,8 @@
     <!--取消下划线-->
     <style type="text/css">a {text-decoration: none}</style>  
     <!-- 最重要的css -->
-    <link rel="stylesheet" type="text/css" href="/static/css/basic.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/rank.min.css" /> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/basic.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/rank.min.css' %}" /> 
 </head>
   <body>
    <!--引用base界面-->

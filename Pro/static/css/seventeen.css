@@ -7,11 +7,6 @@ div {
     display: block;
 }
 
-/*body {
-    font: 12px/1.5 'MicroSoft YaHei';
-    color: #333;
-}*/
-
 h2 {
     display: block;
     font-size: 1.5em;
@@ -48,7 +43,7 @@ h2, h3, li, p, ul {
 .box .b-tit .con {
     line-height: 42px;
 	font-family: "微软雅黑";	
-    font-size: 12px;
+    font-size: 16px;
     color: #4A4A4A;
     position: relative;
     padding-left: 15px;
@@ -66,23 +61,20 @@ h2, h3, li, p, ul {
 }
 
 a {
-    text-decoration: none;
     color: #666;
 }
 
 .box .b-tit .more {
 	font-family: "微软雅黑";
-    font-size: 12px;
+    font-size: 16px;
     color: #4A4A4A;
     float: right;
     line-height: 42px;
-    text-decoration: none;
 }
 
 a:-webkit-any-link {
     color: -webkit-link;
     cursor: pointer;
-    text-decoration: underline;
 }
 
 html {
@@ -92,8 +84,7 @@ html {
 .booklist {
 	margin-top: -5px;
 	margin-left: -12px;
-	width: 710px;
-    height: 145px;
+    height: 180px;
 
 }
 
@@ -107,8 +98,8 @@ html {
 }
 
 .content .fl {
-    margin-left: 10px;
-    width: 710px;
+    margin-left:50px;
+    width: 850px;
     margin-right: 20px;
     background: #fff;
     padding-bottom: 20px;
@@ -136,8 +127,8 @@ html {
 }
 
 .box .b-con .booklist a img {
-    width: 75px;
-    height: 100px;
+    width: 100px; 
+    height: 120px;
 }
 
 img {
@@ -159,7 +150,7 @@ img {
 }
 
 .box .b-con .booklist a {
-    width: 74px;
+    width: 100px;
     text-align: center;
     float: left;
     margin: 0 8px;
@@ -169,7 +160,6 @@ img {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    text-decoration: none;
     color: #666;
     margin-left: 50px;
 

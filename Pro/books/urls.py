@@ -12,6 +12,4 @@ urlpatterns = [
     path('types/<int:type_id>',views.types),
     path('download/<int:book_id>',views.filedownload),
     path('paihang/',views.paihang),
-    path('paihang/<str:typename>',views.get_type_ranking),
-
 ]

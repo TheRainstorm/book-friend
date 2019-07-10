@@ -541,19 +541,7 @@ textarea {
 	color: #d32f2f
 }
 
-.nav {
-	border-bottom: 2px solid #ededed
-}
 
-.nav a {
-	display: inline-block;
-	font-size: 16px;
-	color: #333;
-	font-weight: 700;
-	line-height: 21px;
-	text-decoration: none;
-	margin-right: 70px
-}
 
 .menu-left {
 	position: relative
@@ -590,29 +578,8 @@ textarea {
 	background: url(../images/author-zone-have.png) no-repeat left 3px
 }
 
-.nav a em {
-	display: block;
-	height: 4px;
-	margin: 4px auto 0;
-	background: #fff;
-	width: 60%
-}
-
-.nav a.active em,.nav a.current em,.nav a:hover em {
-	background: #d32f2f
-}
-
-.head-simple .menu .active a,.head-simple .menu .cate ul li a:hover,.head-simple .menu a:hover,.nav a.active,.nav a:hover {
+.head-simple .menu .active a,.head-simple .menu .cate ul li a:hover,.head-simple .menu a:hover {
 	color: #d32f2f
-}
-
-.nav .phone {
-	padding-left: 21px;
-	background: url(../images/phone.png) no-repeat left 3px
-}
-
-.nav .phone:hover {
-	background: url(../images/phone-have.png) no-repeat left 3px
 }
 
 .menu-left .app-menu {

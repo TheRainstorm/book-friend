@@ -12,5 +12,5 @@ urlpatterns = [
     path('personal_comments/', views.personal_comments),    
     path('my_collects/', views.my_collects),
     path('get_headpic/', views.get_headpic),
-
+    path('home/add/', views.shangchuan),
 ]

@@ -29,10 +29,7 @@
                 },
                 success:function(data){
                     if(data == 'False'){
-
-                        if(window.confirm('需要登录，是否登录？')){
-                            window.location.href = '/users/login/';
-                        }
+                        alert('请先登录')
                     }else{
                         // console.log(data);
                         comm_obj = JSON.parse(data);
@@ -56,9 +53,9 @@
     });
 </script>
 <body>
-    <!--引用base界面-->
-    {% include "base.html" %}
 
+<!--引用base界面-->
+{% include "base.html" %}
     <!--白色嵌入-->
     <div action="" class="personal">
         <!--书封面-->
@@ -96,8 +93,7 @@
 
                 <!-- <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button> -->
                 {% else %}
-                <button class="btn-group_button2" disabled style="color:black; background-color: gray"><font color="pink">加入书架</font></button>
-                
+                <button class="btn-group_button2" disabled style="color:rgb(236, 230, 230); background-color: rgb(236, 230, 230)"><font color="pink">加入书架</font></button>
                 <!-- <button disabled style="color:black; background-color: gray">收藏</button> -->
                 {% endif %}
 
@@ -106,7 +102,7 @@
                
                 &nbsp;&nbsp;&nbsp;&nbsp;<img src="{% static 'image/3.jpg' %}" alt="" width="20" height="20">
                 <!-- <button class="btn-group_button3" id="donwload" onclick="donwload('{{ book.book_id }}');"><a  href=""><font color="gray" >下载</font></a></button> -->
-                <button id="donwload" class="donwload" onclick="donwload('{{ book.book_id }}');">下载</button>
+                <button id="donwload" class="btn-group_button3" onclick="donwload('{{ book.book_id }}');"><a>下载</a></button>
             </div>    
              <!--<button>开始阅读</button>      <input type="radio">喜欢           <button>下载</button>-->
             </ul>
@@ -121,16 +117,45 @@
                 &nbsp;<img src="{% static 'image/nvtouxiang.jpg' %}" alt="" width="50" height="50">
             </a>
             <span class="sign">上传作者</span>
-            <a class="name" href="" target="_blank">{{book.uploader}}</a>
+            <a class="name" href="" target="_blank">{{book.uploader.user_name}}</a>
             <br>
         </div>
+
+        <dl class="modle">
+                <dt>
+                    <label><span>作者信息</span></label>
+                </dt>
+                <dd>
+                    <table class="data" cellspacing="1" width="100%">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <a href="" target="_blank">
+                                    <span id="hb_total_fold">{{ download_number }}</span>下载
+                                </a>
+                            </td>
+                            <td>
+                                <a href="" target="_blank">
+                                    <span id="fansScore">{{ collect_number }}</span>收藏
+                                </a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="">
+                                    <span id="topicCount">{{ comment_number }}</span>评论
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </dd>
+            </dl>
 
         <dl class="modle">
             <dt>
                 <label><span>作者公告</span></label>
             </dt>
             <dd>
-                <p> 【欢迎关注我的微信公众号皇甫奇，搜索名字即可，可以在里面和我聊天哦!】 </p>                        
+                <p>{{ book.uploader.signature }}</p>                        
             </dd>
         </dl>
     </div>

@@ -32,6 +32,7 @@ class User(BaseModel):
     signature = models.CharField(max_length=100,default="",verbose_name='个性签名')
     gender = models.CharField(max_length=10,default="male", verbose_name='性别')
 
+    download_number = models.IntegerField(default=0,verbose_name='下载量')
     #用户的管理表
     objects = PassportManager()
     

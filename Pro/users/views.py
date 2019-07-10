@@ -1,7 +1,5 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,StreamingHttpResponse
-from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-
 
 from users.models import User
 from books.models import Book
@@ -66,14 +64,13 @@ def home(request):
     collect_li = Collection.objects.filter(user=user)
     collect_book_li = [e.book for e in collect_li]
 
-    view_num = len(recent_read_book_li) #浏览量
-    collect_num = len(collect_book_li) #收藏量
-
+    comment_number = len(Comment.objects.filter(userName=user))
+    collect_number = len(Collection.objects.filter(user=user))
     context = {
         "user":user,
         'headpic_url':user.image,
-        'view_num':view_num,
-        'collect_num':collect_num,
+        'comment_number':comment_number,
+        'collect_number':collect_number,
         'recent_read_book_li':recent_read_book_li,
         'collect_book_li':collect_book_li,
     }
@@ -94,21 +91,12 @@ def personal_comments(request):
 
     comment_li =Comment.objects.filter(userName=user)
 
-    paginator = Paginator(comment_li,7) #每页显示6本
-    #接受客户端发送的页码:
-    page = request.GET.get('page',1)
-    #
-    try:
-        comment_li=paginator.page(page)
-    except EmptyPage:
-        comment_li= paginator.page(1)
-    except PageNotAnInteger:
-        comment_li = paginator.page(paginator.num_pages)
     return render(request,'users/commentpage.html',{'comment_li':comment_li,'user':user})
 
 def my_collects(request):
     user_name = request.session.get('account',None)
-        
+    if user_name==None:
+        return redirect('/users/login/')
     user = User.objects.filter(user_name=user_name)[0]
 
     collection_li = Collection.objects.filter(user=user)
@@ -116,7 +104,6 @@ def my_collects(request):
     book_li=[]
     for collect in collection_li:
         book_li.append(collect.book)
-        
     return render(request,'users/shelf.html',{'book_li':book_li,'user':user})
 
 def edit_info(request):
@@ -200,8 +187,9 @@ def register(request):
             #上传头像
             src = upload_headpic(request)
             
-            user = User(user_name = usr_name,password = password,image = src)
-            user.save()
+            # user = User(user_name = usr_name,password = password,image = src,signature=None)
+            # user.save()
+            User.objects.create(user_name = usr_name,password = password,image = src,signature="")
 
             return render(request,'users/login.html')
     else:
@@ -216,3 +204,7 @@ def get_headpic(request):
         print(user_li[0].image)
         image_url = '/static/' + user_li[0].image
         return HttpResponse(image_url)
+
+# 上传页面弹窗
+def shangchuan(request):
+    return render(request,'users/add.html')

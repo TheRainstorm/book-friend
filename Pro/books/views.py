@@ -128,7 +128,6 @@ def goupdate(request,book_id):
     return render(request,'books/update.html',{'book':book})
 
 def update(request):
-
     book_id = request.POST.get('book_id',None)
     title = request.POST.get('title',None)
     author = request.POST.get('author',None)
@@ -190,7 +189,17 @@ def detail(request,book_id):
     else:
         user = None
         collection_li = [1] #没有用户的情况下，非空，不能收藏
+        download_number = 0
+        comment_number = 0 
+        collect_number = 0
     
+    #上传者信息
+    uploader = book.uploader
+
+    download_number = uploader.download_number
+    comment_number = len(Comment.objects.filter(userName=uploader))
+    collect_number = len(Collection.objects.filter(user=uploader))
+
     if len(collection_li)==0:
         is_collected=0
     else:
@@ -211,13 +220,16 @@ def detail(request,book_id):
 
     context = {
         'user':user,
+        # 'uploader':uploader,
         'book':book,
         'book_type':book_type,
         'comment_li':comment_li,
-        'is_collected':is_collected
+        'is_collected':is_collected,
+        'download_number':download_number,
+        'comment_number':comment_number,
+        'collect_number':collect_number
     }
     return render(request,'books/eachbook.html',context)
-
 
 #每一类书的页面
 def types(request,type_id):
@@ -236,6 +248,17 @@ def types(request,type_id):
     return render(request,'books/category.html',{'book_li' : typeBooks})
 
 def filedownload(request, book_id):
+    #增加下载量
+    user_name = request.session.get('account',None)
+    if user_name:
+        user = User.objects.filter(user_name=user_name)[0]
+        download_number = user.download_number
+        User.objects.filter(user_name=user_name).update(
+            download_number = download_number+1
+        )
+    else:
+        return redirect('/users/login/')
+    
 # 定义一个内部函数分块读取下文件数据
     def fileIterator(downloadFilePath, chunkSize=512):
         # 读取二进制文件
@@ -246,6 +269,7 @@ def filedownload(request, book_id):
                     yield content
                 else:
                     break
+
     #获得下载对象
     book = Book.objects.get(book_id = book_id)
     # 获取下载文件的全路径
@@ -262,13 +286,9 @@ def filedownload(request, book_id):
     return rep
 
 def paihang(request):
-     #session 获得user
+    #session 获得user
     user_name = request.session.get('account',None)
-
-    if user_name!=None:
-        user = User.objects.filter(user_name=user_name)[0]
-    else:
-        user = None
+    user = User.objects.filter(user_name=user_name)[0]
 
     new_list = Book.objects.get_all_ranking(limit=10,sort='new')
     n_new_list = new_list[3:]
@@ -284,37 +304,6 @@ def paihang(request):
     ccc_collect_list = [(k+4,v) for k,v in cc_collect_list]
     context = {
         'user':user,
-        'nnn_new_list': nnn_new_list,
-        'new_list':new_list,
-        'vvv_view_list':vvv_view_list,
-        'view_list':view_list,
-        'ccc_collect_list':ccc_collect_list,
-        'collect_list':collect_list,
-    }
-    return render(request,'books/paihang.html',context)
-
-def get_type_ranking(request,typename):
-        #session 获得user
-    if typename =='Python':
-        a = 1
-    elif typename =='Javascript':
-        a = 2
-    else:
-        a = 3
-
-    new_list = Book.objects.get_books_by_type(type_id=a,limit=10,sort='new')
-    n_new_list = new_list[3:]
-    nn_new_list =  enumerate(n_new_list)
-    nnn_new_list = [(k+4,v) for k,v in nn_new_list]
-    view_list = Book.objects.get_books_by_type(type_id=a,limit=10,sort='view-hot')
-    v_view_list = view_list[3:]
-    vv_new_list = enumerate(v_view_list)
-    vvv_view_list = [(k+4,v) for k,v in vv_new_list]
-    collect_list = Book.objects.get_books_by_type(type_id=a,limit=10,sort='collect-hot')
-    c_collect_list = collect_list[3:]
-    cc_collect_list = enumerate(c_collect_list)
-    ccc_collect_list = [(k+4,v) for k,v in cc_collect_list]
-    context = {
         'nnn_new_list': nnn_new_list,
         'new_list':new_list,
         'vvv_view_list':vvv_view_list,

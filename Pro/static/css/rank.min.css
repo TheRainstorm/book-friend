@@ -11,9 +11,9 @@
 
 .rank_main {
 	width: 965px;
-	margin-left: 400px;
+	margin-left: 555px;
 	position: absolute;
-	margin-top: 78px;
+	margin-top: 90px;
 }
 
 .rank_menu a:hover {
@@ -21,7 +21,10 @@
 }
 
 .borderE6 {
-	border: 1px solid #e6e6e6
+	top:18px;
+	border: 1px solid #e6e6e6;
+	position:relative;
+	left:230px;
 }
 
 .borderB_e6 {
@@ -153,7 +156,7 @@
 	background-color: #fafafa;
 	border: 1px solid #f0f0f0;
 	padding: 17px 19px 19px;
-	margin-right: 35px;
+	margin-right: 10px;
 	margin-bottom: 40px;
 	float: left;
 	min-height: 479px

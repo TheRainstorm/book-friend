@@ -1,8 +1,11 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
+<!--取消下划线-->
+<style type="text/css">a {text-decoration: none}</style>  
+<script  src="{% static 'js/script111.js' %}"></script>
 
 <!--logo和搜索-->
-<a href="/books/index/"><img class="img-align1" src="{% static 'image/logo.jpg' %}"></a>
+<a href="/books/index/"><img class="img-align1" src="{% static 'image/logo.png' %}"></a>
 <div class="searchForm">
 <form action="/search/">
     <input type="text" name="q" placeholder="搜索">
@@ -12,35 +15,22 @@
 
 <!--登录 登出 书架-->
 <div class="in">
-        {% if user %}
-        <a href="/users/my_collects/"><img src="{% static 'image/5.png' %}"  width="30px"  height="50px"></a>
+        <a href="/users/my_collects/"><img src="{% static 'image/back1.jpg' %}"  width="30px"  height="50px"></a>
         &nbsp; &nbsp; &nbsp;
-        {% else %}
-        <script>
-            // document.getElementById("#collect").onclick=go2login;
-            function go2login(){
-                if(window.confirm('需要登录，是否前往登录？')){
-                    window.location.href = '/users/login/';
-                }
-            }
-        </script>
-        <a href="#" onclick="go2login()"><img src="{% static 'image/5.png' %}"  width="30px"  height="50px"></a>
-        &nbsp; &nbsp; &nbsp;
-        {% endif %}
-
         {% if user %}
         <a href="/users/home/"><img src="{% static user.image %}"  width="30px"  height="50px"></a>
         {% else %}
-        <a href="/users/login/"><img src="{% static 'image/2.png' %}"  width="30px" ></a>
+        <a href="/users/login/"><img src="{% static 'image/book.png' %}"  width="30px" ></a>
         {% endif %}
 </div>
 
 <!--首页 分类-->
 <br><br>
-<div class="category">
-    <a href="/books/index/"><button class="category_first">首页</button></a>
-    <a href="/books/types/1" target="_blanket"><button >推理悬疑</button></a>
-    <a href="/books/types/2" target="_blanket"><button >科幻玄幻</button></a>
-    <a href="/books/types/3" target="_blanket"><button >都市言情</button></a>
-    <a href="/books/paihang/"><button>排行榜</button></a>
-</div>
+    <div class="nav">
+        <a href="/books/index/" class="nav-item"  active-color="orange">首页</a> 
+        <a href="/books/types/1" target="_blanket" class="nav-item"  active-color="green">推理悬疑</a>
+        <a href="/books/types/2" target="_blanket" class="nav-item"  active-color="blue">现代都市</a>
+        <a href="/books/types/3" target="_blanket" class="nav-item"  active-color="red">守望先锋</a> 
+        <a href="/books/paihang/" class="nav-item"  active-color="rebeccapurple">排行榜</a>
+        <span class="nav-indicator"></span>
+    </div>

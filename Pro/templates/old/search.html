@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="{% static 'css/edit.css' %}">
       <!--引用base界面-->
     {% include "base.html" %}
-<p class="word">关于 <span class="keyword" id="q"></span> 的搜索结果：</p>
+<p class="word">关于 <span class="keyword">{{ keyword }}</span> 的搜索结果：</p>
     <!-- <p class="word">关于 <span class="keyword">你不知道</span> 的搜索结果：</p> -->
 	<div class="limit-free-list cf book-detail-wrap center1020">
 			<div class="limit-book-list fl" data-l1="5">
@@ -38,7 +38,7 @@
 										</div>
 										<div class="book-mid-info">
 											<h4><a href="/books/{{ result.object.book_id}}">{{ result.object.title }}</a></h4>
-											<p class="author"><img src="{% static 'image/author.png'%}">
+											<p class="author"><img src="{% static 'image/search/author.png'%}">
 												<a class="default name">{{ result.object.author }}</a><em>|</em>
 												<a href="#">{{ result.object.type_id }}</a><em>|</em>{{ result.object.view_number }}
 											</p>
@@ -63,14 +63,6 @@
     <p class="text-center ">本站所收录作品均来自互联网<br/>蜀ICP备17035299号</p>
   </div>
 </footer>
-<script>
-    function detail(id){
-        window.location.href = '/books/'+ id
-    }
-    var url = window.location.href;
-    text = url.split("=")[1];
-    // console.log(text);
-    document.getElementById("q").innerHTML=text;
-</script>
+
 </body>
 </html>

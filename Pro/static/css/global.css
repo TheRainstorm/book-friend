@@ -214,14 +214,17 @@
     border: 0.5px solid rgb(214,94,100);
 }
 
-.btn-group_button3{
-    background-color:white;
-    color:gray;
-    width: 100px;
-    line-height: 34px;
-    margin-left:-35px;
+.btn-group_button3{  
 	border:none;
-	background:none;
+	background:white;
+}
+
+.btn-group_button3 a{
+    color: gray;
+}
+
+.btn-group_button3 a:hover{
+    color: black;
 }
 
 .btn-group_button1:hover{

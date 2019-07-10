@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Show</title>
+</head>
+<body>
+    <h1>首页</h1>
+    {% for k,v in type_dic.items %}
+    <li>
+        <a href="/books/types/{{ k }}">{{ v }}</a>
+    </li>
+    {% endfor %}
+    <ol>
+        <li>
+            <a href='/users/home/'>用户中心</a>
+        </li>
+    </ol>
+    <a href="/books/add/">去添加书</a>
+    <table>
+        <tr>
+            <th>picture</th>
+            <th>book_id</th>
+            <th>uploader_id</th>
+            <th>uploader</th>
+            <th>title</th>
+            <th>author</th>
+            <th>type_id</th>
+            <th>book_type</th>
+            <th>tag</th>
+            <th>view_number</th>
+            <th></th>
+        </tr>
+        {% for book in book_li %}
+        <tr>
+            <td><a href="/books/{{ book.book_id }}"><img width=50px src="{% static book.image_path %}"></a></td>
+            <td>{{ book.book_id }}</td>
+            <td>{{ book.uploader.user_id }}</td>
+            <td>{{ book.uploader.user_name }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.type_id }}</td>
+            <td>待实现</td>
+            <td>{{ book.tag }}</td>
+            <td>{{ book.view_number }}</td>
+            <td style="text-align:center;">
+                <button class="update" onclick="updateOne('{{ book.book_id }}');">修改</button>
+                <button class="delete" onclick="delone('{{ book.book_id }}');">删除</button>
+                <button class="detail" onclick="detail('{{ book.book_id }}');">详情</button>
+                <button id="collect" class="collect" onclick="collect('{{ book.book_id }}');">收藏</button>
+            </td>
+        </tr>
+        {% empty %}
+        <td>
+            <p style="text-align: center">暂无书籍</p>
+        </td>
+        {% endfor %}
+    </table>
+    <p>搜索</p>
+    <form action="/search/" method="GET">
+        <input name="q" placeholder="输入关键词">
+        <input type="submit" value="搜索">
+    </form>
+
+    <a href="/books/paihang/">排行页</a>
+    <h2>总排行榜（依照浏览量）</h2>
+    <ol>
+        {% for book in all_book_li_by_hot %}
+        <li>
+            <a href="/books/{{ book.book_id }}">{{ book.title }}</a>
+            <span>id: {{ book.book_id }},{{ book.view_number }}</span>
+        </li>
+        {% empty %}
+            <p style="text-align: center">暂无书籍</p>
+        {% endfor %}
+    </ol>
+    
+
+    <script>
+        function delone(id){
+            if(window.confirm('是否确认删除？')){
+                window.location.href = '/books/delete/' + id;
+            }
+        }
+        function updateOne(id){
+            window.location.href = '/books/goupdate/'+ id
+        }
+        function detail(id){
+            window.location.href = '/books/'+ id
+        }
+        function collect(id){
+            window.location.href = '/collects/collect_add/'+ id
+        }
+    </script>
+</body>
+</html>
