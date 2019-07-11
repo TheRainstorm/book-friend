@@ -14,5 +14,6 @@ urlpatterns = [
     path('goto_category/<int:type_id>/<str:order_by>', views.go_to_category),
     path('chapters/<str:bookname>/',views.chapters),
     path('read/<str:bookname>/<int:chapters_id>/',views.read),
-    # path('upload/',views.uploadGrade),
+    path('upload/',views.uploadBooks),
+    path('shangchuan/',views.shangchuan),
 ]

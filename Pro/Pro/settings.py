@@ -26,7 +26,7 @@ SECRET_KEY = 'suyvvkfk#@*kvyd)kv*8)hnhrggs45xl5k8zk%vvfkihe3t!(b'
 DEBUG = True
 
 ALLOWED_HOSTS = ['therainstorm.pythonanywhere.com',
-                'localhost',
+                '127.0.0.1',
                 ]
 
 

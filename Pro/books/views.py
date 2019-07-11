@@ -14,6 +14,38 @@ import json
 import xlrd
 from django.db import transaction
 
+def index(request):
+    #session 获得user
+    user_name = request.session.get('account',None)
+
+    if user_name!=None:
+        user = User.objects.filter(user_name=user_name)[0]
+    else:
+        user = None
+    
+    books_li = Book.objects.all()
+    all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
+
+    #每种类型按new分类返回
+    category1_new = Book.objects.get_books_by_type(1, limit=7, sort='new') #仙侠玄幻
+    category2_new = Book.objects.get_books_by_type(2,limit= 7, sort='new')#历史纵横
+    category3_new = Book.objects.get_books_by_type(3, 7, sort='new')#都市言情
+
+    context = {
+        'user':user,
+        "book_li":books_li,
+        'all_book_li_by_hot':all_book_li_by_hot,
+        'types_book':[  ['仙侠玄幻',category1_new],
+                        ['历史纵横',category2_new],
+                        ['都市言情',category3_new]
+                    ],
+    }
+    
+    return render(request,'books/index.html',context)
+
+def go2index(request):
+    return redirect('/books/index/')
+
 def read_json(name):
     path = 'static/books/json/' + name + '.json'
     with open(path) as f:
@@ -78,77 +110,44 @@ def read(request, bookname, chapters_id):
 
     return render(request,'books/read.html',context=context)
 
-def index(request):
-    #session 获得user
-    user_name = request.session.get('account',None)
+#后端上传书籍接口
+def uploadBooks(request):
+    '''
+    班级信息导入
+    :param request:
+    :return:
+    '''
+    if request.method == 'POST':
+        f = request.FILES.get('file')
+        excel_type = f.name.split('.')[1]
+        if excel_type in ['xlsx','xls']:
+            # 开始解析上传的excel表格
+            wb = xlrd.open_workbook(filename=None,file_contents=f.read())
+            table = wb.sheets()[0]
+            rows = table.nrows  # 总行数
+            name_list = ['yfy','jyf','hx','smy','twz','lg','lb','hmx','cgz','mxy','hkh','xmh','qx']
+            user_list = []
+            for i in range(13):
+                flag = i%13
+                user_name = name_list[flag]
+                user = User.objects.get(user_name=user_name,password="123456")
+                user_list.append(user)
+            with transaction.atomic():  # 控制数据库事务交易
+                for i in range(1,rows):
+                    flag = i%13
+                    rowVlaues = table.row_values(i)
+                    path = '\\books\\picture\\' + str(i-1) + '.jpg'
+                    rowVlaues[4] = rowVlaues[4][:40]
+                    print(rowVlaues[0])
+                    book = Book(title=rowVlaues[1],author=rowVlaues[2],uploader=user_list[flag],type_id=int(rowVlaues[0]),description=rowVlaues[4],image_path=path,view_number=rowVlaues[5],collection_number=rowVlaues[6])
+                    book.save()
+                    print(book)
+            return render(request,'books/shangchuan.html')
+        else:
+            return render(request,'books/shangchuan.html')
 
-    if user_name!=None:
-        user = User.objects.filter(user_name=user_name)[0]
-    else:
-        user = None
-    
-    books_li = Book.objects.all()
-    all_book_li_by_hot = Book.objects.get_all_ranking(limit=10,sort='view-hot')
-
-    #每种类型按new分类返回
-    category1_new = Book.objects.get_books_by_type(1, limit=7, sort='new') #仙侠玄幻
-    category2_new = Book.objects.get_books_by_type(2,limit= 7, sort='new')#历史纵横
-    category3_new = Book.objects.get_books_by_type(3, 7, sort='new')#都市言情
-
-    context = {
-        'user':user,
-        "book_li":books_li,
-        'all_book_li_by_hot':all_book_li_by_hot,
-        'types_book':[  ['仙侠玄幻',category1_new],
-                        ['历史纵横',category2_new],
-                        ['都市言情',category3_new]
-                    ],
-    }
-    
-    return render(request,'books/index.html',context)
-
-def go2index(request):
-    return redirect('/books/index/')
-
-# #后端上传书籍接口
-# def uploadGrade(request):
-#     '''
-#     班级信息导入
-#     :param request:
-#     :return:
-#     '''
-#     if request.method == 'POST':
-#         f = request.FILES.get('file')
-#         excel_type = f.name.split('.')[1]
-#         if excel_type in ['xlsx','xls']:
-#             # 开始解析上传的excel表格
-#             wb = xlrd.open_workbook(filename=None,file_contents=f.read())
-#             table = wb.sheets()[0]
-#             rows = table.nrows  # 总行数
-#             name_list = ['yfy','jyf','hx','smy','twz','lg','lb','hmx','cgz','mxy','hkh','xmh','qx']
-#             user_list = []
-#             for i in range(13):
-#                 flag = i%13
-#                 user_name = name_list[flag]
-#                 user = User(user_name=user_name,password="123456")
-#                 user_list.append(user)
-#                 user.save()            
-#             with transaction.atomic():  # 控制数据库事务交易
-#                 for i in range(1,rows):
-#                     flag = i%13
-#                     rowVlaues = table.row_values(i)
-#                     path = '**\\books\\picture\\' + str(i-1) + '.jpg' //路径
-#                     rowVlaues[4] = rowVlaues[4][:40]
-#                     print(rowVlaues[0])
-#                     book = Book(title=rowVlaues[1],author=rowVlaues[2],uploader=user_list[flag],type_id=int(rowVlaues[0]),description=rowVlaues[4],image_path=path,view_number=rowVlaues[5],collection_number=rowVlaues[6])
-#                     book.save()
-#                     print(book)
-#             return render(request,'books/shangchuang.html')
-#         else:
-#             return render(request,'books/shangchuang.html')
-
-def shangchuang(request):
-    return render(request, 'books/shangchuang.html')    
+def shangchuan(request):
+    return render(request, 'books/shangchuan.html')    
 
 def find_chaps(name, bookname):
     chapters = {}
