@@ -25,7 +25,9 @@ SECRET_KEY = 'suyvvkfk#@*kvyd)kv*8)hnhrggs45xl5k8zk%vvfkihe3t!(b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['therainstorm.pythonanywhere.com',
+                'localhost',
+                ]
 
 
 # Application definition
